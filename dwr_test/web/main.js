@@ -9,61 +9,6 @@ var game = new Phaser.Game  (   2048,
                                     render: render
                                 }
                             );
-/*Cargo el avion aca, porque sino carga asincrónicamente y demora mas en cargar
- * la clase Avion que el main.js.*/
-/*Class Avion.js*/
-function Avion(nombreAvion, x, y, combustible){
-    this.maxBalas = 200;
-    this.maxVida = 400;
-    this.combustible = combustible;
-    this.seleccionado = false;
-    
-    this.sprite = game.add.sprite(x, y, 'block');
-    this.sprite.anchor.set(0.5);
-    this.sprite.name = nombreAvion;
-    this.sprite.inputEnabled = true;
-    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-    
-    /*Uso una función flecha para obtener el 'this' del avion construido.*/
-    this.sprite.events.onInputDown.add(() => {
-        this.seleccionado = true;
-//        console.log(this.getSeleccionado());
-    }, this);
-    
-    this.deseleccionar = function() {
-        this.seleccionado = false;
-    };
-    this.getSeleccionado = function() {
-        return this.seleccionado;
-    };
-}
-
-/*Funciones del objeto*/
-Avion.prototype.disparar = function(){
-    this.maxBalas--; 
-};
-
-Avion.prototype.recargar = function(){
-    this.maxBalas = parametros.MAX_BALAS;
-};
-
-Avion.prototype.moverAMouse = function(){
-    if (game.input.mousePointer.isDown){
-        game.physics.arcade.moveToPointer(this.sprite, 500);
-        this.sprite.rotation = game.physics.arcade.angleToPointer(this.sprite) - 300;
-        if (Phaser.Rectangle.contains(this.sprite.body, game.input.x, game.input.y))
-        {
-            this.sprite.body.velocity.setTo(0, 0);
-        }
-        game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1);
-    }
-    else {
-        this.sprite.body.velocity.setTo(0, 0);
-    }
-};
-
-
-
 var text = '';
 var sprite;
 var sprite2;
@@ -98,17 +43,16 @@ function create() {
     grupoTop = game.add.group();
     grupoLow = game.add.group();
     
+    
     /*Aviones Azules*/
-    aviones_azules = new Array();
-    
-    for(var i = 0; i < 4; i++){
-        aviones_azules.push(new Avion("Azul_" + i, 100, i * 100, 30));
+    aviones_azules = new Aviones("Azules");
+    for(let i = 0; i < 4; i++){
+        aviones_azules.agregarAvion(new Avion(i, 100, i * 100, 30));
     }
-    
     /*Avioens Rojos*/
-    aviones_rojos = new Array();
-    for(var i = 0; i < 4; i++){
-        aviones_rojos.push(new Avion("Rojo_" + i, 400, i * 100, 30));
+    aviones_rojos = new Aviones("Rojos");
+    for(let i = 0; i < 4; i++){
+        aviones_rojos.agregarAvion(new Avion(i, 400, i * 100, 30));
     }
     
 
@@ -202,39 +146,34 @@ var azul = false;
 var rojo = false;
 
 function update() {
+    console.log(aviones_azules.aviones);
     llamar = llamar + 1;
     if(llamar === 0){
         if(azul == true){
-//            console.log("entra azul");
-            Fachada.updatePosRojo( aviones_azules[0].sprite.x, aviones_azules[0].sprite.y, aviones_azules[0].sprite.rotation,    {
-                                            callback:function() {},
+            let posAviones = aviones_azules.obtenerPosicionesAviones();
+            Fachada.updatePosRojo(posAviones,    {
                                             timeout:5000,
-                                            errorHandler:function(message) { console.log("error updatePos"); }
+                                            errorHandler:function(message, exception) { console.log("error updatePosRojo "); console.log(dwr.util.toDescriptiveString(exception, 2))}
                                         });
             Fachada.getPosAzul( {
-                                    callback: function(pos){ 
-                                        aviones_rojos[0].sprite.x = pos[0];
-                                        aviones_rojos[0].sprite.y = pos[1];
-                                        aviones_rojos[0].sprite.rotation = pos[2];
+                                    callback: function(pos){
+                                        aviones_rojos.actualizarPosicionesAviones(pos);
                                     },
                                     timeout: 5000 ,
                                     errorHandler:function(message) { 
-                                        console.log("error getPos");
+                                        console.log("error getPosAzul" + message);
                                     }
                                 });
         }
         if(rojo == true){
-//            console.log("entra rojo");
-            Fachada.updatePosAzul( aviones_rojos[0].sprite.x, aviones_rojos[0].sprite.y, aviones_rojos[0].sprite.rotation,   {
+            Fachada.updatePosAzul( aviones_rojos.obtenerPosicionesAviones(),   {
                                             callback:function() {},
                                             timeout:5000,
-                                            errorHandler:function(message) { console.log("error updatePos"); }
+                                            errorHandler:function(message) { console.log("error updatePosAzul " + message); }
                                         });
             Fachada.getPosRojo( {
                                     callback: function(pos){ 
-                                        aviones_azules[0].sprite.x = pos[0];
-                                        aviones_azules[0].sprite.y = pos[1]; 
-                                        aviones_azules[0].sprite.rotation = pos[2];
+                                        aviones_azules.actualizarPosicionesAviones(pos);
                                     },
                                     timeout: 5000 ,
                                     errorHandler:function(message) { 
@@ -246,9 +185,6 @@ function update() {
     else{
         if(llamar > 0){ llamar = -1; }
     }
-    
-      
-      
     
     game.world.bringToTop(grupoTop);
     
@@ -357,22 +293,21 @@ function update() {
     
     if(rojo == true){
         for(i = 0; i < 4; i++){
-            if(aviones_rojos[i].getSeleccionado()){
-                aviones_rojos[i].moverAMouse();
+            if(aviones_rojos.obtenerAvion(i).getSeleccionado()){
+                aviones_rojos.obtenerAvion(i).moverAMouse();
             }
             else{
-                aviones_rojos[i].deseleccionar();
+                aviones_rojos.obtenerAvion(i).deseleccionar();
             }
-            console.log(aviones_rojos[i].getSeleccionado());
         }
     }
     if(azul == true){
         for(i = 0; i < 4; i++){
-            if(aviones_azules[i].getSeleccionado()){
-                aviones_azules[i].moverAMouse();
+            if(aviones_azules.obtenerAvion(i).getSeleccionado()){
+                aviones_azules.obtenerAvion(i).moverAMouse();
             }
             else{
-                aviones_azules[i].deseleccionar();
+                aviones_azules.obtenerAvion(i).deseleccionar();
             }
         }
     }

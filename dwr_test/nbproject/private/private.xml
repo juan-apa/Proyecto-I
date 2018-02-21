@@ -13,14 +13,6 @@
             <file>file:/home/juan/Documents/Facultad/Proyecto%20I/prueba_tec/Servidor/dwr_test/src/java/persistencia/Consultas.java</file>
             <file>file:/home/juan/Documents/Facultad/Proyecto%20I/prueba_tec/Servidor/dwr_test/src/java/persistencia/ExceptionConfiguracion.java</file>
         </group>
-        <group name="Soporte_TI">
-            <file>file:/C:/Users/pc-61/Documents/proyectos-java/dwr_test/web/index.jsp</file>
-            <file>file:/C:/Users/pc-61/Documents/proyectos-java/dwr_test/src/java/logica/DAOAviones.java</file>
-            <file>file:/C:/Users/pc-61/Documents/proyectos-java/dwr_test/src/java/persistencia/DAOConfiguraciones.java</file>
-            <file>file:/C:/Users/pc-61/Documents/proyectos-java/dwr_test/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/pc-61/Documents/proyectos-java/dwr_test/web/META-INF/context.xml</file>
-            <file>file:/C:/Users/pc-61/Documents/proyectos-java/dwr_test/src/java/logica/Avion.java</file>
-            <file>file:/C:/Users/pc-61/Documents/proyectos-java/dwr_test/web/WEB-INF/dwr.xml</file>
-        </group>
+        <group name="Soporte_TI"/>
     </open-files>
 </project-private>

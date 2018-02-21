@@ -16,22 +16,21 @@ import persistencia.ExceptionConfiguracion;
 public class Fachada {
     private DAOConfiguraciones configuraciones;
     private static Fachada instancia;
-    private float x_pos_az;
-    private float y_pos_az;
-    private float rot_az;
-    private float x_pos_ro;
-    private float y_pos_ro;
-    private float rot_ro;
+    private Posicion[] posicionesAzules;
+    private Posicion[] posicionesRojos;
     
     private Fachada() throws ExceptionConfiguracion{
         this.configuraciones = new DAOConfiguraciones();
-        this.x_pos_az = 0;
-        this.y_pos_az = 0;
-        this.rot_az = 0;
         
-        this.x_pos_ro = 0;
-        this.y_pos_ro = 0;
-        this.rot_ro = 0;
+        this.posicionesAzules = new Posicion[4];
+        for(int i = 0; i < this.posicionesAzules.length; i++){
+            this.posicionesAzules[i] = new Posicion(1,1,1);
+        }
+        
+        this.posicionesRojos = new Posicion[4];
+        for(int i = 0; i < this.posicionesRojos.length; i++){
+            this.posicionesRojos[i] = new Posicion(1,1,1);
+        }
     }
     
     public static Fachada getInstance() throws ExceptionConfiguracion{
@@ -45,31 +44,43 @@ public class Fachada {
         return this.configuraciones.obtenerMAX_BALAS();
     }
     
-    public void updatePosRojo(float x, float y, float r){
-        this.x_pos_ro = x;
-        this.y_pos_ro = y;
-        this.rot_ro = r;
+    public void updatePosRojo(VOPosicion[] vop){
+        for(int i = 0; i < vop.length; i++){
+            this.posicionesRojos[i].setX(vop[i].getX());
+            this.posicionesRojos[i].setY(vop[i].getY());
+            this.posicionesRojos[i].setRot(vop[i].getRot());
+        }
     }
     
-    public void updatePosAzul(float x, float y, float r){
-        this.x_pos_az = x;
-        this.y_pos_az = y;
-        this.rot_az = r;
+    public void updatePosAzul(VOPosicion[] vop){
+        for(int i = 0; i < vop.length; i++){
+            this.posicionesAzules[i].setX(vop[i].getX());
+            this.posicionesAzules[i].setY(vop[i].getY());
+            this.posicionesAzules[i].setRot(vop[i].getRot());
+        }
     }
     
-    public float[] getPosRojo(){
-        float[] ret = new float[3]; 
-        ret[0] = this.x_pos_ro;
-        ret[1] = this.y_pos_ro;
-        ret[2] = this.rot_ro;
+    public VOPosicion[] getPosRojo(){
+        VOPosicion[] ret = new VOPosicion[this.posicionesRojos.length];
+        for(int i = 0; i < this.posicionesRojos.length; i++){
+            ret[i] = new VOPosicion(this.posicionesRojos[i].getX(), this.posicionesRojos[i].getY(), this.posicionesRojos[i].getRot());
+        }
         return ret;
     }
     
-    public float[] getPosAzul(){
-        float[] ret = new float[3]; 
-        ret[0] = this.x_pos_az;
-        ret[1] = this.y_pos_az;
-        ret[2] = this.rot_az;
+    public VOPosicion[] getPosAzul(){
+        VOPosicion[] ret = new VOPosicion[this.posicionesAzules.length];
+        for(int i = 0; i < this.posicionesAzules.length; i++){
+            ret[i] = new VOPosicion(this.posicionesAzules[i].getX(), this.posicionesAzules[i].getY(), this.posicionesAzules[i].getRot());
+        }
         return ret;
+    }
+    
+    public void test(VOPosicion[] vop){
+        for(int i = 0; i < vop.length; i++){
+            this.posicionesRojos[i].setX(vop[i].getX());
+            this.posicionesRojos[i].setY(vop[i].getY());
+            this.posicionesRojos[i].setRot(vop[i].getRot());
+        }
     }
 }

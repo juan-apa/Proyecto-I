@@ -18,7 +18,14 @@ public class Main {
     public static void main(String[] args) {
         try {
             Fachada f = Fachada.getInstance();
-            f.obtenerMAX_BALAS();
+//            f.obtenerMAX_BALAS();
+            VOPosicion[] vops = new VOPosicion[4];
+            for(int i = 0; i < vops.length; i++){
+                vops[i] = new VOPosicion(0, 0, 0);
+            }
+            
+            f.updatePosAzul(vops);
+            f.getPosAzul();
         } catch (ExceptionConfiguracion ex) {
             ex.printStackTrace();
         }

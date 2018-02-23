@@ -32,6 +32,9 @@
             }
             console.log("TRES " + parametros.MAX_BALAS);
         </script>
+        <script src="VOPosicion.js" charset="utf-8"> </script>
+        <script src="Avion.js" charset="utf-8"> </script>
+        <script src="Aviones.js" charset="utf-8"> </script>
         <script src="main.js" charset="utf-8"> </script>
     </head>
     <body>

@@ -56,28 +56,7 @@ function create() {
     for(let i = 0; i < 4; i++){
         aviones_rojos.agregarAvion(new Avion(i, 400, i * 100, 30));
     }
-    
 
-//    //Avion A1
-//    sprite = game.add.sprite(64 + (64 * 1), 200 + (1 * 4), 'block');
-//    sprite.anchor.set(0.5);
-//    sprite.name = 'Avion_A1';
-//    sprite.inputEnabled = true;
-//    sprite.events.onInputDown.add(clickedSprite, this);
-//    game.physics.enable(sprite, Phaser.Physics.ARCADE);
-//    grupoTop.add(sprite);
-//    sprite.body.collideWorldBounds = true;
-//    
-//    game.camera.follow(sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1);
-//    
-//    //Avion A2
-//    sprite2 = game.add.sprite(64 + (64 * 1)+800, 200 + (1*4), 'block');
-//    sprite2.name = 'Avion_A2';
-//    sprite2.anchor.set(0.5);
-//    sprite2.inputEnabled = true;
-//    sprite2.events.onInputDown.add(clickedSprite2, this);
-//    game.physics.enable(sprite2, Phaser.Physics.ARCADE);
-//    grupoTop.add(sprite2);
     
     
     sprite3 = game.add.sprite(64 + (64 * 1)+800, 200 + (1*4)+300, 'barco');
@@ -89,20 +68,6 @@ function create() {
     sprite3.events.onInputDown.add(clickedSprite4, this);
     game.physics.enable(sprite3, Phaser.Physics.ARCADE);
     grupoLow.add(sprite3);
-
-//    sprite4 = game.add.sprite(64 + (64 * 1)+400, 200 + (1*4)+200, 'block');
-//    sprite4.name = 'Avion_Bomba';
-//    sprite4.anchor.set(0.5);
-//    sprite4.inputEnabled = true;
-//    sprite4.events.onInputDown.add(clickedSprite3, this);
-//    game.physics.enable(sprite4, Phaser.Physics.ARCADE);
-//    grupoTop.add(sprite4);
-    
-//    sprite.kill();
-//    sprite2.kill();
-//    sprite4.kill();
-
-
 
     weapon = game.add.group();
     weapon.enableBody = true;
@@ -116,6 +81,8 @@ function create() {
     
     explosions = game.add.group();
     explosions.createMultiple(30, 'kaboom');
+    
+    cursors = game.input.keyboard.createCursorKeys();
     
 }
 

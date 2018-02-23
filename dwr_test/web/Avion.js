@@ -30,11 +30,21 @@ function Avion(nombreAvion, x, y, combustible){
 }
 
 /*Funciones del objeto*/
+Avion.prototype.obtenerSpirte = function(){
+    return this.sprite;
+};
+
 Avion.prototype.disparar = function(){
     if (this.seleccionado===true){
+       this.cantBalas--;
        this.arma.dispararr(this.sprite.x,this.sprite.y);
     }
     //this.maxBalas--; 
+};
+
+Avion.prototype.getArma = function(){
+    return this.arma.getSprite();
+    //return this.arma;
 };
 
 Avion.prototype.recargar = function(){

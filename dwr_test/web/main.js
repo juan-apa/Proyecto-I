@@ -184,7 +184,7 @@ function update() {
         }
     }
     else{
-        if(llamar > 1){ llamar = -1; }
+        if(llamar > 10){ llamar = -1; }
     }
     
     game.world.bringToTop(grupoTop);
@@ -256,6 +256,9 @@ function update() {
     if(azul === true){
         for(i = 0; i < aviones_azules.largo(); i++){
             aviones_azules.obtenerAvion(i).moverAMouse();
+            if(fireButton.isDown){
+                aviones_azules.obtenerAvion(i).disparar();
+            }
         }
     }
     

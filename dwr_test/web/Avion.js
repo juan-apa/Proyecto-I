@@ -10,6 +10,7 @@ function Avion(nombreAvion, x, y, combustible){
     this.combustible = combustible;
     this.seleccionado = false;
     this.altura = ALTURA_BAJA;
+    this.arma = new Arma(1);
     
     this.sprite = game.add.sprite(x, y, 'block');
     this.sprite.anchor.set(0.5);
@@ -30,7 +31,10 @@ function Avion(nombreAvion, x, y, combustible){
 
 /*Funciones del objeto*/
 Avion.prototype.disparar = function(){
-    this.maxBalas--; 
+    if (this.seleccionado===true){
+       this.arma.dispararr(this.sprite.x,this.sprite.y);
+    }
+    //this.maxBalas--; 
 };
 
 Avion.prototype.recargar = function(){

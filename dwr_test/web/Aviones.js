@@ -1,9 +1,4 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+/*Class Aviones.js*/
 function Aviones(nombre){
     this.grupo = game.add.group();
     /*Permito el click en los hijos*/
@@ -15,14 +10,19 @@ function Aviones(nombre){
     this.aviones = new Array();
     /*Cuando le hago click*/
     this.grupo.onChildInputDown.add((sprite) => {
-        this.aviones[sprite.name].setSeleccionado(true);
-    }, this);
-    this.grupo.onChildInputUp.add((sprite) => {
-        grupo.setAll('body.velocity.x', 0);
-        grupo.setAll('body.velocity.y', 0);
+        for(let i = 0; i < this.aviones.length; i++){
+            /*Dejar como ==, no ===*/
+            if(i == sprite.name){
+                this.aviones[i].setSeleccionado(true);
+            }
+            else{
+                this.aviones[i].setSeleccionado(false);
+            }
+        }
     }, this);
 };
 
+/*Funciones del objeto*/
 Aviones.prototype.agregarAvion = function(avion){
     this.grupo.add(avion.sprite);
     this.aviones.push(avion);

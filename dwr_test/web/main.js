@@ -34,6 +34,7 @@ function preload() {
     game.load.image("barco", "barcoo.png");
 }
 
+var informacion;
 /*Creacion del juego*/
 function create() {
     mapa = game.add.tileSprite(0, 0, 1600, 1200, 'fondoOceano');
@@ -54,7 +55,7 @@ function create() {
     /*Avioens Rojos*/
     aviones_rojos = new Aviones("Rojos");
     for (let i = 0; i < 4; i++) {
-        aviones_rojos.agregarAvion(new Avion(i, 400, i * 100, 30));
+        aviones_rojos.agregarAvion(new Avion(i, 900, i * 100, 30));
     }
 
 
@@ -116,6 +117,13 @@ function create() {
 
     explosions = game.add.group();
     explosions.createMultiple(30, 'kaboom');
+    
+    //seteo el panel de mensajes
+    informacion = game.add.text(10,10, "", {
+        font: "30px Arial",
+        fill: "#ff0044",
+        align: "center"
+    });
 
 }
 
@@ -146,6 +154,7 @@ var x = 0;
 var y = 0;
 var azul = false;
 var rojo = false;
+var informacion;
 
 function update() {
     llamar = llamar + 1;
@@ -255,14 +264,15 @@ function update() {
             aviones_rojos.obtenerAvion(i).moverAMouse();
         }
     }
-
+    
     /*TODO este bloque no se tiene que hacer todo el tiempo, solo se tiene que
      * hacer una vez, cuando se sepa que equipo es el mio. */
     if (azul === true) {
         for (i = 0; i < aviones_azules.largo(); i++) {
-            aviones_azules.obtenerAvion(i).moverAMouse();
+            aviones_azules.obtenerAvion(i).moverAMouse();//+ aviones_azules.obtenerAvion(i).getMunicion   
             if (fireButton.isDown) {
                 aviones_azules.obtenerAvion(i).disparar();
+                
                 for (y = 0; y < aviones_azules.largo(); y++) {
                     if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
                         game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), aviones_rojos.obtenerAvion(y).obtenerSpirte(), collisionHandler);
@@ -321,13 +331,13 @@ function fire(spriteq) {
     }
 }
 
-function collisionHandler(weapon, sprite2) {
-    sprite2.kill();
-    weapon.kill();
+function collisionHandler(a, b) {
+    b.kill();
+    a.kill();
 }
 
 function render() {
-    game.debug.text("Click the Spritesssss" + parametros.MAX_BALAS + "VIDA:" + parametros.VIDA_MAX_AVION, 32, 32);
+    //game.debug.text("Caca" + parametros.MAX_BALAS + "VIDA:" + parametros.VIDA_MAX_AVION, 32, 32);
 }
 
 

@@ -1,6 +1,6 @@
 /*Class Arma.js*/
 
-/* global game, fireButton, Aviones, aviones_rojos, aviones_rojo, Phaser */
+/* global game, fireButton, Aviones, aviones_rojos, aviones_rojo, Phaser, informacion */
 
 const METRALLETA = 1;
 const TORPEDO = 2;
@@ -8,12 +8,9 @@ const BOMBA = 3;
 
 function Arma(tipoArma) {
     this.tipoArma = tipoArma;
-
-    if (this.tipoArma === METRALLETA) {         //la cantidad de municion que tiene
-        this.municion = 2000000;
-
-    } else {
-        this.municion = 1;
+    this.municion = 1                   //si es bomba o torpedo tiene 1 municion
+    if(this.tipoArma === METRALLETA){    //si es metra, tiene mas municion
+        this.municion = 200;
     }
     this.sprite = game.add.sprite('balas');
     this.sprite.anchor.set(0.5);
@@ -24,9 +21,9 @@ function Arma(tipoArma) {
     this.sprite.createMultiple(50, "balas");
     this.sprite.setAll('checkWorldBounds', true);
     this.sprite.setAll('outOfBoundsKill', true);
-}
+};
 
-Arma.prototype.getMunicion = function () {
+Arma.prototype.getCantMunicion = function () {
     return this.municion;
 };
 
@@ -34,13 +31,15 @@ Arma.prototype.getSprite = function () {
     return this.sprite;
 };
 
-Arma.prototype.dispararr = function (x, y, aviones_rojos) {
-    if (fireButton.isDown && this.municion > 0) {
+Arma.prototype.dispararr = function (x, y) {
+    if (fireButton.isDown && this.municion >= 0) {
+        //informacion de municion del avion
+        
         if (this.tipoArma === METRALLETA) {
-            ////test
+            informacion.setText("Municion: "+this.municion + " Tipo Municion: METRALLETA" );
             this.municion--;
             nextFire = 0;
-            fireRate = 100;
+            fireRate = 80;  //parametrizable
             if (game.time.now > nextFire && this.sprite.countDead() > 0)
             {
                 nextFire = game.time.now + fireRate;

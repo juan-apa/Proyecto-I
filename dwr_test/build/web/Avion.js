@@ -44,7 +44,10 @@ Avion.prototype.disparar = function(){
 
 Avion.prototype.getArma = function(){
     return this.arma.getSprite();
-    //return this.arma;
+};
+
+Avion.prototype.getMunicion = function(){
+    return this.arma.getCantMunicion();
 };
 
 Avion.prototype.recargar = function(){

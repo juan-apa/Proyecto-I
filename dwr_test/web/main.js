@@ -32,6 +32,12 @@ function preload() {
     game.load.image("fondoOceano", "oceano2.jpg");
     game.load.image("balas", "balas2.png");
     game.load.image("barco", "barcoo.png");
+    //cargo imagenes portaaviones
+    game.load.image("barco", "barcoo.png");
+    game.load.image("barco_1avion", "portaviones_2.png");
+    game.load.image("barco_2avion", "portaviones_3.png");
+    game.load.image("barco_3avion", "portaviones_4.png");
+    game.load.image("barco_4avion", "portaviones_5.png");
 }
 
 var informacion;
@@ -117,9 +123,9 @@ function create() {
 
     explosions = game.add.group();
     explosions.createMultiple(30, 'kaboom');
-    
+
     //seteo el panel de mensajes
-    informacion = game.add.text(10,10, "", {
+    informacion = game.add.text(10, 10, "", {
         font: "30px Arial",
         fill: "#ff0044",
         align: "center"
@@ -155,10 +161,21 @@ var y = 0;
 var azul = false;
 var rojo = false;
 var informacion;
-
+//test:
+var huboImpacto = false;
+var team;
+var pos = 9;
+var cant=0;
 function update() {
     llamar = llamar + 1;
     if (llamar === 0) {
+//        if (huboImpacto === true && pos!==9) {
+//            console.log('entre');
+//            console.log('pos='+pos);
+//            console.log('largo aviones: '+aviones_rojos.largo());
+//            aviones_rojos.eliminarAvion(aviones_rojos.obtenerAvion(pos));
+//            huboImpacto === false;
+//        }
         if (azul === true) {
             let posAviones = aviones_azules.obtenerPosicionesAviones();
             Fachada.updatePosRojo(posAviones, {
@@ -177,6 +194,7 @@ function update() {
                     console.log("error getPosAzul" + message);
                 }
             });
+
         }
         if (rojo === true) {
             Fachada.updatePosAzul(aviones_rojos.obtenerPosicionesAviones(), {
@@ -262,20 +280,43 @@ function update() {
     if (rojo === true) {
         for (i = 0; i < aviones_rojos.largo(); i++) {
             aviones_rojos.obtenerAvion(i).moverAMouse();
+            //test
+            if (fireButton.isDown) {
+                aviones_rojos.obtenerAvion(i).disparar();
+                for (y = 0; y < aviones_azules.largo(); y++) {
+                    if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
+                        game.physics.arcade.collide(aviones_rojos.obtenerAvion(i).getArma(), aviones_azules.obtenerAvion(y).obtenerSpirte(), collisionHandler);
+                    }
+                }
+            }
+            //test
         }
     }
-    
+
     /*TODO este bloque no se tiene que hacer todo el tiempo, solo se tiene que
      * hacer una vez, cuando se sepa que equipo es el mio. */
     if (azul === true) {
         for (i = 0; i < aviones_azules.largo(); i++) {
             aviones_azules.obtenerAvion(i).moverAMouse();//+ aviones_azules.obtenerAvion(i).getMunicion   
+            //game.physics.arcade.overlap(aviones_rojos.obtenerAvion(i).obtenerSpirte(), sprite3, collisionHandler2, null, this);
+            game.physics.arcade.collide(aviones_azules.obtenerAvion(i).obtenerSpirte(), sprite3, collisionHandler2);
+
+//            if (checkOverlap(aviones_rojos.obtenerAvion(i).obtenerSpirte(), sprite3))
+//            {
+//                sprite3.kill();
+//            }
+
+
             if (fireButton.isDown) {
                 aviones_azules.obtenerAvion(i).disparar();
-                
-                for (y = 0; y < aviones_azules.largo(); y++) {
+
+
+                for (y = 0; y < aviones_rojos.largo(); y++) {
                     if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
                         game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), aviones_rojos.obtenerAvion(y).obtenerSpirte(), collisionHandler);
+//                        if (huboImpacto === true) {
+//                            pos = y;
+//                        }
                     }
                 }
             }
@@ -283,6 +324,50 @@ function update() {
     }
 
 }
+
+
+function checkOverlap(spriteA, spriteB) {
+
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+
+    return Phaser.Rectangle.intersects(boundsA, boundsB);
+
+}
+
+function collisionHandler2(a, b) {
+    a.kill();
+    console.log('cant: ' +cant);
+    /*
+     if (barco.cantBarco===1){barco.sprite.loadTexture(barco_avion1)}
+    if (barco.cantBarco===2){barco.sprite.loadTexture(barco_avion2)}
+    if (barco.cantBarco===3){barco.sprite.loadTexture(barco_avion3)}
+    if (barco.cantBarco===4){barco.sprite.loadTexture(barco_avion4)}
+     * 
+     */
+    if (cant===0){
+        sprite3.loadTexture('barco_1avion', 0);
+    }
+    if (cant===1){
+        sprite3.loadTexture('barco_2avion', 0);
+    }
+    if (cant===2){
+        sprite3.loadTexture('barco_3avion', 0);
+    }
+    if (cant===3){
+        sprite3.loadTexture('barco_4avion', 0);
+    }
+    cant++;
+    
+}
+
+function collisionHandler(a, b) {
+    b.kill();
+    a.kill();
+    //huboImpacto = true;
+}
+
+
 
 function numeroRandom(min, max) {
     return Math.round(Math.random() * (max - min) + min);
@@ -331,10 +416,6 @@ function fire(spriteq) {
     }
 }
 
-function collisionHandler(a, b) {
-    b.kill();
-    a.kill();
-}
 
 function render() {
     //game.debug.text("Caca" + parametros.MAX_BALAS + "VIDA:" + parametros.VIDA_MAX_AVION, 32, 32);

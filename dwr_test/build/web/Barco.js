@@ -2,10 +2,10 @@
 
 function Barco(nombre){
     this.seleccionado = false;
-    this.velocidad = 2
-    
+    this.velocidad = 2;
+    this.cantAviones = 0;
     this.sprite = game.add.sprite(64 + (64 * 1)+800, 200 + (1*4)+300, 'barco');
-    if(nombre != null){
+    if(nombre !== null){
         this.sprite.name = nombre;
     }
     else{
@@ -23,3 +23,15 @@ Barco.prototype.moverBarco = function(){
         this.sprite.y = this.sprite.y - 2;
     }
 }
+
+Barco.prototype.sumarCantidadAviones = function(){
+    if(this.cantAviones<4){
+        this.cantAviones++;
+    }
+};
+
+Barco.prototype.restarCantidadAviones = function(){
+    if(this.cantAviones>0){
+        this.cantAviones--;
+    }
+};

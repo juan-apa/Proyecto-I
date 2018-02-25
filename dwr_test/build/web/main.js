@@ -25,6 +25,9 @@ var av2;
 var mover = 0;
 var aviones_azules;
 var aviones_rojos;
+var barco_azul;
+var barco_rojo;
+var flechas;
 
 /*Precarga del juego*/
 function preload() {
@@ -63,29 +66,9 @@ function create() {
     for (let i = 0; i < 4; i++) {
         aviones_rojos.agregarAvion(new Avion(i, 900, i * 100, 30));
     }
-
-
-//    //Avion A1
-//    sprite = game.add.sprite(64 + (64 * 1), 200 + (1 * 4), 'block');
-//    sprite.anchor.set(0.5);
-//    sprite.name = 'Avion_A1';
-//    sprite.inputEnabled = true;
-//    sprite.events.onInputDown.add(clickedSprite, this);
-//    game.physics.enable(sprite, Phaser.Physics.ARCADE);
-//    grupoTop.add(sprite);
-//    sprite.body.collideWorldBounds = true;
-//    
-//    game.camera.follow(sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1);
-//    
-//    //Avion A2
-//    sprite2 = game.add.sprite(64 + (64 * 1)+800, 200 + (1*4), 'block');
-//    sprite2.name = 'Avion_A2';
-//    sprite2.anchor.set(0.5);
-//    sprite2.inputEnabled = true;
-//    sprite2.events.onInputDown.add(clickedSprite2, this);
-//    game.physics.enable(sprite2, Phaser.Physics.ARCADE);
-//    grupoTop.add(sprite2);
-
+    
+    barco_azul = new Barco("barco_azul");
+    barco_rojo = new Barco("barco_rojo");
 
     sprite3 = game.add.sprite(64 + (64 * 1) + 800, 200 + (1 * 4) + 300, 'barco');
     sprite3.name = 'B2';
@@ -96,20 +79,7 @@ function create() {
     sprite3.events.onInputDown.add(clickedSprite4, this);
     game.physics.enable(sprite3, Phaser.Physics.ARCADE);
     grupoLow.add(sprite3);
-
-//    sprite4 = game.add.sprite(64 + (64 * 1)+400, 200 + (1*4)+200, 'block');
-//    sprite4.name = 'Avion_Bomba';
-//    sprite4.anchor.set(0.5);
-//    sprite4.inputEnabled = true;
-//    sprite4.events.onInputDown.add(clickedSprite3, this);
-//    game.physics.enable(sprite4, Phaser.Physics.ARCADE);
-//    grupoTop.add(sprite4);
-
-//    sprite.kill();
-//    sprite2.kill();
-//    sprite4.kill();
-
-
+    sprite3.kill();
 
     weapon = game.add.group();
     weapon.enableBody = true;
@@ -130,7 +100,7 @@ function create() {
         fill: "#ff0044",
         align: "center"
     });
-
+    flechas = game.input.keyboard.createCursorKeys();
 }
 
 
@@ -161,12 +131,15 @@ var y = 0;
 var azul = false;
 var rojo = false;
 var informacion;
+
 //test:
 var huboImpacto = false;
 var team;
 var pos = 9;
 var cant=0;
+
 function update() {
+    
     llamar = llamar + 1;
     if (llamar === 0) {
 //        if (huboImpacto === true && pos!==9) {
@@ -194,7 +167,6 @@ function update() {
                     console.log("error getPosAzul" + message);
                 }
             });
-
         }
         if (rojo === true) {
             Fachada.updatePosAzul(aviones_rojos.obtenerPosicionesAviones(), {
@@ -222,62 +194,13 @@ function update() {
 
     game.world.bringToTop(grupoTop);
 
-//    if (fireButton.isDown && parametros.MAX_BALAS > 0)
-//    {
-//        if (mover === 1) {
-//            parametros.MAX_BALAS--;
-//            if (parametros.MAX_BALAS > 0) {
-//                fire(sprite);
-//            }
-//        }
-//        if (mover === 2) {
-//            parametros.MAX_BALAS--;
-//            if (parametros.MAX_BALAS > 0) {
-//                fire(sprite2);
-//            }
-//        }
-//
-//        if (mover === 3) {
-//            caeBomba();
-//        }
-//    }
-
     mapa.tilePosition.x = -game.camera.x;
     mapa.tilePosition.y = -game.camera.y;
-
-//    if (mover === 1) {
-//        game.physics.arcade.overlap(weapon, sprite2, collisionHandler, null, this);
-//        var explosion = explosions.getFirstExists(false);
-//        explosion.play('kaboom', 30, false, true);
-//    }
-//    
-//    if (mover === 2) {
-//        game.physics.arcade.overlap(weapon, sprite, collisionHandler, null, this);
-//        var explosion = explosions.getFirstExists(false);
-//        explosion.play('kaboom', 30, false, true);
-//    }
-
-//    game.physics.arcade.collide(sprite2, sprite, test);
-//    game.physics.arcade.collide(sprite, sprite2, test);
-
-    if (mover === 4) {
-        if (game.input.mousePointer.isDown)
-        {
-            game.physics.arcade.moveToPointer(sprite3, 50);
-            sprite3.rotation = game.physics.arcade.angleToPointer(sprite3);
-            if (Phaser.Rectangle.contains(sprite3.body, game.input.x, game.input.y))
-            {
-                sprite3.body.velocity.setTo(0, 0);
-            }
-        } else
-        {
-            sprite3.body.velocity.setTo(0, 0);
-        }
-    }
 
     /*TODO este bloque no se tiene que hacer todo el tiempo, solo se tiene que
      * hacer una vez, cuando se sepa que equipo es el mio. */
     if (rojo === true) {
+        barco_rojo.moverBarco();
         for (i = 0; i < aviones_rojos.largo(); i++) {
             aviones_rojos.obtenerAvion(i).moverAMouse();
             //test
@@ -296,16 +219,11 @@ function update() {
     /*TODO este bloque no se tiene que hacer todo el tiempo, solo se tiene que
      * hacer una vez, cuando se sepa que equipo es el mio. */
     if (azul === true) {
+        barco_azul.moverBarco();
         for (i = 0; i < aviones_azules.largo(); i++) {
             aviones_azules.obtenerAvion(i).moverAMouse();//+ aviones_azules.obtenerAvion(i).getMunicion   
             //game.physics.arcade.overlap(aviones_rojos.obtenerAvion(i).obtenerSpirte(), sprite3, collisionHandler2, null, this);
             game.physics.arcade.collide(aviones_azules.obtenerAvion(i).obtenerSpirte(), sprite3, collisionHandler2);
-
-//            if (checkOverlap(aviones_rojos.obtenerAvion(i).obtenerSpirte(), sprite3))
-//            {
-//                sprite3.kill();
-//            }
-
 
             if (fireButton.isDown) {
                 aviones_azules.obtenerAvion(i).disparar();
@@ -314,9 +232,6 @@ function update() {
                 for (y = 0; y < aviones_rojos.largo(); y++) {
                     if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
                         game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), aviones_rojos.obtenerAvion(y).obtenerSpirte(), collisionHandler);
-//                        if (huboImpacto === true) {
-//                            pos = y;
-//                        }
                     }
                 }
             }
@@ -338,13 +253,6 @@ function checkOverlap(spriteA, spriteB) {
 function collisionHandler2(a, b) {
     a.kill();
     console.log('cant: ' +cant);
-    /*
-     if (barco.cantBarco===1){barco.sprite.loadTexture(barco_avion1)}
-    if (barco.cantBarco===2){barco.sprite.loadTexture(barco_avion2)}
-    if (barco.cantBarco===3){barco.sprite.loadTexture(barco_avion3)}
-    if (barco.cantBarco===4){barco.sprite.loadTexture(barco_avion4)}
-     * 
-     */
     if (cant===0){
         sprite3.loadTexture('barco_1avion', 0);
     }
@@ -374,28 +282,11 @@ function numeroRandom(min, max) {
 }
 
 
-/*Funciones Auxiliares*/
-//function test(sprite, sprite2) {
-//    sprite.kill();
-//    sprite2.kill();
-//}
-//
-//function caeBomba() {
-//    if (checkOverlap(sprite4, sprite3)) {
-//        sprite3.kill();
-//    }
-//}
-
-
-
-
 function checkOverlap(spriteA, spriteB) {
     var boundsA = spriteA.getBounds();
     var boundsB = spriteB.getBounds();
     return Phaser.Rectangle.intersects(boundsA, boundsB);
 }
-
-
 
 
 function fire(spriteq) {

@@ -16,21 +16,18 @@ import persistencia.ExceptionConfiguracion;
 public class Fachada {
     private DAOConfiguraciones configuraciones;
     private static Fachada instancia;
-    private Posicion[] posicionesAzules;
-    private Posicion[] posicionesRojos;
+    private Aviones avionesAzules;
+    private Aviones avionesRojos;
+    private Barco barcoAzul;
+    private Barco barcoRojo;
+    
     
     private Fachada() throws ExceptionConfiguracion{
         this.configuraciones = new DAOConfiguraciones();
-        
-        this.posicionesAzules = new Posicion[4];
-        for(int i = 0; i < this.posicionesAzules.length; i++){
-            this.posicionesAzules[i] = new Posicion(1,1,1);
-        }
-        
-        this.posicionesRojos = new Posicion[4];
-        for(int i = 0; i < this.posicionesRojos.length; i++){
-            this.posicionesRojos[i] = new Posicion(1,1,1);
-        }
+        this.avionesAzules = new Aviones(4);
+        this.avionesRojos = new Aviones(4);
+        this.barcoAzul = new Barco("Barco Azul", 50, 50, 1);
+        this.barcoRojo = new Barco("Barco Rojo", 200, 200, 3);
     }
     
     public static Fachada getInstance() throws ExceptionConfiguracion{
@@ -44,43 +41,56 @@ public class Fachada {
         return this.configuraciones.obtenerMAX_BALAS();
     }
     
-    public void updatePosRojo(VOPosicion[] vop){
-        for(int i = 0; i < vop.length; i++){
-            this.posicionesRojos[i].setX(vop[i].getX());
-            this.posicionesRojos[i].setY(vop[i].getY());
-            this.posicionesRojos[i].setRot(vop[i].getRot());
-        }
+    public void updatePosRojo(VOPosicion[] vop, VOPosicion vopBarco){
+        /*Actualizo la posicion de los aviones rojos*/
+        this.avionesRojos.updatePosiciones(vop);
+        
+        /*Actualizo la posicion del barco rojo*/
+        this.barcoRojo.updatePosicion(vopBarco.getX(), vopBarco.getY(), vopBarco.getRot());
     }
     
-    public void updatePosAzul(VOPosicion[] vop){
-        for(int i = 0; i < vop.length; i++){
-            this.posicionesAzules[i].setX(vop[i].getX());
-            this.posicionesAzules[i].setY(vop[i].getY());
-            this.posicionesAzules[i].setRot(vop[i].getRot());
-        }
+    public void updatePosAzul(VOPosicion[] vop, VOPosicion vopBarco){
+        /*Actualizo la posicion de los aviones azules*/
+        this.avionesAzules.updatePosiciones(vop);
+        
+        /*Actualizo la posicion del barco azul*/
+        this.barcoAzul.updatePosicion(vopBarco.getX(), vopBarco.getY(), vopBarco.getRot());
     }
     
     public VOPosicion[] getPosRojo(){
-        VOPosicion[] ret = new VOPosicion[this.posicionesRojos.length];
-        for(int i = 0; i < this.posicionesRojos.length; i++){
-            ret[i] = new VOPosicion(this.posicionesRojos[i].getX(), this.posicionesRojos[i].getY(), this.posicionesRojos[i].getRot());
-        }
+        /*Hago un arreglo en donde entren las VOPosiciones de los avioens y el 
+        barco, por eso es que le sumo 1.*/
+        VOPosicion[] ret = new VOPosicion[this.avionesRojos.largo() + 1];
+        
+        /*Obtengo las posiciones de los aviones rojos.*/
+        VOPosicion[] vopAviones = this.avionesRojos.obtenerPosicionesAviones();
+        
+        /*Obtengo las posiciones del barco en un VOPosiciones.*/
+        VOPosicion vopBarco = this.barcoRojo.getPosicion();
+        
+        /*Junto los vop de los aviones y el barco en la variable ret.*/
+        System.arraycopy(vopAviones, 0, ret, 0, vopAviones.length);
+        ret[ret.length-1] = vopBarco;
+        
         return ret;
     }
     
     public VOPosicion[] getPosAzul(){
-        VOPosicion[] ret = new VOPosicion[this.posicionesAzules.length];
-        for(int i = 0; i < this.posicionesAzules.length; i++){
-            ret[i] = new VOPosicion(this.posicionesAzules[i].getX(), this.posicionesAzules[i].getY(), this.posicionesAzules[i].getRot());
-        }
+        /*Hago un arreglo en donde entren las VOPosiciones de los avioens y el 
+        barco, por eso es que le sumo 1.*/
+        VOPosicion[] ret = new VOPosicion[this.avionesAzules.largo() + 1];
+        
+        /*Obtengo las posiciones de los aviones rojos.*/
+        VOPosicion[] vopAviones = this.avionesAzules.obtenerPosicionesAviones();
+        
+        /*Obtengo las posiciones del barco en un VOPosiciones.*/
+        VOPosicion vopBarco = this.barcoAzul.getPosicion();
+        
+        /*Junto los vop de los aviones y el barco en la variable ret.*/
+        System.arraycopy(vopAviones, 0, ret, 0, vopAviones.length);
+        ret[ret.length-1] = vopBarco;
+        
         return ret;
     }
     
-    public void test(VOPosicion[] vop){
-        for(int i = 0; i < vop.length; i++){
-            this.posicionesRojos[i].setX(vop[i].getX());
-            this.posicionesRojos[i].setY(vop[i].getY());
-            this.posicionesRojos[i].setRot(vop[i].getRot());
-        }
-    }
 }

@@ -150,8 +150,7 @@ function update() {
 //            huboImpacto === false;
 //        }
         if (azul === true) {
-            let posAviones = aviones_azules.obtenerPosicionesAviones();
-            Fachada.updatePosRojo(posAviones, {
+            Fachada.updatePosRojo(aviones_azules.obtenerPosicionesAviones(), barco_azul.obtenerPosicion(), {
                 timeout: 5000,
                 errorHandler: function (message, exception) {
                     console.log("error updatePosRojo ");
@@ -160,7 +159,9 @@ function update() {
             });
             Fachada.getPosAzul({
                 callback: function (pos) {
-                    aviones_rojos.actualizarPosicionesAviones(pos);
+                    let largo = pos.length-1;
+                    aviones_rojos.actualizarPosicionesAviones(pos.slice(0, largo));
+                    barco_rojo.actualizarPosicion(pos[largo]);
                 },
                 timeout: 5000,
                 errorHandler: function (message) {
@@ -168,8 +169,9 @@ function update() {
                 }
             });
         }
+        
         if (rojo === true) {
-            Fachada.updatePosAzul(aviones_rojos.obtenerPosicionesAviones(), {
+            Fachada.updatePosAzul(aviones_rojos.obtenerPosicionesAviones(), barco_rojo.obtenerPosicion(), {
                 callback: function () {},
                 timeout: 5000,
                 errorHandler: function (message) {
@@ -178,11 +180,13 @@ function update() {
             });
             Fachada.getPosRojo({
                 callback: function (pos) {
-                    aviones_azules.actualizarPosicionesAviones(pos);
+                    let largo = pos.length-1;
+                    aviones_azules.actualizarPosicionesAviones(pos.slice(0, largo));
+                    barco_azul.actualizarPosicion(pos[largo]);
                 },
                 timeout: 5000,
                 errorHandler: function (message) {
-                    console.log("error getPos");
+                    console.log("error getPosRojo" + message);
                 }
             });
         }

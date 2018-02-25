@@ -65,3 +65,13 @@ Barco.prototype.restarCantidadAviones = function(){
         this.cantAviones--;
     }
 };
+
+Barco.prototype.obtenerPosicion = function(){
+  return new VOPosicion(this.sprite.x, this.sprite.y, this.sprite.rotation); 
+};
+
+Barco.prototype.actualizarPosicion = function(vop){
+    this.sprite.x = vop.x;
+    this.sprite.y = vop.y;
+    this.sprite.rotation = vop.rot;
+};

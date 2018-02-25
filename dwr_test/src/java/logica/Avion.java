@@ -5,40 +5,52 @@ package logica;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import org.directwebremoting.annotations.RemoteMethod;
-import org.directwebremoting.annotations.RemoteProxy;
-
 /**
  *
- * @author pc-61
+ * @author Juan Aparicio
  */
-@RemoteProxy
-public class Avion{
-    private int numero;
-    private static Avion instancia = null; 
+public class Avion extends Vehiculo {
 
+    private boolean vivo;
+
+    /*En este caso el nombre en String es en realidad un numero, que representa
+    su posicion en el arreglo en el que se encuentra en JavaScript.*/
     public Avion() {
-        this.numero = 0;
-    }
-    
-    public static synchronized Avion getInstance(){
-        if(instancia == null){
-            Avion.instancia = new Avion();
-        }
-        Avion.instancia.sumar();
-        return Avion.instancia;
-    }
-    @RemoteMethod
-    public int getNumero(){
-        return this.numero;
-    }
-    @RemoteMethod
-    public String imprimirNumero(){
-        System.out.println("Numero: " + this.numero);
-        return "Accedido: " + this.numero + " veces";
+        this.nombre = "-1";
+        this.x = 0;
+        this.y = 0;
+        this.rot = 0;
+        this.vivo = true;
     }
 
-    private void sumar() {
-        this.numero++;
+    public Avion(String nombre, double x, double y, double rot) {
+        this.nombre = nombre;
+        this.x = x;
+        this.y = y;
+        this.rot = rot;
+        this.vivo = true;
+    }
+
+    public Avion(String nombre, double x, double y, double rot, boolean vivo) {
+        this.nombre = nombre;
+        this.x = x;
+        this.y = y;
+        this.rot = rot;
+        this.vivo = vivo;
+    }
+
+    Avion(double x, double y, double rot) {
+        this.x = x;
+        this.y = y;
+        this.rot = rot;
+        this.vivo = true;
+    }
+
+    public boolean isVivo() {
+        return vivo;
+    }
+
+    public void setVivo(boolean vivo) {
+        this.vivo = vivo;
     }
 }

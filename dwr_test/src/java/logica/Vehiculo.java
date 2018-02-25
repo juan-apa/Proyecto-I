@@ -9,22 +9,11 @@ package logica;
  *
  * @author pc-61
  */
-public class VOPosicion {
-    private double x;
-    private double y;
-    private double rot;
-    
-    public VOPosicion() {
-        this.x = 0;
-        this.y = 0;
-        this.rot = 0;
-    }
-    
-    public VOPosicion(double x, double y, double rot) {
-        this.x = x;
-        this.y = y;
-        this.rot = rot;
-    }
+public abstract class Vehiculo {
+    protected double x;
+    protected double y;
+    protected double rot;
+    protected String nombre;
 
     public double getX() {
         return x;
@@ -48,5 +37,23 @@ public class VOPosicion {
 
     public void setRot(double rot) {
         this.rot = rot;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    public void updatePosicion(double x, double y, double rot){
+        this.x = x;
+        this.y = y;
+        this.rot = rot;
+    }
+    
+    public VOPosicion getPosicion(){
+        return new VOPosicion(x, y, rot);
     }
 }

@@ -24,7 +24,7 @@ public class Main {
                 vops[i] = new VOPosicion(0, 0, 0);
             }
             
-            f.updatePosAzul(vops);
+//            f.updatePosAzul(vops);
             f.getPosAzul();
         } catch (ExceptionConfiguracion ex) {
             ex.printStackTrace();

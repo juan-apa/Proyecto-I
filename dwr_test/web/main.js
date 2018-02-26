@@ -44,6 +44,11 @@ function preload() {
 }
 
 var informacion;
+var despegarAvionAzul_1;
+var despegarAvionAzul_2;
+var despegarAvionAzul_3;
+var despegarAvionAzul_4;
+
 /*Creacion del juego*/
 function create() {
     mapa = game.add.tileSprite(0, 0, 1600, 1200, 'fondoOceano');
@@ -66,7 +71,7 @@ function create() {
     for (let i = 0; i < 4; i++) {
         aviones_rojos.agregarAvion(new Avion(i, 900, i * 100, 30));
     }
-    
+
     barco_azul = new Barco("barco_azul");
     barco_rojo = new Barco("barco_rojo");
 
@@ -101,8 +106,15 @@ function create() {
         align: "center"
     });
     flechas = game.input.keyboard.createCursorKeys();
-}
 
+    //despegarAvionAzul_1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+
+    despegarAvionAzul_1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+    //despegarAvionAzul_1.onDown.add(barco_azul.despegarAvion(),this);
+    // despegarAvionAzul_2 = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+    //despegarAvionAzul_3 = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
+    //despegarAvionAzul_4 = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
+}
 
 function move(pointer, x, y) {
     mask.x = x - 100;
@@ -136,13 +148,10 @@ var informacion;
 var huboImpacto = false;
 var team;
 var pos = 9;
-var cant=0;
+var cant = 0;
 
 function update() {
-    console.log("azul: ");
-    console.log(aviones_azules);
-    console.log("rojo: ");
-    console.log(aviones_rojos);
+
     llamar = llamar + 1;
     if (llamar === 0) {
 //        if (huboImpacto === true && pos!==9) {
@@ -162,7 +171,7 @@ function update() {
             });
             Fachada.getPosAzul({
                 callback: function (pos) {
-                    let largo = pos.length-1;
+                    let largo = pos.length - 1;
                     aviones_rojos.actualizarPosicionesAviones(pos.slice(0, largo));
                     barco_rojo.actualizarPosicion(pos[largo]);
                 },
@@ -172,7 +181,7 @@ function update() {
                 }
             });
         }
-        
+
         if (rojo === true) {
             Fachada.updatePosAzul(aviones_rojos.obtenerPosicionesAviones(), barco_rojo.obtenerPosicion(), {
                 callback: function () {},
@@ -183,7 +192,7 @@ function update() {
             });
             Fachada.getPosRojo({
                 callback: function (pos) {
-                    let largo = pos.length-1;
+                    let largo = pos.length - 1;
                     aviones_azules.actualizarPosicionesAviones(pos.slice(0, largo));
                     barco_azul.actualizarPosicion(pos[largo]);
                 },
@@ -212,18 +221,18 @@ function update() {
             aviones_rojos.obtenerAvion(i).moverAMouse();
             //test
             if (fireButton.isDown) { /*TODO revisar esto, puede ser que si las balas
-     *                                  son mas lentas y se suelta el boton de disparo,
-     *                                  no detecte las colisiones.*/
+             *                                  son mas lentas y se suelta el boton de disparo,
+             *                                  no detecte las colisiones.*/
                 aviones_rojos.obtenerAvion(i).disparar();
                 for (y = 0; y < aviones_azules.largo(); y++) {
                     if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
                         let colision = game.physics.arcade.collide(aviones_rojos.obtenerAvion(i).getArma(), aviones_azules.obtenerAvion(y).obtenerSpirte(), collisionHandler);
-                        if(colision){
+                        if (colision) {
                             Fachada.disparo_avion_avion(1, i.toString(), {
-                                callback: function(){}, 
-                                timeout: 5000, 
-                                errorHandler: function(mensaje){
-                                    console.log("Error disparo rojo->azul: "+mensaje);
+                                callback: function () {},
+                                timeout: 5000,
+                                errorHandler: function (mensaje) {
+                                    console.log("Error disparo rojo->azul: " + mensaje);
                                 }
                             });
                         }
@@ -238,11 +247,14 @@ function update() {
      * hacer una vez, cuando se sepa que equipo es el mio. */
     if (azul === true) {
         barco_azul.moverBarco();
+        if (despegarAvionAzul_1.isDown && despegarAvionAzul_1.downDuration(1)) {    //emfernandez a terminar
+            barco_azul.despegarAvion();
+        }
         for (i = 0; i < aviones_azules.largo(); i++) {
             aviones_azules.obtenerAvion(i).moverAMouse();//+ aviones_azules.obtenerAvion(i).getMunicion   
             //game.physics.arcade.overlap(aviones_rojos.obtenerAvion(i).obtenerSpirte(), sprite3, collisionHandler2, null, this);
-            game.physics.arcade.collide(aviones_azules.obtenerAvion(i).obtenerSpirte(), sprite3, collisionHandler2);
-
+            //game.physics.arcade.collide(aviones_azules.obtenerAvion(i).obtenerSpirte(), barco_azul.getSprite(), collisionHandler2);
+            game.physics.arcade.overlap(aviones_azules.obtenerAvion(i).obtenerSpirte(), barco_azul.getSprite(), collisionHandler2, null, this);
             if (fireButton.isDown) {
                 aviones_azules.obtenerAvion(i).disparar();
 
@@ -250,12 +262,12 @@ function update() {
                 for (y = 0; y < aviones_rojos.largo(); y++) {
                     if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
                         let colision = game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), aviones_rojos.obtenerAvion(y).obtenerSpirte(), collisionHandler);
-                        if(colision){
+                        if (colision) {
                             Fachada.disparo_avion_avion(0, i.toString(), {
-                                callback: function(){}, 
-                                timeout: 5000, 
-                                errorHandler: function(mensaje){
-                                    console.log("Error disparo rojo->azul: "+mensaje);
+                                callback: function () {},
+                                timeout: 5000,
+                                errorHandler: function (mensaje) {
+                                    console.log("Error disparo rojo->azul: " + mensaje);
                                 }
                             });
                         }
@@ -279,27 +291,27 @@ function checkOverlap(spriteA, spriteB) {
 
 function collisionHandler2(a, b) {
     a.kill();
-    console.log('cant: ' +cant);
-    if (cant===0){
-        sprite3.loadTexture('barco_1avion', 0);
+
+    if (barco_azul.getCantidadAviones() === 0) {
+        barco_azul.setearSprite(1);
     }
-    if (cant===1){
-        sprite3.loadTexture('barco_2avion', 0);
+    if (barco_azul.getCantidadAviones() === 1) {
+        barco_azul.setearSprite(2);
     }
-    if (cant===2){
-        sprite3.loadTexture('barco_3avion', 0);
+    if (barco_azul.getCantidadAviones() === 2) {
+        barco_azul.setearSprite(3);
     }
-    if (cant===3){
-        sprite3.loadTexture('barco_4avion', 0);
+    if (barco_azul.getCantidadAviones() === 3) {
+        barco_azul.setearSprite(4);
     }
-    cant++;
-    
+    barco_azul.agregarCantidadAviones();
+
+
 }
 
 function collisionHandler(a, b) {
     b.kill();
     a.kill();
-    //huboImpacto = true;
 }
 
 

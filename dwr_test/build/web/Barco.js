@@ -9,6 +9,8 @@ function Barco(nombre){
     this.velocidadActual = 0;
     this.cantAviones = 0;
     this.sprite = game.add.sprite(64 + (64 * 1)+800, 200 + (1*4)+300, 'barco');
+    this.sprite.immovable = false;
+    
     
     /*Ojo con el !== porque por defecto lo pone como undefined, no null. Entonces
      * uso el != para que haga la conversion de undefined -> null.*/
@@ -60,6 +62,18 @@ Barco.prototype.sumarCantidadAviones = function(){
     }
 };
 
+Barco.prototype.getCantidadAviones = function (){
+    return this.cantAviones;
+};
+
+Barco.prototype.agregarCantidadAviones = function(){
+    this.cantAviones++;
+};
+
+Barco.prototype.getSprite = function(){
+    return this.sprite;
+};
+
 Barco.prototype.restarCantidadAviones = function(){
     if(this.cantAviones>0){
         this.cantAviones--;
@@ -74,4 +88,35 @@ Barco.prototype.actualizarPosicion = function(vop){
     this.sprite.x = vop.x;
     this.sprite.y = vop.y;
     this.sprite.rotation = vop.rot;
+};
+
+Barco.prototype.setearSprite = function(valor){
+    if(valor===1){
+        this.sprite.loadTexture('barco_1avion', 0);
+    }
+    if(valor===2){
+        this.sprite.loadTexture('barco_2avion', 0);
+    }
+    if(valor===3){
+        this.sprite.loadTexture('barco_3avion', 0);
+    }
+    if(valor===4){
+        this.sprite.loadTexture('barco_4avion', 0);
+    }
+};
+
+Barco.prototype.despegarAvion = function(){
+    if (this.cantAviones===4){
+        this.cantAviones = 3;
+    }
+    if (this.cantAviones===3){
+        this.cantAviones = 2;
+    }
+    if (this.cantAviones===2){
+        this.cantAviones = 1;
+    }
+    if (this.cantAviones===1){
+        this.cantAviones = 0;
+    }
+    console.log('cantidad aviones:' + this.cantAviones);
 };

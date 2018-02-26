@@ -31,6 +31,7 @@
                 console.log(parametros)
             }
             console.log("TRES " + parametros.MAX_BALAS);
+            dwr.engine.setActiveReverseAjax(true)
         </script>
         <script src="VOPosicion.js" charset="utf-8"> </script>
         <script src="Barco.js" charset="utf-8"> </script>

@@ -53,4 +53,11 @@ public class Avion extends Vehiculo {
     public void setVivo(boolean vivo) {
         this.vivo = vivo;
     }
+    
+    public void destruir(){
+        this.x = Double.NaN;
+        this.y = Double.NaN;
+        this.rot = Double.NaN;
+        this.vivo = false;
+    }
 }

@@ -25,18 +25,34 @@ public class Aviones {
     public VOPosicion[] obtenerPosicionesAviones(){
         VOPosicion[] ret = new VOPosicion[this.cantAviones];
         for(int i = 0; i < this.cantAviones; i++){
-            ret[i] = this.aviones[i].getPosicion();
+            if(this.aviones[i].isVivo()){
+                ret[i] = this.aviones[i].getPosicion();
+            }
+            else{
+                ret[i] = null;
+            }
         }
         return ret;
     }
     
     public void updatePosiciones(VOPosicion[] vop){
         for(int i = 0; i < this.cantAviones; i++){
-            this.aviones[i].updatePosicion(vop[i].getX(), vop[i].getY(), vop[i].getRot());
+            if(this.aviones[i].isVivo()){
+                this.aviones[i].updatePosicion(vop[i].getX(), vop[i].getY(), vop[i].getRot());
+            }
+            else{
+                this.aviones[i].updatePosicion(Double.NaN, Double.NaN, Double.NaN);
+            }
         }
     }
     
     public int largo(){
         return this.aviones.length;
+    }
+    
+    /*Acá el nombre en realidad es un número que es el indice del arreglo.*/
+    public void destruirAvion(String nombre){
+        int i = Integer.parseInt(nombre);
+        this.aviones[i].destruir();
     }
 }

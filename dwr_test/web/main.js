@@ -139,7 +139,10 @@ var pos = 9;
 var cant=0;
 
 function update() {
-    
+    console.log("azul: ");
+    console.log(aviones_azules);
+    console.log("rojo: ");
+    console.log(aviones_rojos);
     llamar = llamar + 1;
     if (llamar === 0) {
 //        if (huboImpacto === true && pos!==9) {
@@ -191,7 +194,7 @@ function update() {
             });
         }
     } else {
-        if (llamar > 10) {
+        if (llamar > 0) {
             llamar = -1;
         }
     }
@@ -208,11 +211,22 @@ function update() {
         for (i = 0; i < aviones_rojos.largo(); i++) {
             aviones_rojos.obtenerAvion(i).moverAMouse();
             //test
-            if (fireButton.isDown) {
+            if (fireButton.isDown) { /*TODO revisar esto, puede ser que si las balas
+     *                                  son mas lentas y se suelta el boton de disparo,
+     *                                  no detecte las colisiones.*/
                 aviones_rojos.obtenerAvion(i).disparar();
                 for (y = 0; y < aviones_azules.largo(); y++) {
                     if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
-                        game.physics.arcade.collide(aviones_rojos.obtenerAvion(i).getArma(), aviones_azules.obtenerAvion(y).obtenerSpirte(), collisionHandler);
+                        let colision = game.physics.arcade.collide(aviones_rojos.obtenerAvion(i).getArma(), aviones_azules.obtenerAvion(y).obtenerSpirte(), collisionHandler);
+                        if(colision){
+                            Fachada.disparo_avion_avion(1, i.toString(), {
+                                callback: function(){}, 
+                                timeout: 5000, 
+                                errorHandler: function(mensaje){
+                                    console.log("Error disparo rojo->azul: "+mensaje);
+                                }
+                            });
+                        }
                     }
                 }
             }
@@ -235,7 +249,16 @@ function update() {
 
                 for (y = 0; y < aviones_rojos.largo(); y++) {
                     if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
-                        game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), aviones_rojos.obtenerAvion(y).obtenerSpirte(), collisionHandler);
+                        let colision = game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), aviones_rojos.obtenerAvion(y).obtenerSpirte(), collisionHandler);
+                        if(colision){
+                            Fachada.disparo_avion_avion(0, i.toString(), {
+                                callback: function(){}, 
+                                timeout: 5000, 
+                                errorHandler: function(mensaje){
+                                    console.log("Error disparo rojo->azul: "+mensaje);
+                                }
+                            });
+                        }
                     }
                 }
             }

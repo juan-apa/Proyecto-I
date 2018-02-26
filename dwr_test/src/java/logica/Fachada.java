@@ -14,6 +14,8 @@ import persistencia.ExceptionConfiguracion;
  * @author Juan Aparicio
  */
 public class Fachada {
+    public final static int EQUIPO_AZUL = 0;
+    public final static int EQUIPO_ROJO = 1;
     private DAOConfiguraciones configuraciones;
     private static Fachada instancia;
     private Aviones avionesAzules;
@@ -93,4 +95,21 @@ public class Fachada {
         return ret;
     }
     
+    /**
+     * @param equipoObjetivo
+     * es el equipo al cual le dispararon un avion.
+     * 
+     * @param nombreAvionObjetivo 
+     * es un String cuyos valores pueden ser: "0", "1", "2", "3", el cual es el 
+     * índice del arreglo dentro de Aviones.*/
+    public void disparo_avion_avion(int equipoObjetivo, String nombreAvionObjetivo){
+        if(equipoObjetivo == EQUIPO_AZUL){
+            this.avionesAzules.destruirAvion(nombreAvionObjetivo);
+        }
+        else{
+            if(equipoObjetivo == EQUIPO_ROJO){
+                this.avionesRojos.destruirAvion(nombreAvionObjetivo);
+            }
+        }
+    }
 }

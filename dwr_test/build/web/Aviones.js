@@ -59,9 +59,13 @@ Aviones.prototype.obtenerPosicionesAviones = function () {
 
 Aviones.prototype.actualizarPosicionesAviones = function (posiciones) {
     for (let i = 0; i < this.aviones.length; i++) {
-        this.aviones[i].sprite.x = posiciones[i].x;
-        this.aviones[i].sprite.y = posiciones[i].y;
-        this.aviones[i].sprite.rotation = posiciones[i].rot;
+        if (posiciones[i] == null) {
+            console.log("null");
+        } else {
+            this.aviones[i].sprite.x = posiciones[i].x;
+            this.aviones[i].sprite.y = posiciones[i].y;
+            this.aviones[i].sprite.rotation = posiciones[i].rot;
+        }
     }
 };
 

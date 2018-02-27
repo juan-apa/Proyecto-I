@@ -34,9 +34,10 @@ function preload() {
     game.load.image('block', 'avionn.png');
     game.load.image("fondoOceano", "oceano2.jpg");
     game.load.image("balas", "balas2.png");
-    game.load.image("barco", "barcoo.png");
+    game.load.image("barco", "portaviones_1.png");
     //cargo imagenes portaaviones
     game.load.image("barco", "barcoo.png");
+    game.load.image("barco_0avion", "portaviones_1.png");
     game.load.image("barco_1avion", "portaviones_2.png");
     game.load.image("barco_2avion", "portaviones_3.png");
     game.load.image("barco_3avion", "portaviones_4.png");
@@ -74,6 +75,7 @@ function create() {
 
     barco_azul = new Barco("barco_azul");
     barco_rojo = new Barco("barco_rojo");
+
 
     sprite3 = game.add.sprite(64 + (64 * 1) + 800, 200 + (1 * 4) + 300, 'barco');
     sprite3.name = 'B2';
@@ -246,19 +248,16 @@ function update() {
     /*TODO este bloque no se tiene que hacer todo el tiempo, solo se tiene que
      * hacer una vez, cuando se sepa que equipo es el mio. */
     if (azul === true) {
+        console.log('cantidad de aviones:' + barco_azul.getCantidadAviones());
         barco_azul.moverBarco();
         if (despegarAvionAzul_1.isDown && despegarAvionAzul_1.downDuration(1)) {    //emfernandez a terminar
             barco_azul.despegarAvion();
         }
         for (i = 0; i < aviones_azules.largo(); i++) {
-            aviones_azules.obtenerAvion(i).moverAMouse();//+ aviones_azules.obtenerAvion(i).getMunicion   
-            //game.physics.arcade.overlap(aviones_rojos.obtenerAvion(i).obtenerSpirte(), sprite3, collisionHandler2, null, this);
-            //game.physics.arcade.collide(aviones_azules.obtenerAvion(i).obtenerSpirte(), barco_azul.getSprite(), collisionHandler2);
+            aviones_azules.obtenerAvion(i).moverAMouse();
             game.physics.arcade.overlap(aviones_azules.obtenerAvion(i).obtenerSpirte(), barco_azul.getSprite(), collisionHandler2, null, this);
             if (fireButton.isDown) {
                 aviones_azules.obtenerAvion(i).disparar();
-
-
                 for (y = 0; y < aviones_rojos.largo(); y++) {
                     if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
                         let colision = game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), aviones_rojos.obtenerAvion(y).obtenerSpirte(), collisionHandler);
@@ -288,11 +287,12 @@ function checkOverlap(spriteA, spriteB) {
     return Phaser.Rectangle.intersects(boundsA, boundsB);
 
 }
+;
 
 function collisionHandler2(a, b) {
     a.kill();
-
     if (barco_azul.getCantidadAviones() === 0) {
+        console.log('entre acaaaaaaaaaaa');
         barco_azul.setearSprite(1);
     }
     if (barco_azul.getCantidadAviones() === 1) {
@@ -305,14 +305,16 @@ function collisionHandler2(a, b) {
         barco_azul.setearSprite(4);
     }
     barco_azul.agregarCantidadAviones();
-
+    console.log('cantidad de aviones: ' + barco_azul.getCantidadAviones());
 
 }
+;
 
 function collisionHandler(a, b) {
     b.kill();
     a.kill();
 }
+;
 
 
 

@@ -60,7 +60,9 @@ Aviones.prototype.obtenerPosicionesAviones = function () {
 Aviones.prototype.actualizarPosicionesAviones = function (posiciones) {
     for (let i = 0; i < this.aviones.length; i++) {
         if (posiciones[i] == null) {
-            console.log("null");
+            if(this.aviones[i].isVivo()){
+                this.destruirAvion(i);
+            }
         } else {
             this.aviones[i].sprite.x = posiciones[i].x;
             this.aviones[i].sprite.y = posiciones[i].y;
@@ -69,4 +71,14 @@ Aviones.prototype.actualizarPosicionesAviones = function (posiciones) {
     }
 };
 
-
+Aviones.prototype.destruirAvion = function(i){
+    try{
+       let indiceEnGrupo = this.grupo.getChildIndex(this.aviones[i].sprite);
+        if(indiceEnGrupo >= 0){
+            this.grupo.removeChildAt(indiceEnGrupo);
+        }
+    } catch( e ){
+        
+    }
+    this.aviones[i].destruir();
+};

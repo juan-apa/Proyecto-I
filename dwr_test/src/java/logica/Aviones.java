@@ -55,4 +55,12 @@ public class Aviones {
         int i = Integer.parseInt(nombre);
         this.aviones[i].destruir();
     }
+    
+    public boolean[] obtenerAvionesVivos(){
+        boolean[] ret = new boolean[this.aviones.length];
+        for(int i = 0; i < this.aviones.length; i++){
+            ret[i] = this.aviones[i].isVivo();
+        }
+        return ret;
+    }
 }

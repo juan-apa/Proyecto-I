@@ -11,6 +11,8 @@ function Avion(nombreAvion, x, y, combustible){
     this.seleccionado = false;
     this.altura = ALTURA_BAJA;
     this.arma = new Arma(1);
+    this.vivo = true;
+    this.aterrizado = false;
     
     this.sprite = game.add.sprite(x, y, 'block');
     this.sprite.anchor.set(0.5);
@@ -95,3 +97,16 @@ Avion.prototype.descender = function(){
         this.altura = ALTURA_BAJA;
     }
 };
+
+Avion.prototype.destruir = function(){
+    this.vivo = false;
+    this.sprite.kill();
+};
+
+Avion.prototype.aterrizar = function(){
+    this.aterrizado = true;
+};
+
+Avion.prototype.isVivo = function(){
+    return this.vivo;
+}

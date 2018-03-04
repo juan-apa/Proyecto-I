@@ -112,4 +112,12 @@ public class Fachada {
             }
         }
     }
+    
+    public boolean[] avionesAzulesVivos(){
+        return this.avionesAzules.obtenerAvionesVivos();
+    }
+    
+    public boolean[] avionesRojosVivos(){
+        return this.avionesRojos.obtenerAvionesVivos();
+    }
 }

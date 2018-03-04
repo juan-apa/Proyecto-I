@@ -164,14 +164,14 @@ function update() {
 //            huboImpacto === false;
 //        }
         if (azul === true) {
-            Fachada.updatePosRojo(aviones_azules.obtenerPosicionesAviones(), barco_azul.obtenerPosicion(), {
+            Fachada.updatePosAzul(aviones_azules.obtenerPosicionesAviones(), barco_azul.obtenerPosicion(), {
                 timeout: 5000,
                 errorHandler: function (message, exception) {
                     console.log("error updatePosRojo ");
                     console.log(dwr.util.toDescriptiveString(exception, 2));
                 }
             });
-            Fachada.getPosAzul({
+            Fachada.getPosRojo({
                 callback: function (pos) {
                     let largo = pos.length - 1;
                     aviones_rojos.actualizarPosicionesAviones(pos.slice(0, largo));
@@ -185,14 +185,14 @@ function update() {
         }
 
         if (rojo === true) {
-            Fachada.updatePosAzul(aviones_rojos.obtenerPosicionesAviones(), barco_rojo.obtenerPosicion(), {
+            Fachada.updatePosRojo(aviones_rojos.obtenerPosicionesAviones(), barco_rojo.obtenerPosicion(), {
                 callback: function () {},
                 timeout: 5000,
                 errorHandler: function (message) {
                     console.log("error updatePosAzul " + message);
                 }
             });
-            Fachada.getPosRojo({
+            Fachada.getPosAzul({
                 callback: function (pos) {
                     let largo = pos.length - 1;
                     aviones_azules.actualizarPosicionesAviones(pos.slice(0, largo));
@@ -218,6 +218,13 @@ function update() {
     /*TODO este bloque no se tiene que hacer todo el tiempo, solo se tiene que
      * hacer una vez, cuando se sepa que equipo es el mio. */
     if (rojo === true) {
+        Fachada.avionesRojosVivos(function(arr){
+            for(let i = 0; i < arr.length; i++){
+                if(arr[i] === false){
+                    aviones_rojos.destruirAvion(i);
+                }
+            }
+        });
         barco_rojo.moverBarco();
         for (i = 0; i < aviones_rojos.largo(); i++) {
             aviones_rojos.obtenerAvion(i).moverAMouse();
@@ -230,7 +237,8 @@ function update() {
                     if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
                         let colision = game.physics.arcade.collide(aviones_rojos.obtenerAvion(i).getArma(), aviones_azules.obtenerAvion(y).obtenerSpirte(), collisionHandler);
                         if (colision) {
-                            Fachada.disparo_avion_avion(1, i.toString(), {
+                            console.log("azul: " + i + " rojo: " + y);
+                            Fachada.disparo_avion_avion(0, y.toString(), {
                                 callback: function () {},
                                 timeout: 5000,
                                 errorHandler: function (mensaje) {
@@ -248,7 +256,14 @@ function update() {
     /*TODO este bloque no se tiene que hacer todo el tiempo, solo se tiene que
      * hacer una vez, cuando se sepa que equipo es el mio. */
     if (azul === true) {
-        console.log('cantidad de aviones:' + barco_azul.getCantidadAviones());
+//        console.log('cantidad de aviones:' + barco_azul.getCantidadAviones());
+        Fachada.avionesAzulesVivos(function(arr){
+            for(let i = 0; i < arr.length; i++){
+                if(arr[i] === false){
+                    aviones_azules.destruirAvion(i);
+                }
+            }
+        });
         barco_azul.moverBarco();
         if (despegarAvionAzul_1.isDown && despegarAvionAzul_1.downDuration(1)) {    //emfernandez a terminar
             barco_azul.despegarAvion();
@@ -262,7 +277,8 @@ function update() {
                     if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
                         let colision = game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), aviones_rojos.obtenerAvion(y).obtenerSpirte(), collisionHandler);
                         if (colision) {
-                            Fachada.disparo_avion_avion(0, i.toString(), {
+                            console.log("azul: " + i + " rojo: " + y);
+                            Fachada.disparo_avion_avion(1, y.toString(), {
                                 callback: function () {},
                                 timeout: 5000,
                                 errorHandler: function (mensaje) {

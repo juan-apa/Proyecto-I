@@ -4,15 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="Soporte_TI"/>
         <group>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Aviones.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Avion.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Fachada.java</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Aviones.java</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/WEB-INF/dwr.xml</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Barco.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Arma.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Avion.java</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/main.js</file>
+            <file>file:/C:/Users/Emiliano/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Barco.js</file>
+            <file>file:/C:/Users/Emiliano/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/play.js</file>
+            <file>file:/C:/Users/Emiliano/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Aviones.js</file>
+            <file>file:/C:/Users/Emiliano/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Avion.js</file>
         </group>
     </open-files>
 </project-private>

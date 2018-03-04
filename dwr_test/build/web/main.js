@@ -166,13 +166,6 @@ function update() {
 
     llamar = llamar + 1;
     if (llamar === 0) {
-//        if (huboImpacto === true && pos!==9) {
-//            console.log('entre');
-//            console.log('pos='+pos);
-//            console.log('largo aviones: '+aviones_rojos.largo());
-//            aviones_rojos.eliminarAvion(aviones_rojos.obtenerAvion(pos));
-//            huboImpacto === false;
-//        }
         if (azul === true) {
             Fachada.updatePosAzul(aviones_azules.obtenerPosicionesAviones(), barco_azul.obtenerPosicion(), {
                 timeout: 5000,
@@ -219,8 +212,6 @@ function update() {
             llamar = -1;
         }
     }
-
-    game.world.bringToTop(grupoTop);
 
     mapa.tilePosition.x = -game.camera.x;
     mapa.tilePosition.y = -game.camera.y;
@@ -280,7 +271,10 @@ function update() {
         }
         for (i = 0; i < aviones_azules.largo(); i++) {
             aviones_azules.obtenerAvion(i).moverAMouse();
-            game.physics.arcade.overlap(aviones_azules.obtenerAvion(i).obtenerSpirte(), barco_azul.getSprite(), collisionHandler2, null, this);
+            let avionBarcoSuperpuestos = game.physics.arcade.overlap(aviones_azules.obtenerAvion(i).obtenerSpirte(), barco_azul.getSprite(), collisionHandler2, null, this);
+            if(avionBarcoSuperpuestos){
+                aviones_azules.obtenerAvion(i).aterrizar(); 
+            }
             if (fireButton.isDown) {
                 aviones_azules.obtenerAvion(i).disparar();
                 for (y = 0; y < aviones_rojos.largo(); y++) {

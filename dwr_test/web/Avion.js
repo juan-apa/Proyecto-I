@@ -55,7 +55,8 @@ Avion.prototype.getMunicion = function(){
 };
 
 Avion.prototype.recargar = function(){
-    this.maxBalas = parametros.MAX_BALAS;
+    this.arma.recargar();
+    console.log("avion recargado");
 };
 
 Avion.prototype.moverAMouse = function(){
@@ -111,6 +112,12 @@ Avion.prototype.destruir = function(){
 
 Avion.prototype.aterrizar = function(){
     this.aterrizado = true;
+    /*Para cambiar el tiempo de recarga cambiar el 4 por otro numero*/
+    game.time.events.add(1000 * 2, this.recargar, this);
+};
+
+Avion.prototype.despegar = function(){
+    this.aterrizado = false;
 };
 
 Avion.prototype.isVivo = function(){

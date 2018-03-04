@@ -99,6 +99,5 @@ Aviones.prototype.obtenerCombustibles = function(){
     for(let i = 0; i < this.aviones.length; i++){
         ret.push(this.aviones[i].obtenerCombustible());
     }
-    console.log(ret);
     return ret;
 };

@@ -23,6 +23,12 @@ function Arma(tipoArma) {
     this.sprite.setAll('outOfBoundsKill', true);
 };
 
+/*Funciones del objeto*/
+
+Arma.prototype.recargar = function(){
+    /*TODO terminar la recarga.*/
+}
+
 Arma.prototype.getCantMunicion = function () {
     return this.municion;
 };
@@ -52,5 +58,3 @@ Arma.prototype.dispararr = function (x, y) {
         }
     }
 };
-
-/*Funciones del objeto*/

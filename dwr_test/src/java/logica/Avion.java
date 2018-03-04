@@ -12,7 +12,8 @@ package logica;
 public class Avion extends Vehiculo {
 
     private boolean vivo;
-
+    private int combustible;
+    
     /*En este caso el nombre en String es en realidad un numero, que representa
     su posicion en el arreglo en el que se encuentra en JavaScript.*/
     public Avion() {
@@ -59,5 +60,13 @@ public class Avion extends Vehiculo {
         this.y = Double.NaN;
         this.rot = Double.NaN;
         this.vivo = false;
+    }
+    
+    public int getComustible(){
+        return this.combustible;
+    }
+    
+    public void setCombustible(int combustible){
+        this.combustible = combustible;
     }
 }

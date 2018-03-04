@@ -65,12 +65,12 @@ function create() {
     /*Aviones Azules*/
     aviones_azules = new Aviones("Azules");
     for (let i = 0; i < 4; i++) {
-        aviones_azules.agregarAvion(new Avion(i, 100, i * 100, 30));
+        aviones_azules.agregarAvion(new Avion(i, 100, i * 100, i+5));
     }
     /*Avioens Rojos*/
     aviones_rojos = new Aviones("Rojos");
     for (let i = 0; i < 4; i++) {
-        aviones_rojos.agregarAvion(new Avion(i, 900, i * 100, 30));
+        aviones_rojos.agregarAvion(new Avion(i, 900, i * 100, i+9));
     }
 
     barco_azul = new Barco("barco_azul");
@@ -116,6 +116,9 @@ function create() {
     // despegarAvionAzul_2 = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
     //despegarAvionAzul_3 = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
     //despegarAvionAzul_4 = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
+    
+    /*Creacion loop disminucion combustibles*/
+    game.time.events.loop(1000, disminuirCombustible, this)
 }
 
 function move(pointer, x, y) {
@@ -137,6 +140,13 @@ function clickedSprite3(sprite) {
 
 function clickedSprite4(sprite) {
     mover = 4;
+}
+
+function disminuirCombustible(){
+    aviones_azules.disminuirCombustible();
+    aviones_rojos.disminuirCombustible();
+    Fachada.updateCombustibleAzul(aviones_azules.obtenerCombustibles(), function(){});
+    Fachada.updateCombustibleRojo(aviones_rojos.obtenerCombustibles(), function(){});
 }
 
 var llamar = 0;

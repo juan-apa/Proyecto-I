@@ -120,4 +120,12 @@ public class Fachada {
     public boolean[] avionesRojosVivos(){
         return this.avionesRojos.obtenerAvionesVivos();
     }
+    
+    public void updateCombustibleAzul(int[] combustibles){
+        this.avionesAzules.updateCombustible(combustibles);
+    }
+    
+    public void updateCombustibleRojo(int[] combustibles){
+        this.avionesRojos.updateCombustible(combustibles);
+    }
 }

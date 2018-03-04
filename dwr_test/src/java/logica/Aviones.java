@@ -63,4 +63,10 @@ public class Aviones {
         }
         return ret;
     }
+    
+    public void updateCombustible(int[] combustibles){
+        for(int i = 0; i < this.aviones.length; i++){
+            this.aviones[i].setCombustible(combustibles[i]);
+        }
+    }
 }

@@ -7,12 +7,14 @@ const ALTURA_ALTA = 2;
 function Avion(nombreAvion, x, y, combustible){
     this.maxBalas = 200;
     this.maxVida = 400;
+    this.maxCombustible = 20;
     this.combustible = combustible;
     this.seleccionado = false;
     this.altura = ALTURA_BAJA;
     this.arma = new Arma(1);
     this.vivo = true;
     this.aterrizado = false;
+    this.bloqueado = false;
     
     this.sprite = game.add.sprite(x, y, 'block');
     this.sprite.anchor.set(0.5);
@@ -78,6 +80,10 @@ Avion.prototype.moverAMouse = function(){
     }
 };
 
+Avion.prototype.isAterrizado = function(){
+    return this.aterrizado;
+};
+
 Avion.prototype.obtenerXYRot = function(){
     return new VOPosicion(this.sprite.x, this.sprite.y, this.sprite.rotation);
 };
@@ -109,4 +115,16 @@ Avion.prototype.aterrizar = function(){
 
 Avion.prototype.isVivo = function(){
     return this.vivo;
-}
+};
+
+Avion.prototype.disminuirCombustible = function(){
+    this.combustible--;
+};
+
+Avion.prototype.sinCombustible = function(){
+    return (this.combustible === 0);
+};
+
+Avion.prototype.obtenerCombustible = function(){
+    return this.combustible;
+};

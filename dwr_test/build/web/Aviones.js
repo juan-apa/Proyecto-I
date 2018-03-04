@@ -78,7 +78,27 @@ Aviones.prototype.destruirAvion = function(i){
             this.grupo.removeChildAt(indiceEnGrupo);
         }
     } catch( e ){
-        
+        /*No hago nada en caso de error*/
     }
     this.aviones[i].destruir();
+};
+
+Aviones.prototype.disminuirCombustible = function(){
+    for(let i = 0; i < this.aviones.length; i++){
+        if((! this.aviones[i].isAterrizado()) && (this.aviones[i].isVivo())){
+            this.aviones[i].disminuirCombustible();
+            if(this.aviones[i].sinCombustible()){
+                this.destruirAvion(i);
+            }
+        }
+    }
+};
+
+Aviones.prototype.obtenerCombustibles = function(){
+    let ret = Array();
+    for(let i = 0; i < this.aviones.length; i++){
+        ret.push(this.aviones[i].obtenerCombustible());
+    }
+    console.log(ret);
+    return ret;
 };

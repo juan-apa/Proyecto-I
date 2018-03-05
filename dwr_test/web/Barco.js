@@ -10,6 +10,7 @@ function Barco(nombre){
     this.cantAviones = 0;
     this.sprite = game.add.sprite(64 + (64 * 1)+800, 200 + (1*4)+300, 'barco');
     this.sprite.immovable = false;
+    this.vivo = true;
     
     
     /*Ojo con el !== porque por defecto lo pone como undefined, no null. Entonces
@@ -91,7 +92,7 @@ Barco.prototype.actualizarPosicion = function(vop){
 };
 
 Barco.prototype.setearSprite = function(valor){
-    console.log('valor==='+valor);
+    //console.log('valor==='+valor);
     if(valor===0){
         this.sprite.loadTexture('barcoo', 0);
     }
@@ -112,20 +113,33 @@ Barco.prototype.setearSprite = function(valor){
 Barco.prototype.despegarAvion = function(){
     if (this.cantAviones===4){
         //this.cantAviones = 3;
-        this.sprite.loadTexture('barco_4avion', 0);
+        this.sprite.loadTexture('barco_3avion', 0);
     }
     if (this.cantAviones===3){
         //this.cantAviones = 2;
-        this.sprite.loadTexture('barco_3avion', 0);
+        this.sprite.loadTexture('barco_2avion', 0);
     }
     if (this.cantAviones===2){
         //this.cantAviones = 1;
-        this.sprite.loadTexture('barco_2avion', 0);
+        this.sprite.loadTexture('barco_1avion', 0);
     }
     if (this.cantAviones===1){
         //this.cantAviones = 0;
-        this.sprite.loadTexture('barco_1avion', 0);
+        this.sprite.loadTexture('barco_0avion', 0);
     }
-    this.cantAviones--;
-    console.log('cantidad aviones:' + this.cantAviones);
+    
+    if (this.cantAviones>=1 && this.cantAviones<=4){
+        this.cantAviones--;
+    }
+    
+    //console.log('cantidad aviones:' + this.cantAviones);
+    //return id_avion;
+};
+
+Barco.prototype.isVivo = function(){
+    return this.vivo;
+};
+
+Barco.prototype.destruir = function(){
+  this.vivo = false;  
 };

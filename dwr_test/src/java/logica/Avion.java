@@ -12,7 +12,10 @@ package logica;
 public class Avion extends Vehiculo {
 
     private boolean vivo;
-
+    private int combustible;
+    private Arma arma;
+    private int velocidad = 100;
+    
     /*En este caso el nombre en String es en realidad un numero, que representa
     su posicion en el arreglo en el que se encuentra en JavaScript.*/
     public Avion() {
@@ -21,6 +24,7 @@ public class Avion extends Vehiculo {
         this.y = 0;
         this.rot = 0;
         this.vivo = true;
+        this.arma = new Arma(Arma.MUNICION_METRALLETA);
     }
 
     public Avion(String nombre, double x, double y, double rot) {
@@ -29,6 +33,16 @@ public class Avion extends Vehiculo {
         this.y = y;
         this.rot = rot;
         this.vivo = true;
+        this.arma = new Arma(Arma.MUNICION_METRALLETA);
+    }
+    
+    public Avion(String nombre, double x, double y, double rot, Arma arma) {
+        this.nombre = nombre;
+        this.x = x;
+        this.y = y;
+        this.rot = rot;
+        this.vivo = true;
+        this.arma = arma;
     }
 
     public Avion(String nombre, double x, double y, double rot, boolean vivo) {
@@ -37,13 +51,15 @@ public class Avion extends Vehiculo {
         this.y = y;
         this.rot = rot;
         this.vivo = vivo;
+        this.arma = new Arma(Arma.MUNICION_METRALLETA);
     }
 
-    Avion(double x, double y, double rot) {
+    public Avion(double x, double y, double rot) {
         this.x = x;
         this.y = y;
         this.rot = rot;
         this.vivo = true;
+        this.arma = new Arma(Arma.MUNICION_METRALLETA);
     }
 
     public boolean isVivo() {
@@ -60,4 +76,26 @@ public class Avion extends Vehiculo {
         this.rot = Double.NaN;
         this.vivo = false;
     }
+    
+    public int getComustible(){
+        return this.combustible;
+    }
+    
+    public void setCombustible(int combustible){
+        this.combustible = combustible;
+    }
+    
+    public Arma getArma(){
+        return this.arma;
+    }
+
+    public int getVelocidad() {
+        return velocidad;
+    }
+
+    public void setVelocidad(int velocidad) {
+        this.velocidad = velocidad;
+    }
+    
+    
 }

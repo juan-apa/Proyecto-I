@@ -5,8 +5,10 @@
     <allow>
         <!--<convert converter="bean" match="logica.VOPosicion"/>-->
         <convert converter="bean" match="logica.VOPosicion" javascript="VOPosicion"/>
+        <convert converter="bean" match="logica.VOEstado" javascript="VOEstado"/>
         <!--<convert converter="bean" match="logica.*"/>-->
         <convert converter="array" match="[l*"/>
+        <convert converter="array" match="[B"/>
         <create creator="static" javascript="Fachada" >
             <param name="class" value="logica.Fachada"/>
         </create>

@@ -7,10 +7,15 @@ const ALTURA_ALTA = 2;
 function Avion(nombreAvion, x, y, combustible){
     this.maxBalas = 200;
     this.maxVida = 400;
+    this.maxCombustible = 20;
     this.combustible = combustible;
     this.seleccionado = false;
     this.altura = ALTURA_BAJA;
     this.arma = new Arma(1);
+    this.vivo = true;
+    this.aterrizado = false;
+    this.bloqueado = false;
+    this.id = 0;
     
     this.sprite = game.add.sprite(x, y, 'block');
     this.sprite.anchor.set(0.5);
@@ -34,6 +39,27 @@ Avion.prototype.obtenerSpirte = function(){
     return this.sprite;
 };
 
+Avion.prototype.setSprite = function(x,y){
+    this.sprite.reset(x, y);
+    this.aterrizado = false;
+};
+
+Avion.prototype.getBloqueado = function(){
+    return this.bloqueado;
+};
+
+
+
+Avion.prototype.setId = function(valor){
+    this.id = valor;
+};
+
+Avion.prototype.getId = function(){
+    return this.id;
+};
+
+
+
 Avion.prototype.disparar = function(){
     if (this.seleccionado===true){
        this.cantBalas--;
@@ -51,7 +77,9 @@ Avion.prototype.getMunicion = function(){
 };
 
 Avion.prototype.recargar = function(){
-    this.maxBalas = parametros.MAX_BALAS;
+    this.arma.recargar();
+    this.bloqueado = false;
+    console.log("avion recargado");
 };
 
 Avion.prototype.moverAMouse = function(){
@@ -65,6 +93,7 @@ Avion.prototype.moverAMouse = function(){
             {
                 this.sprite.body.velocity.setTo(0, 0);
             }
+            /*TODO modificar para que la camara siga al mouse*/
             game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1);
         }
         else{
@@ -74,6 +103,10 @@ Avion.prototype.moverAMouse = function(){
             this.sprite.velocity.setTo(0,0);
         }
     }
+};
+
+Avion.prototype.isAterrizado = function(){
+    return this.aterrizado;
 };
 
 Avion.prototype.obtenerXYRot = function(){
@@ -94,4 +127,40 @@ Avion.prototype.descender = function(){
     if(this.altura === ALTURA_ALTA){
         this.altura = ALTURA_BAJA;
     }
+};
+
+Avion.prototype.destruir = function(){
+    this.vivo = false;
+    this.sprite.kill();
+};
+
+Avion.prototype.aterrizar = function(){
+    this.aterrizado = true;
+    this.bloqueado = true;
+    /*Para cambiar el tiempo de recarga cambiar el 4 por otro numero*/
+    game.time.events.add(1000 * 4, this.recargar, this);
+};
+
+Avion.prototype.despegar = function(){
+    this.aterrizado = false;
+};
+
+Avion.prototype.isVivo = function(){
+    return this.vivo;
+};
+
+Avion.prototype.disminuirCombustible = function(){
+    this.combustible--;
+};
+
+Avion.prototype.sinCombustible = function(){
+    return (this.combustible === 0);
+};
+
+Avion.prototype.obtenerCombustible = function(){
+    return this.combustible;
+};
+
+Avion.prototype.obtenerTipoArma = function(){
+    return this.arma.tipoArma;
 };

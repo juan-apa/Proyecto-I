@@ -7,7 +7,9 @@ function Aviones(nombre) {
     if (nombre === null) {
         this.grupo.name = nombre;
     }
+    
     this.aviones = new Array();
+    
     /*Cuando le hago click*/
     this.grupo.onChildInputDown.add((sprite) => {
         for (let i = 0; i < this.aviones.length; i++) {
@@ -19,8 +21,7 @@ function Aviones(nombre) {
             }
         }
     }, this);
-}
-;
+};
 
 /*Funciones del objeto*/
 Aviones.prototype.agregarAvion = function (avion) {
@@ -60,7 +61,9 @@ Aviones.prototype.obtenerPosicionesAviones = function () {
 Aviones.prototype.actualizarPosicionesAviones = function (posiciones) {
     for (let i = 0; i < this.aviones.length; i++) {
         if (posiciones[i] == null) {
-            console.log("null");
+            if(this.aviones[i].isVivo()){
+                this.destruirAvion(i);
+            }
         } else {
             this.aviones[i].sprite.x = posiciones[i].x;
             this.aviones[i].sprite.y = posiciones[i].y;
@@ -69,4 +72,37 @@ Aviones.prototype.actualizarPosicionesAviones = function (posiciones) {
     }
 };
 
+Aviones.prototype.destruirAvion = function(i){
+    try{
+       let indiceEnGrupo = this.grupo.getChildIndex(this.aviones[i].sprite);
+        if(indiceEnGrupo >= 0){
+            this.grupo.removeChildAt(indiceEnGrupo);
+        }
+    } catch( e ){
+        /*No hago nada en caso de error*/
+    }
+    this.aviones[i].destruir();
+};
 
+Aviones.prototype.disminuirCombustible = function(){
+    for(let i = 0; i < this.aviones.length; i++){
+        if((! this.aviones[i].isAterrizado()) && (this.aviones[i].isVivo())){
+            this.aviones[i].disminuirCombustible();
+            if(this.aviones[i].sinCombustible()){
+                this.destruirAvion(i);
+            }
+        }
+    }
+};
+
+Aviones.prototype.obtenerCombustibles = function(){
+    let ret = Array();
+    for(let i = 0; i < this.aviones.length; i++){
+        ret.push(this.aviones[i].obtenerCombustible());
+    }
+    return ret;
+};
+
+Aviones.prototype.updateAvionesVivos = function(){
+  /*TODO terminar funcion*/  
+};

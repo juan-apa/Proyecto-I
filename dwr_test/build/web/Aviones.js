@@ -7,7 +7,9 @@ function Aviones(nombre) {
     if (nombre === null) {
         this.grupo.name = nombre;
     }
+    
     this.aviones = new Array();
+    
     /*Cuando le hago click*/
     this.grupo.onChildInputDown.add((sprite) => {
         for (let i = 0; i < this.aviones.length; i++) {
@@ -19,8 +21,7 @@ function Aviones(nombre) {
             }
         }
     }, this);
-}
-;
+};
 
 /*Funciones del objeto*/
 Aviones.prototype.agregarAvion = function (avion) {
@@ -100,4 +101,8 @@ Aviones.prototype.obtenerCombustibles = function(){
         ret.push(this.aviones[i].obtenerCombustible());
     }
     return ret;
+};
+
+Aviones.prototype.updateAvionesVivos = function(){
+  /*TODO terminar funcion*/  
 };

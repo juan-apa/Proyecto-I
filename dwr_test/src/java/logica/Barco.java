@@ -11,12 +11,16 @@ package logica;
  * @author Juan Aparicio
  */
 public class Barco extends Vehiculo{
-
+    private Aviones aviones;
+    private int velocidad = 100;
+    private boolean vivo = true;
+    
     public Barco() {
         this.nombre = "-1";
         this.x = 0;
         this.y = 0;
         this.rot = 0;
+        this.aviones = new Aviones(4);
     }
     
     public Barco(String nombre){
@@ -24,6 +28,7 @@ public class Barco extends Vehiculo{
         this.x = 0;
         this.y = 0;
         this.rot = 0;
+        this.aviones = new Aviones(4);
     }
     
     public Barco(String nombre, double x, double y, double rot){
@@ -31,5 +36,61 @@ public class Barco extends Vehiculo{
         this.x = x;
         this.y = y;
         this.rot = rot;
+        this.aviones = new Aviones(4);
     }
+    
+    public Barco(String nombre, double x, double y, double rot, Aviones aviones){
+        this.nombre = nombre;
+        this.x = x;
+        this.y = y;
+        this.rot = rot;
+        this.aviones = aviones;
+    }
+    
+    public boolean tieneAviones(){
+        return (this.aviones.cantidadAviones() != 0);
+    }
+    
+    public Aviones getAviones(){
+        return this.aviones;
+    }
+
+    public void recibeDisparoSinAvionesDeBomba() {
+        /*Le saco 1/4 de la velocidad*/
+        this.velocidad = this.velocidad - (this.velocidad * (1/4));
+        if(this.velocidad <= 0){
+            this.x = Double.NaN;
+            this.y = Double.NaN;
+            this.rot = Double.NaN;
+        }
+    }
+    
+    public void recibeDisparoSinAvionesDeTorpedo(){
+        /*Le saco 1/2 de la velocidad*/
+        this.velocidad = this.velocidad - (this.velocidad * (1/4));
+        if(this.velocidad <= 0){
+            this.x = Double.NaN;
+            this.y = Double.NaN;
+            this.rot = Double.NaN;
+        }
+    }
+
+    public int getVelocidad() {
+        return velocidad;
+    }
+
+    public void setVelocidad(int velocidad) {
+        this.velocidad = velocidad;
+    }
+
+    public boolean isVivo() {
+        return vivo;
+    }
+
+    public void setVivo(boolean vivo) {
+        this.vivo = vivo;
+    }
+    
+    
+    
 }

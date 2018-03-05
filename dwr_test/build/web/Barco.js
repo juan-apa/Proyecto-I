@@ -10,6 +10,7 @@ function Barco(nombre){
     this.cantAviones = 0;
     this.sprite = game.add.sprite(64 + (64 * 1)+800, 200 + (1*4)+300, 'barco');
     this.sprite.immovable = false;
+    this.vivo = true;
     
     
     /*Ojo con el !== porque por defecto lo pone como undefined, no null. Entonces
@@ -133,4 +134,12 @@ Barco.prototype.despegarAvion = function(){
     
     //console.log('cantidad aviones:' + this.cantAviones);
     //return id_avion;
+};
+
+Barco.prototype.isVivo = function(){
+    return this.vivo;
+};
+
+Barco.prototype.destruir = function(){
+  this.vivo = false;  
 };

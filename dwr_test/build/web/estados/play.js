@@ -50,10 +50,20 @@ var playState = {
         /*Creacion loop disminucion combustibles*/
 //        game.time.events.loop(1000, this.disminuirCombustible, this);
     },
-
-    update: function () {
+    
+    update: function(){
+        var estadoAzul;
+        var estadoRojo;
         llamar++;
         if (llamar === 0) {
+            
+            /*Obtengo los estados de ambos equipos*/
+            Fachada.getEstadoEquipoAzul(function(estado){
+                estadoAzul = estado;
+            });
+            Fachada.getEstadoEquipoRojo(function(estado){
+                estadoRojo = estado;
+            });
             if (azul === true) {
                 Fachada.updatePosAzul(aviones_azules.obtenerPosicionesAviones(), barco_azul.obtenerPosicion(), {
                     timeout: 5000,
@@ -62,6 +72,8 @@ var playState = {
                         console.log(dwr.util.toDescriptiveString(exception, 2));
                     }
                 });
+                
+                
                 Fachada.getPosRojo({
                     callback: function (pos) {
                         let largo = pos.length - 1;
@@ -121,28 +133,42 @@ var playState = {
                  *                                  son mas lentas y se suelta el boton de disparo,
                  *                                  no detecte las colisiones.*/
                     aviones_rojos.obtenerAvion(i).disparar();
-                    for (y = 0; y < aviones_azules.largo(); y++) {
-                        if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
-                            let colision = game.physics.arcade.collide(aviones_rojos.obtenerAvion(i).getArma(), aviones_azules.obtenerAvion(y).obtenerSpirte(), collisionHandler);
-                            if (colision) {
-                                //console.log("azul: " + i + " rojo: " + y);
-                                Fachada.disparo_avion_avion(0, y.toString(), {
-                                    callback: function () {},
-                                    timeout: 5000,
-                                    errorHandler: function (mensaje) {
-                                        console.log("Error disparo rojo->azul: " + mensaje);
+                    let tipoArmaAvion = aviones_rojos.obtenerAvion(i).obtenerTipoArma();
+                    switch(tipoArmaAvion){
+                        case METRALLETA:
+                            for (y = 0; y < aviones_azules.largo(); y++) {
+                                if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
+                                    let colision = game.physics.arcade.collide(aviones_rojos.obtenerAvion(i).getArma(), aviones_azules.obtenerAvion(y).obtenerSpirte(), collisionHandler);
+                                    if (colision) {
+                                        console.log("azul: " + i + " rojo: " + y);
+                                        Fachada.disparo_avion_avion(0, y.toString(), {
+                                            callback: function () {},
+                                            timeout: 5000,
+                                            errorHandler: function (mensaje) {
+                                                console.log("Error disparo rojo->azul: " + mensaje);
+                                            }
+                                        });
                                     }
-                                });
+                                }
                             }
-                        }
+                            break;
+                        
+                        case BOMBA:
+                            let colision = game.physics.arcade.collide(aviones_rojos.obtenerAvion(i).getArma(), barco_azul.getSprite(), collisionHandler);
+                            if(colision){
+                                Fachada.disparo_avion_barco(0, )
+                            }
+                            break
+                            
+                        case TORPEDO:
+                            break
                     }
+                    
                 }
                 //test
             }
         }
 
-        /*TODO este bloque no se tiene que hacer todo el tiempo, solo se tiene que
-         * hacer una vez, cuando se sepa que equipo es el mio. */
         if (azul === true) {
             //        console.log('cantidad de aviones:' + barco_azul.getCantidadAviones());
             Fachada.avionesAzulesVivos(function (arr) {
@@ -238,7 +264,7 @@ var playState = {
             }
         }
     },
-    disminuirCombustible: function () {
+    disminuirCombustible: function(){
         aviones_azules.disminuirCombustible();
         aviones_rojos.disminuirCombustible();
         Fachada.updateCombustibleAzul(aviones_azules.obtenerCombustibles(), function () {});
@@ -246,26 +272,6 @@ var playState = {
     }
 };
 
-function move(pointer, x, y) {
-    mask.x = x - 100;
-    mask.y = y - 100;
-}
-
-function clickedSprite(sprite) {
-    mover = 1;
-}
-
-function clickedSprite2(sprite) {
-    mover = 2;
-}
-
-function clickedSprite3(sprite) {
-    mover = 3;
-}
-
-function clickedSprite4(sprite) {
-    mover = 4;
-}
 
 function checkOverlap(spriteA, spriteB) {
 
@@ -311,27 +317,18 @@ function numeroRandom(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
 
-
 function checkOverlap(spriteA, spriteB) {
     var boundsA = spriteA.getBounds();
     var boundsB = spriteB.getBounds();
     return Phaser.Rectangle.intersects(boundsA, boundsB);
 }
 
-function fire(spriteq) {
-    if (game.time.now > nextFire && weapon.countDead() > 0)
-    {
-        nextFire = game.time.now + fireRate;
-
-        var bullet = weapon.getFirstDead();
-
-        bullet.reset(spriteq.x - 8, spriteq.y - 8); // de donde sale la bala
-
-        bullet.lifespan = 200;		//distancia de la bala
-
-        bullet.trackrotation = true;
-
-        game.physics.arcade.moveToPointer(bullet, 2000);	//velocidad de la bala
-
+function sinAviones(arr){
+    let ret = true;
+    for(let i = 0; i < arr.length; i++){
+        if(arr[i]){
+           ret = false; 
+        } 
     }
+    return ret;
 }

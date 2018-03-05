@@ -1,7 +1,7 @@
 /* global game, Phaser, Fachada, rojo, azul, aviones_azules, aviones_rojos, barco_azul */
 
 var playState = {
-    create: function(){
+    create: function () {
         /*Seteo el mapa en que voy a jugar*/
         mapa = game.add.tileSprite(0, 0, 1600, 1200, 'fondoOceano');
         mapa.fixedToCamara = true;
@@ -11,18 +11,18 @@ var playState = {
         /*Aviones Azules*/
         aviones_azules = new Aviones("Azules");
         for (let i = 0; i < 4; i++) {
-            aviones_azules.agregarAvion(new Avion(i, 100, i * 100, i+5));
+            aviones_azules.agregarAvion(new Avion(i, 100, i * 100, i + 5));
         }
         /*Aviones Rojos*/
         aviones_rojos = new Aviones("Rojos");
         for (let i = 0; i < 4; i++) {
-            aviones_rojos.agregarAvion(new Avion(i, 900, i * 100, i+9));
+            aviones_rojos.agregarAvion(new Avion(i, 900, i * 100, i + 9));
         }
-        
+
         /*Creo los barcos*/
         barco_azul = new Barco("barco_azul");
         barco_rojo = new Barco("barco_rojo");
-        
+
         /*Seteo los botones de disparo*/
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 
@@ -35,12 +35,15 @@ var playState = {
             fill: "#ff0044",
             align: "center"
         });
-        
+
         /*Seteo las flehcas de movimiento de los barcos*/
         flechas = game.input.keyboard.createCursorKeys();
-        
+
         /*Evento en que se apreta la tecla 1 para despegar el avión del barco*/
         despegarAvionAzul_1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+        despegarAvionAzul_2 = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+        despegarAvionAzul_3 = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
+        despegarAvionAzul_4 = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
 
         /*Creacion loop disminucion combustibles*/
 //        game.time.events.loop(1000, this.disminuirCombustible, this);
@@ -113,9 +116,9 @@ var playState = {
 
 
         if (rojo === true) {
-            Fachada.avionesRojosVivos(function(arr){
-                for(let i = 0; i < arr.length; i++){
-                    if(arr[i] === false){
+            Fachada.avionesRojosVivos(function (arr) {
+                for (let i = 0; i < arr.length; i++) {
+                    if (arr[i] === false) {
                         aviones_rojos.destruirAvion(i);
                     }
                 }
@@ -165,23 +168,74 @@ var playState = {
         }
 
         if (azul === true) {
-    //        console.log('cantidad de aviones:' + barco_azul.getCantidadAviones());
-            Fachada.avionesAzulesVivos(function(arr){
-                for(let i = 0; i < arr.length; i++){
-                    if(arr[i] === false){
+            //        console.log('cantidad de aviones:' + barco_azul.getCantidadAviones());
+            Fachada.avionesAzulesVivos(function (arr) {
+                for (let i = 0; i < arr.length; i++) {
+                    if (arr[i] === false) {
                         aviones_azules.destruirAvion(i);
                     }
                 }
             });
             barco_azul.moverBarco();
-            if (despegarAvionAzul_1.isDown && despegarAvionAzul_1.downDuration(1)) {    //emfernandez a terminar
-                barco_azul.despegarAvion();
+
+            //Presiono 1 para despegar avion id 1
+            if (despegarAvionAzul_1.isDown && despegarAvionAzul_1.downDuration(1) && barco_azul.getCantidadAviones() > 0) {    //emfernandez a terminar
+                //console.log("id avion:" + 1);
+                for (i = 0; i < aviones_azules.largo(); i++) {
+                    if (aviones_azules.obtenerAvion(i).getId() === 1 && aviones_azules.obtenerAvion(i).getBloqueado()===false) {
+                        barco_azul.despegarAvion();
+                        aviones_azules.obtenerAvion(i).setId(0);
+                        aviones_azules.obtenerAvion(i).setSprite(barco_azul.getSprite().position.x - 300, barco_azul.getSprite().position.y - 150);
+                    }
+                }
             }
+
+            //Presiono 2 para despegar avion id 2
+            if (despegarAvionAzul_2.isDown && despegarAvionAzul_2.downDuration(1) && barco_azul.getCantidadAviones() > 0) {    //emfernandez a terminar
+                //console.log("id avion:" + 2);
+
+                for (i = 0; i < aviones_azules.largo(); i++) {
+                    if (aviones_azules.obtenerAvion(i).getId() === 2 && aviones_azules.obtenerAvion(i).getBloqueado()===false) {
+                        barco_azul.despegarAvion();
+                        aviones_azules.obtenerAvion(i).setId(0);
+                        aviones_azules.obtenerAvion(i).setSprite(barco_azul.getSprite().position.x - 300, barco_azul.getSprite().position.y - 100);
+                    }
+                }
+            }
+
+            //Presiono 3 para despegar avion id 3
+            if (despegarAvionAzul_3.isDown && despegarAvionAzul_3.downDuration(1) && barco_azul.getCantidadAviones() > 0) {    //emfernandez a terminar
+                //console.log("id avion:" + 3);
+
+                for (i = 0; i < aviones_azules.largo(); i++) {
+                    if (aviones_azules.obtenerAvion(i).getId() === 3 && aviones_azules.obtenerAvion(i).getBloqueado()===false) {
+                        barco_azul.despegarAvion();
+                        aviones_azules.obtenerAvion(i).setId(0);
+                        aviones_azules.obtenerAvion(i).setSprite(barco_azul.getSprite().position.x - 300, barco_azul.getSprite().position.y - 50);
+                    }
+                }
+            }
+
+            //Presiono 4 para despegar avion id 4
+            if (despegarAvionAzul_4.isDown && despegarAvionAzul_4.downDuration(1) && barco_azul.getCantidadAviones() > 0) {    //emfernandez a terminar
+                for (i = 0; i < aviones_azules.largo(); i++) {
+                    if (aviones_azules.obtenerAvion(i).getId() === 4 && aviones_azules.obtenerAvion(i).getBloqueado()===false) {                       
+                        barco_azul.despegarAvion();
+                        aviones_azules.obtenerAvion(i).setId(0);
+                        aviones_azules.obtenerAvion(i).setSprite(barco_azul.getSprite().position.x - 300, barco_azul.getSprite().position.y);
+                    }
+                }
+            }
+            //////////////////////////////////////
+
             for (i = 0; i < aviones_azules.largo(); i++) {
                 aviones_azules.obtenerAvion(i).moverAMouse();
+                //aterrizaje de avion
                 let avionBarcoSuperpuestos = game.physics.arcade.overlap(aviones_azules.obtenerAvion(i).obtenerSpirte(), barco_azul.getSprite(), collisionHandler2, null, this);
-                if(avionBarcoSuperpuestos){
-                    aviones_azules.obtenerAvion(i).aterrizar(); 
+                if (avionBarcoSuperpuestos) {
+                    aviones_azules.obtenerAvion(i).aterrizar();
+                    var posAterrizaje = barco_azul.getCantidadAviones();
+                    aviones_azules.obtenerAvion(i).setId(posAterrizaje);
                 }
                 if (fireButton.isDown) {
                     aviones_azules.obtenerAvion(i).disparar();
@@ -204,12 +258,11 @@ var playState = {
             }
         }
     },
-    
     disminuirCombustible: function(){
         aviones_azules.disminuirCombustible();
         aviones_rojos.disminuirCombustible();
-        Fachada.updateCombustibleAzul(aviones_azules.obtenerCombustibles(), function(){});
-        Fachada.updateCombustibleRojo(aviones_rojos.obtenerCombustibles(), function(){});
+        Fachada.updateCombustibleAzul(aviones_azules.obtenerCombustibles(), function () {});
+        Fachada.updateCombustibleRojo(aviones_rojos.obtenerCombustibles(), function () {});
     }
 };
 
@@ -221,12 +274,15 @@ function checkOverlap(spriteA, spriteB) {
 
     return Phaser.Rectangle.intersects(boundsA, boundsB);
 
-};
+}
+;
 
 function collisionHandler2(a, b) {
+    //if (a.visible === true) {
+    //console.log('ANTES= cantidad de aviones: ' + barco_azul.getCantidadAviones());
     a.kill();
+    a.visible = false;
     if (barco_azul.getCantidadAviones() === 0) {
-        console.log('entre acaaaaaaaaaaa');
         barco_azul.setearSprite(1);
     }
     if (barco_azul.getCantidadAviones() === 1) {
@@ -239,14 +295,17 @@ function collisionHandler2(a, b) {
         barco_azul.setearSprite(4);
     }
     barco_azul.agregarCantidadAviones();
-    console.log('cantidad de aviones: ' + barco_azul.getCantidadAviones());
+    //console.log('DESPUES= cantidad de aviones: ' + barco_azul.getCantidadAviones());
 
-};
+    //}
+}
+;
 
 function collisionHandler(a, b) {
     b.kill();
     a.kill();
-};
+}
+;
 
 function numeroRandom(min, max) {
     return Math.round(Math.random() * (max - min) + min);

@@ -103,6 +103,22 @@ Aviones.prototype.obtenerCombustibles = function(){
     return ret;
 };
 
-Aviones.prototype.updateAvionesVivos = function(){
-  /*TODO terminar funcion*/  
+Aviones.prototype.updateAvionesVivos = function(arrBooleano){
+  /*TODO terminar funcion*/
+  for(let i = 0; i < this.aviones.length; i++){
+      if(! arrBooleano[i]){
+          this.destruirAvion(i);
+      }
+  }
+};
+
+Aviones.prototype.aterrizarAviones = function(arr){
+    for(let i = 0; i < this.aviones.length; i++){
+        if(arr[i]){
+            this.aviones[i].sprite.visible = false;
+        }
+        else{
+            this.aviones[i].sprite.visible = true;
+        }
+    }
 };

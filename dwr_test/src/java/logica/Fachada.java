@@ -28,6 +28,11 @@ public class Fachada {
         this.configuraciones = new DAOConfiguraciones();
         this.avionesAzules = new Aviones(4);
         this.avionesRojos = new Aviones(4);
+        for(int i = 0; i < 4; i++){
+            String nombre = String.valueOf(i);
+            this.avionesAzules.obtenerAvion(i).setNombre(nombre);
+            this.avionesRojos.obtenerAvion(i).setNombre(nombre);
+        }
         this.barcoAzul = new Barco("Barco Azul", 50, 50, 1);
         this.barcoRojo = new Barco("Barco Rojo", 200, 200, 3);
     }
@@ -224,5 +229,22 @@ public class Fachada {
     public void updateCombustibleRojo(int[] combustibles){
         this.avionesRojos.updateCombustible(combustibles);
     }
-
+    public void aterrizajeAvionAzul(int posAvion){
+        Avion aux = this.avionesAzules.obtenerAvion(posAvion);
+        this.barcoAzul.aterrizajeAvion(aux);
+        aux = null;
+    }
+    public void aterrizajeAvionRojo(int posAvion){
+        Avion aux = this.avionesRojos.obtenerAvion(posAvion);
+        this.barcoRojo.aterrizajeAvion(aux);
+        aux = null;
+    }
+    
+    public void despegueAvionAzul(int posAvion){
+        this.barcoAzul.despegueAvion(posAvion);
+    }
+    public void despegueAvionRojo(int posAvion){
+        this.barcoRojo.despegueAvion(posAvion);
+    }
+    
 }

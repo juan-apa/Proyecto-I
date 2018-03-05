@@ -8,7 +8,7 @@ const BOMBA = 3;
 
 function Arma(tipoArma) {
     this.tipoArma = tipoArma;
-    this.municion = 1   
+    this.municion = 1;
     this.maxBalas = 1;                  //si es bomba o torpedo tiene 1 municion
     if(this.tipoArma === METRALLETA){   //si es metra, tiene mas municion
         this.municion = 200;
@@ -62,10 +62,27 @@ Arma.prototype.dispararr = function (x, y) {
         if(this.tipoArma === BOMBA){
             informacion.setText("Municion: "+this.municion + " Tipo Municion: BOMBA" );
             this.municion--;
-            let bomba = this.sprite.getFirstDead();
-            bomba.reset(x - 8, y - 8);
-            bomba.lifespan = 200;
-            game.physics.arcade.moveToPointer(bullet, 500);
+            nextFire = 0;
+            fireRate = 1000;  //parametrizable
+            if (game.time.now > nextFire && this.sprite.countDead() > 0)
+            {
+                nextFire = game.time.now + fireRate;
+                let bullet = this.sprite.getFirstDead();
+                bullet.reset(x - 8, y - 8);
+                bullet.lifespan = 0;
+                bullet.trackrotation = true;
+                game.physics.arcade.moveToPointer(bullet, 1);
+            }
+            
+        }
+        
+        if(this.tipoArma === TORPEDO){
+            informacion.setText("Municion: "+this.municion + " Tipo Municion: BOMBA" );
+            this.municion--;
+            let bullet = this.sprite.getFirstDead();
+            bullet.reset(x - 8, y - 8);
+            bullet.lifespan = 300;
+            game.physics.arcade.moveToPointer(bullet, 300);
         }
     }
 };

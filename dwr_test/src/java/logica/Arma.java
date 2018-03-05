@@ -11,9 +11,9 @@ package logica;
  * @author Sammy Guergachi <sguergachi at gmail.com>
  */
 public class Arma {
-    public final static int MUNICION_METRALLETA = 0;
-    public final static int MUNICION_BOMBA = 1;
-    public final static int MUNICION_TORPEDO = 2;
+    public final static int MUNICION_METRALLETA = 1;
+    public final static int MUNICION_BOMBA = 2;
+    public final static int MUNICION_TORPEDO = 3;
     
     private int tipoMunicion;
     

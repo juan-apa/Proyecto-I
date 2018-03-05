@@ -15,6 +15,7 @@ public class Avion extends Vehiculo {
     private int combustible;
     private Arma arma;
     private int velocidad = 100;
+    private boolean aterrizado = false;
     
     /*En este caso el nombre en String es en realidad un numero, que representa
     su posicion en el arreglo en el que se encuentra en JavaScript.*/
@@ -24,7 +25,7 @@ public class Avion extends Vehiculo {
         this.y = 0;
         this.rot = 0;
         this.vivo = true;
-        this.arma = new Arma(Arma.MUNICION_METRALLETA);
+        this.arma = new Arma(Arma.MUNICION_BOMBA);
     }
 
     public Avion(String nombre, double x, double y, double rot) {
@@ -96,6 +97,12 @@ public class Avion extends Vehiculo {
     public void setVelocidad(int velocidad) {
         this.velocidad = velocidad;
     }
-    
-    
+
+    public boolean isAterrizado() {
+        return aterrizado;
+    }
+
+    public void setAterrizado(boolean aterrizado) {
+        this.aterrizado = aterrizado;
+    }
 }

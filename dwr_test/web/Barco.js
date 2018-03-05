@@ -11,6 +11,10 @@ function Barco(nombre){
     this.sprite = game.add.sprite(64 + (64 * 1)+800, 200 + (1*4)+300, 'barco');
     this.sprite.immovable = false;
     this.vivo = true;
+    this.aviones = new Array(4);
+    for(let i = 0; i < 4; i++){
+        this.aviones[i] = false;
+    }
     
     
     /*Ojo con el !== porque por defecto lo pone como undefined, no null. Entonces

@@ -1,5 +1,9 @@
 /*Class Avion.js*/
+<<<<<<< HEAD
 /* global game, parametros, Phaser, informacion */
+=======
+/* global game, parametros, Phaser, BOMBA */
+>>>>>>> desarrollo
 
 const ALTURA_BAJA = 1;
 const ALTURA_ALTA = 2;
@@ -11,7 +15,7 @@ function Avion(nombreAvion, x, y, combustible){
     this.combustible = combustible;
     this.seleccionado = false;
     this.altura = ALTURA_BAJA;
-    this.arma = new Arma(1);
+    this.arma = new Arma(BOMBA);
     this.vivo = true;
     this.aterrizado = false;
     this.bloqueado = false;
@@ -65,7 +69,6 @@ Avion.prototype.disparar = function(){
        this.cantBalas--;
        this.arma.dispararr(this.sprite.x, this.sprite.y);
     }
-    //this.maxBalas--; 
 };
 
 Avion.prototype.getArma = function(){
@@ -116,7 +119,7 @@ Avion.prototype.moverAMouse = function(){
                 this.sprite.body.velocity.setTo(0, 0);
             }
             /*TODO modificar para que la camara siga al mouse*/
-            game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1);
+//            game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1);
         }
         else{
             this.sprite.body.velocity.setTo(0,0);

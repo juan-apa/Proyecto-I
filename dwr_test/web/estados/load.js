@@ -7,6 +7,7 @@ var loadState = {
         game.load.image('block', 'assets/avionn.png');
         game.load.image("fondoOceano", "assets/oceano2.jpg");
         game.load.image("balas", "assets/balas2.png");
+        game.load.image("bullet", "assets/balas2.png");
         game.load.image("barco", "assets/portaviones_1.png");
         game.load.image("barco", "assets/barcoo.png");
         game.load.image("barco_0avion", "assets/portaviones_1.png");

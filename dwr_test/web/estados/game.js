@@ -34,6 +34,7 @@ var y = 0;
 var azul = false;
 var rojo = false;
 var informacion;
+var wasd;
 
 //test:
 var huboImpacto = false;
@@ -46,8 +47,8 @@ game.state.add('boot', bootState);
 game.state.add('load', loadState);
 game.state.add('menu', menuState);
 game.state.add('play', playState);
-//game.state.add('win', winState);
-//game.state.add('loose', looseState);
+game.state.add('win', winState);
+game.state.add('loose', looseState);
 
 /*Inicio el siguiente estado, que es boot*/
 console.log("pasando a boot");

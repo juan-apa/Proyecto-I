@@ -187,7 +187,9 @@ public class Aviones {
     public boolean[] obtenerAvionesVivos(){
         boolean[] ret = new boolean[this.aviones.length];
         for(int i = 0; i < this.aviones.length; i++){
-            ret[i] = this.aviones[i].isVivo();
+            if(this.aviones[i] != null){
+                ret[i] = this.aviones[i].isVivo();
+            }
         }
         return ret;
     }
@@ -233,5 +235,11 @@ public class Aviones {
     
     public Avion obtenerAvion(int indice){
         return this.aviones[indice];
+    }
+    
+    public void vaciar(){
+        for(int i = 0; i < this.cantAviones; i++){
+            this.aviones[i] = null;
+        }
     }
 }

@@ -21,6 +21,7 @@ public class Barco extends Vehiculo{
         this.y = 0;
         this.rot = 0;
         this.aviones = new Aviones(4);
+        this.aviones.vaciar();
     }
     
     public Barco(String nombre){
@@ -29,6 +30,7 @@ public class Barco extends Vehiculo{
         this.y = 0;
         this.rot = 0;
         this.aviones = new Aviones(4);
+        this.aviones.vaciar();
     }
     
     public Barco(String nombre, double x, double y, double rot){
@@ -37,6 +39,7 @@ public class Barco extends Vehiculo{
         this.y = y;
         this.rot = rot;
         this.aviones = new Aviones(4);
+        this.aviones.vaciar();
     }
     
     public Barco(String nombre, double x, double y, double rot, Aviones aviones){
@@ -57,7 +60,9 @@ public class Barco extends Vehiculo{
 
     public void recibeDisparoSinAvionesDeBomba() {
         /*Le saco 1/4 de la velocidad*/
-        this.velocidad = this.velocidad - (this.velocidad * (1/4));
+        /*Le voy restando de a 25 la velocidad*/
+        int resta = this.velocidad - 25;
+        this.velocidad -= resta;
         if(this.velocidad <= 0){
             this.x = Double.NaN;
             this.y = Double.NaN;
@@ -91,6 +96,15 @@ public class Barco extends Vehiculo{
         this.vivo = vivo;
     }
     
+    public void aterrizajeAvion(Avion av){
+        av.setAterrizado(true);
+        System.out.println(av.getNombre());
+        this.aviones.insertarAvion(av, Integer.parseInt(av.getNombre()));
+    }
     
+    public void despegueAvion(int indice){
+        Avion aux = this.aviones.sacarAvion(indice);
+        aux.setAterrizado(false);
+    }
     
 }

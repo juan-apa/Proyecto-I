@@ -44,7 +44,7 @@ Arma.prototype.dispararr = function (x, y) {
         //informacion de municion del avion
         
         if (this.tipoArma === METRALLETA) {
-            informacion.setText("Municion: "+this.municion + " Tipo Municion: METRALLETA" );
+            //informacion.setText("Municion: "+this.municion + " Tipo Municion: METRALLETA" );
             this.municion--;
             nextFire = 0;
             fireRate = 80;  //parametrizable

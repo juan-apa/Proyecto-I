@@ -1,5 +1,5 @@
 /*Class Avion.js*/
-/* global game, parametros, Phaser */
+/* global game, parametros, Phaser, informacion */
 
 const ALTURA_BAJA = 1;
 const ALTURA_ALTA = 2;
@@ -80,8 +80,30 @@ Avion.prototype.recargar = function(){
     this.arma.recargar();
 };
 
+Avion.prototype.getAltura = function(){
+    var ret;
+    if (this.altura===1){
+        ret = 'ALTURA BAJA';
+    }
+    else {
+        ret = 'ALTURA ALTA';
+    }    
+    return ret;
+};
+
+Avion.prototype.cambiarAltura = function(){
+    if (this.altura===1){
+        this.altura=2;
+    }
+    else {
+        this.altura=1;
+    }    
+};
+
+
 Avion.prototype.moverAMouse = function(){
     if(this.seleccionado){
+        informacion.setText("Municion: "+this.getMunicion() + " Tipo Municion: METRALLETA" + "Altura Actual: " +this.getAltura());
         mouse_x = game.input.x;
         mouse_y = game.input.y;
         if (game.input.mousePointer.isDown){

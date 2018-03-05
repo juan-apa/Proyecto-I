@@ -44,7 +44,9 @@ var playState = {
         despegarAvionAzul_2 = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
         despegarAvionAzul_3 = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
         despegarAvionAzul_4 = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
-
+        
+        cambiarAlturaAvion = game.input.keyboard.addKey(Phaser.KeyCode.Z);
+        
         /*Creacion loop disminucion combustibles*/
 //        game.time.events.loop(1000, this.disminuirCombustible, this);
     },
@@ -123,7 +125,7 @@ var playState = {
                         if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
                             let colision = game.physics.arcade.collide(aviones_rojos.obtenerAvion(i).getArma(), aviones_azules.obtenerAvion(y).obtenerSpirte(), collisionHandler);
                             if (colision) {
-                                console.log("azul: " + i + " rojo: " + y);
+                                //console.log("azul: " + i + " rojo: " + y);
                                 Fachada.disparo_avion_avion(0, y.toString(), {
                                     callback: function () {},
                                     timeout: 5000,
@@ -211,13 +213,17 @@ var playState = {
                     var posAterrizaje = barco_azul.getCantidadAviones();
                     aviones_azules.obtenerAvion(i).setId(posAterrizaje);
                 }
+                //cambiarAlturaAvion
+                if (cambiarAlturaAvion.isDown && cambiarAlturaAvion.downDuration(1)){
+                    aviones_azules.obtenerAvion(i).cambiarAltura();
+                }
                 if (fireButton.isDown) {
                     aviones_azules.obtenerAvion(i).disparar();
                     for (y = 0; y < aviones_rojos.largo(); y++) {
                         if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
                             let colision = game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), aviones_rojos.obtenerAvion(y).obtenerSpirte(), collisionHandler);
                             if (colision) {
-                                console.log("azul: " + i + " rojo: " + y);
+                                //console.log("azul: " + i + " rojo: " + y);
                                 Fachada.disparo_avion_avion(1, y.toString(), {
                                     callback: function () {},
                                     timeout: 5000,

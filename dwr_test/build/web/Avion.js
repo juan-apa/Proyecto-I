@@ -56,6 +56,7 @@ Avion.prototype.getMunicion = function(){
 
 Avion.prototype.recargar = function(){
     this.arma.recargar();
+    this.bloqueado = false;
     console.log("avion recargado");
 };
 
@@ -70,6 +71,7 @@ Avion.prototype.moverAMouse = function(){
             {
                 this.sprite.body.velocity.setTo(0, 0);
             }
+            /*TODO modificar para que la camara siga al mouse*/
             game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1);
         }
         else{
@@ -112,8 +114,9 @@ Avion.prototype.destruir = function(){
 
 Avion.prototype.aterrizar = function(){
     this.aterrizado = true;
+    this.bloqueado = true;
     /*Para cambiar el tiempo de recarga cambiar el 4 por otro numero*/
-    game.time.events.add(1000 * 2, this.recargar, this);
+    game.time.events.add(1000 * 4, this.recargar, this);
 };
 
 Avion.prototype.despegar = function(){
@@ -134,4 +137,8 @@ Avion.prototype.sinCombustible = function(){
 
 Avion.prototype.obtenerCombustible = function(){
     return this.combustible;
+};
+
+Avion.prototype.obtenerTipoArma = function(){
+    return this.arma.tipoArma;
 };

@@ -95,6 +95,75 @@ public class Fachada {
         return ret;
     }
     
+        
+    public VOEstado getEstadoEquipoAzul(){
+        VOEstado estAzul = new VOEstado(
+                this.avionesAzules.obtenerAvionesVivos(), 
+                this.avionesAzules.xAviones(),
+                this.avionesAzules.yAviones(),
+                this.avionesAzules.rotAviones(),
+                this.avionesAzules.velAviones(),
+                this.avionesAzules.municionesAviones(),
+                this.barcoAzul.getX(),
+                this.barcoAzul.getY(),
+                this.barcoAzul.getRot(),
+                this.barcoAzul.getVelocidad(),
+                this.barcoAzul.isVivo(),
+                this.barcoAzul.getAviones().obtenerAvionesVivos()
+        );
+        
+        return estAzul;
+    }
+    
+    public VOEstado getEstadoEquipoRojo(){
+        VOEstado estRojo = new VOEstado(
+                this.avionesRojos.obtenerAvionesVivos(), 
+                this.avionesRojos.xAviones(),
+                this.avionesRojos.yAviones(),
+                this.avionesRojos.rotAviones(),
+                this.avionesRojos.velAviones(),
+                this.avionesRojos.municionesAviones(),
+                this.barcoRojo.getX(),
+                this.barcoRojo.getY(),
+                this.barcoRojo.getRot(),
+                this.barcoRojo.getVelocidad(),
+                this.barcoRojo.isVivo(),
+                this.barcoRojo.getAviones().obtenerAvionesVivos()
+        );
+        
+        return estRojo;
+    }
+    
+    public void updateEstadoAzul(VOEstado vo){
+        this.avionesAzules.updateAvionesVivos(vo.getAvionesVivos());
+        this.avionesAzules.updateX(vo.getX_aviones());
+        this.avionesAzules.updateY(vo.getY_aviones());
+        this.avionesAzules.updateRot(vo.getRot_aviones());
+        this.avionesAzules.updateVel(vo.getVelocidadAviones());
+        this.avionesAzules.updateMuniciones(vo.getMunicionesAviones());
+        this.barcoAzul.setX(vo.getX_barco());
+        this.barcoAzul.setY(vo.getY_barco());
+        this.barcoAzul.setRot(vo.getRot_barco());
+        this.barcoAzul.setVelocidad(vo.getVelocidadBarco());
+        this.barcoAzul.setVivo(vo.isBarcoVivo());
+        this.barcoAzul.getAviones().updateAvionesVivos(vo.getAvionesEnBarco());        
+    }
+    
+    public void updateEstadoRojo(VOEstado vo){
+        this.avionesRojos.updateAvionesVivos(vo.getAvionesVivos());
+        this.avionesRojos.updateX(vo.getX_aviones());
+        this.avionesRojos.updateY(vo.getY_aviones());
+        this.avionesRojos.updateRot(vo.getRot_aviones());
+        this.avionesRojos.updateVel(vo.getVelocidadAviones());
+        this.avionesRojos.updateMuniciones(vo.getMunicionesAviones());
+        this.barcoRojo.setX(vo.getX_barco());
+        this.barcoRojo.setY(vo.getY_barco());
+        this.barcoRojo.setRot(vo.getRot_barco());
+        this.barcoRojo.setVelocidad(vo.getVelocidadBarco());
+        this.barcoRojo.setVivo(vo.isBarcoVivo());
+        this.barcoRojo.getAviones().updateAvionesVivos(vo.getAvionesEnBarco());        
+    }
+    
     /**
      * @param equipoObjetivo
      * es el equipo al cual le dispararon un avion.
@@ -109,6 +178,33 @@ public class Fachada {
         else{
             if(equipoObjetivo == EQUIPO_ROJO){
                 this.avionesRojos.destruirAvion(nombreAvionObjetivo);
+            }
+        }
+    }
+    
+    public void disparo_avion_barco(int equipoObjetivo, String nombreAvion){
+        if(equipoObjetivo == EQUIPO_AZUL){
+            if(this.barcoAzul.tieneAviones()){
+                Avion aMatar = this.barcoAzul.getAviones().popAvion();
+                String nombreAvionAMatar = aMatar.getNombre();
+                this.avionesAzules.destruirAvion(nombreAvionAMatar);
+            }
+            else{
+                int numeroAvionQueDisparo = Integer.parseInt(nombreAvion);
+                int tipoMunicion = this.avionesRojos.obtenerAvion(numeroAvionQueDisparo).getArma().getTipoMunicion();
+                switch(tipoMunicion){
+                    case Arma.MUNICION_BOMBA:
+                        this.barcoAzul.recibeDisparoSinAvionesDeBomba();
+                        break;
+                    case Arma.MUNICION_TORPEDO:
+                        this.barcoAzul.recibeDisparoSinAvionesDeBomba();
+                        break;
+                }
+            }
+        }
+        else{
+            if(equipoObjetivo == EQUIPO_ROJO){
+                
             }
         }
     }
@@ -128,4 +224,5 @@ public class Fachada {
     public void updateCombustibleRojo(int[] combustibles){
         this.avionesRojos.updateCombustible(combustibles);
     }
+
 }

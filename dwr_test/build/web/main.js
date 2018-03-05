@@ -124,8 +124,3 @@
 //function render() {
 //    //game.debug.text("Caca" + parametros.MAX_BALAS + "VIDA:" + parametros.VIDA_MAX_AVION, 32, 32);
 //}
-
-
-
-
-

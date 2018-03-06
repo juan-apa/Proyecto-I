@@ -1,9 +1,5 @@
 /*Class Avion.js*/
-<<<<<<< HEAD
-/* global game, parametros, Phaser, informacion */
-=======
-/* global game, parametros, Phaser, BOMBA */
->>>>>>> desarrollo
+/* global game, parametros, Phaser, BOMBA, informacion */
 
 const ALTURA_BAJA = 1;
 const ALTURA_ALTA = 2;

@@ -40,7 +40,7 @@ Arma.prototype.getSprite = function () {
 };
 
 Arma.prototype.dispararr = function (x, y) {
-    if (fireButton.isDown && this.municion >= 0) {
+    if (fireButton.isDown && this.municion > 0) {
         //informacion de municion del avion
         
         if (this.tipoArma === METRALLETA) {
@@ -63,15 +63,15 @@ Arma.prototype.dispararr = function (x, y) {
             informacion.setText("Municion: "+this.municion + " Tipo Municion: BOMBA" );
             this.municion--;
             nextFire = 0;
-            fireRate = 1000;  //parametrizable
-            if (game.time.now > nextFire && this.sprite.countDead() > 0)
+            fireRate = 2000;  //parametrizable
+            if (game.time.now > nextFire && this.sprite.countDead() > 0 )
             {
                 nextFire = game.time.now + fireRate;
                 let bullet = this.sprite.getFirstDead();
                 bullet.reset(x - 8, y - 8);
-                bullet.lifespan = 0;
+                bullet.lifespan = 30;
                 bullet.trackrotation = true;
-                game.physics.arcade.moveToPointer(bullet, 1);
+                game.physics.arcade.moveToPointer(bullet, 10);
             }
             
         }

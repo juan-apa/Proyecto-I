@@ -1,4 +1,4 @@
-/* global game, Phaser, Fachada, rojo, azul, aviones_azules, aviones_rojos, barco_azul */
+/* global game, Phaser, Fachada, rojo, azul, aviones_azules, aviones_rojos, barco_azul, win, loose, despegarAvion_4, despegarAvion_3, despegarAvion_2, despegarAvion_1, barco_rojo, METRALLETA, BOMBA, TORPEDO */
 
 var playState = {
     create: function () {
@@ -14,7 +14,7 @@ var playState = {
         mapa = game.add.tileSprite(0, 0, 1600, 1200, 'fondoOceano');
         mapa.fixedToCamara = true;
         game.stage.backgroundColor = "#4488AA";
-        game.world.setBounds(0, 0, 1600, 1200);
+        game.world.setBounds(0, 0, 3000, 3000);
 
         /*Aviones Azules*/
         aviones_azules = new Aviones("Azules");
@@ -43,15 +43,16 @@ var playState = {
             fill: "#ff0044",
             align: "center"
         });
+        informacion.fixedToCamera = true;
 
         /*Seteo las flehcas de movimiento de los barcos*/
         flechas = game.input.keyboard.createCursorKeys();
 
         /*Evento en que se apreta la tecla 1 para despegar el avión del barco*/
-        despegarAvionAzul_1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
-        despegarAvionAzul_2 = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
-        despegarAvionAzul_3 = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
-        despegarAvionAzul_4 = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
+        despegarAvion_1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+        despegarAvion_2 = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+        despegarAvion_3 = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
+        despegarAvion_4 = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
         
         cambiarAlturaAvion = game.input.keyboard.addKey(Phaser.KeyCode.Z);
         
@@ -154,21 +155,35 @@ var playState = {
 
         moverCamara();
         if (rojo === true) {
-//            Fachada.avionesRojosVivos(function (arr) {
-//                for (let i = 0; i < arr.length; i++) {
-//                    if (arr[i] === false) {
-//                        aviones_rojos.destruirAvion(i);
-//                    }
-//                }
-//            });
+            /*Mover barco*/
             barco_rojo.moverBarco();
+            
+            /*Despegar avion*/
+            despegarAviones(aviones_rojos, barco_rojo, azul, rojo);
+            
             for (i = 0; i < aviones_rojos.largo(); i++) {
+                /*Mover avion*/
                 aviones_rojos.obtenerAvion(i).moverAMouse();
-                //test
-                if (fireButton.isDown) { /*TODO revisar esto, puede ser que si las balas
-                 *                                  son mas lentas y se suelta el boton de disparo,
-                 *                                  no detecte las colisiones.*/
-
+                
+                /*Aterrizaje avion*/
+                let avionBarcoSuperpuestos = game.physics.arcade.overlap(aviones_rojos.obtenerAvion(i).obtenerSpirte(), barco_rojo.getSprite(), barcoAvionRojoColisionan, null, this);
+                if (avionBarcoSuperpuestos) {
+                    aviones_rojos.obtenerAvion(i).aterrizar();
+                    var posAterrizaje = barco_rojo.getCantidadAviones();
+                    aviones_rojos.obtenerAvion(i).setId(posAterrizaje);
+                    /*Le digo al servidor que aterrizo el avion i*/
+                    Fachada.aterrizajeAvionRojo(i, function(){
+                        console.log("avion aterrizado en fachada.");
+                    });
+                }
+                
+                //Manejo de altura
+                if (cambiarAlturaAvion.isDown && cambiarAlturaAvion.downDuration(1)){
+                    aviones_rojos.obtenerAvion(i).cambiarAltura();
+                }
+                
+                /*Manejo de disparo*/
+                if (fireButton.isDown) {
                     aviones_rojos.obtenerAvion(i).disparar();
                     let tipoArmaAvion = aviones_rojos.obtenerAvion(i).obtenerTipoArma();
                     switch(tipoArmaAvion){
@@ -177,7 +192,6 @@ var playState = {
                                 if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
                                     let colision = game.physics.arcade.collide(aviones_rojos.obtenerAvion(i).getArma(), aviones_azules.obtenerAvion(y).obtenerSpirte(), collisionHandler);
                                     if (colision) {
-                                        console.log("azul: " + i + " rojo: " + y);
                                         Fachada.disparo_avion_avion(0, y.toString(), {
                                             callback: function () {},
                                             timeout: 5000,
@@ -201,83 +215,27 @@ var playState = {
                             break
                             
                         case TORPEDO:
+                            /*TODO terminar el de torpedo*/
                             break
                     }
                     
                 }
-                //test
             }
         }
 
         if (azul === true) {
+            /*Mover barco*/
             barco_azul.moverBarco();
-
-            //Presiono 1 para despegar avion id 1
-            if (despegarAvionAzul_1.isDown && despegarAvionAzul_1.downDuration(1) && barco_azul.getCantidadAviones() > 0) {    //emfernandez a terminar
-                //console.log("id avion:" + 1);
-                for (i = 0; i < aviones_azules.largo(); i++) {
-                    if (aviones_azules.obtenerAvion(i).getId() === 1 && aviones_azules.obtenerAvion(i).getBloqueado()===false) {
-                        barco_azul.despegarAvion();
-                        aviones_azules.obtenerAvion(i).setId(0);
-                        aviones_azules.obtenerAvion(i).setSprite(barco_azul.getSprite().position.x - 300, barco_azul.getSprite().position.y - 150);
-                        Fachada.despegueAvionAzul(i, function(){
-                            console.log("Avion despegado en fachada");
-                        });
-                    }
-                }
-            }
-
-            //Presiono 2 para despegar avion id 2
-            if (despegarAvionAzul_2.isDown && despegarAvionAzul_2.downDuration(1) && barco_azul.getCantidadAviones() > 0) {    //emfernandez a terminar
-                //console.log("id avion:" + 2);
-
-                for (i = 0; i < aviones_azules.largo(); i++) {
-                    if (aviones_azules.obtenerAvion(i).getId() === 2 && aviones_azules.obtenerAvion(i).getBloqueado()===false) {
-                        barco_azul.despegarAvion();
-                        aviones_azules.obtenerAvion(i).setId(0);
-                        aviones_azules.obtenerAvion(i).setSprite(barco_azul.getSprite().position.x - 300, barco_azul.getSprite().position.y - 100);
-                        Fachada.despegueAvionAzul(i, function(){
-                            console.log("Avion despegado en fachada");
-                        });
-                    }
-                }
-            }
-
-            //Presiono 3 para despegar avion id 3
-            if (despegarAvionAzul_3.isDown && despegarAvionAzul_3.downDuration(1) && barco_azul.getCantidadAviones() > 0) {    //emfernandez a terminar
-                //console.log("id avion:" + 3);
-
-                for (i = 0; i < aviones_azules.largo(); i++) {
-                    if (aviones_azules.obtenerAvion(i).getId() === 3 && aviones_azules.obtenerAvion(i).getBloqueado()===false) {
-                        barco_azul.despegarAvion();
-                        aviones_azules.obtenerAvion(i).setId(0);
-                        aviones_azules.obtenerAvion(i).setSprite(barco_azul.getSprite().position.x - 300, barco_azul.getSprite().position.y - 50);
-                        Fachada.despegueAvionAzul(i, function(){
-                            console.log("Avion despegado en fachada");
-                        });
-                    }
-                }
-            }
-
-            //Presiono 4 para despegar avion id 4
-            if (despegarAvionAzul_4.isDown && despegarAvionAzul_4.downDuration(1) && barco_azul.getCantidadAviones() > 0) {    //emfernandez a terminar
-                for (i = 0; i < aviones_azules.largo(); i++) {
-                    if (aviones_azules.obtenerAvion(i).getId() === 4 && aviones_azules.obtenerAvion(i).getBloqueado()===false) {                       
-                        barco_azul.despegarAvion();
-                        aviones_azules.obtenerAvion(i).setId(0);
-                        aviones_azules.obtenerAvion(i).setSprite(barco_azul.getSprite().position.x - 300, barco_azul.getSprite().position.y);
-                        Fachada.despegueAvionAzul(i, function(){
-                            console.log("Avion despegado en fachada");
-                        });
-                    }
-                }
-            }
-            //////////////////////////////////////
-
+            
+            /*Despegar avion*/
+            despegarAviones(aviones_azules, barco_azul, azul, rojo);
+            
             for (i = 0; i < aviones_azules.largo(); i++) {
+                /*Mover avion*/
                 aviones_azules.obtenerAvion(i).moverAMouse();
-                //aterrizaje de avion
-                let avionBarcoSuperpuestos = game.physics.arcade.overlap(aviones_azules.obtenerAvion(i).obtenerSpirte(), barco_azul.getSprite(), collisionHandler2, null, this);
+                
+                /*Aterrizaje avion*/
+                let avionBarcoSuperpuestos = game.physics.arcade.overlap(aviones_azules.obtenerAvion(i).obtenerSpirte(), barco_azul.getSprite(), barcoAvionAzulColisionan, null, this);
                 if (avionBarcoSuperpuestos) {
                     aviones_azules.obtenerAvion(i).aterrizar();
                     var posAterrizaje = barco_azul.getCantidadAviones();
@@ -287,26 +245,47 @@ var playState = {
                         console.log("avion aterrizado en fachada.");
                     });
                 }
-                //cambiarAlturaAvion
+                
+                //Manejo de altura
                 if (cambiarAlturaAvion.isDown && cambiarAlturaAvion.downDuration(1)){
                     aviones_azules.obtenerAvion(i).cambiarAltura();
                 }
+                
+                /*Manejo de disparo*/
                 if (fireButton.isDown) {
                     aviones_azules.obtenerAvion(i).disparar();
-                    for (y = 0; y < aviones_rojos.largo(); y++) {
-                        if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
-                            let colision = game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), aviones_rojos.obtenerAvion(y).obtenerSpirte(), collisionHandler);
-                            if (colision) {
-                                //console.log("azul: " + i + " rojo: " + y);
-                                Fachada.disparo_avion_avion(1, y.toString(), {
-                                    callback: function () {},
-                                    timeout: 5000,
-                                    errorHandler: function (mensaje) {
-                                        console.log("Error disparo rojo->azul: " + mensaje);
+                    let tipoArmaAvion = aviones_rojos.obtenerAvion(i).obtenerTipoArma();
+                    switch(tipoArmaAvion){
+                        case METRALLETA:
+                            for (y = 0; y < aviones_rojos.largo(); y++) {
+                                if (numeroRandom(1, 20) >= 10) {                //este parametro levantarlo del archivo de configuracion (va de la mano con el grado de difucuotad)
+                                    let colision = game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), aviones_rojos.obtenerAvion(y).obtenerSpirte(), collisionHandler);
+                                    if (colision) {
+                                        Fachada.disparo_avion_avion(1, y.toString(), {
+                                            callback: function () {},
+                                            timeout: 5000,
+                                            errorHandler: function (mensaje) {
+                                                console.log("Error disparo rojo->azul: " + mensaje);
+                                            }
+                                        });
                                     }
+                                }
+                            }
+                            break;
+                        
+                        case BOMBA:
+                            let colision = game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), barco_rojo.getSprite(), colisionBombaBarco)
+                            if(colision){
+                                console.log("colision: " + colision);
+                                Fachada.disparo_avion_barco(1, i.toString(),function(){
+                                    console.log("respuesta fachada");
                                 });
                             }
-                        }
+                            break;
+                            
+                        case TORPEDO:
+                            /*TODO terminar el de torpedo*/
+                            break;
                     }
                 }
             }
@@ -331,9 +310,8 @@ function checkOverlap(spriteA, spriteB) {
 }
 ;
 
-function collisionHandler2(a, b) {
-    //if (a.visible === true) {
-    //console.log('ANTES= cantidad de aviones: ' + barco_azul.getCantidadAviones());
+function barcoAvionAzulColisionan(a, b) {
+    /*a es el avion, y b es el barco*/
     a.kill();
     a.visible = false;
     if (barco_azul.getCantidadAviones() === 0) {
@@ -349,11 +327,27 @@ function collisionHandler2(a, b) {
         barco_azul.setearSprite(4);
     }
     barco_azul.agregarCantidadAviones();
-    //console.log('DESPUES= cantidad de aviones: ' + barco_azul.getCantidadAviones());
+};
 
-    //}
-}
-;
+function barcoAvionRojoColisionan(a, b) {
+    /*a es el avion, y b es el barco*/
+    a.kill();
+    a.visible = false;
+    if (barco_rojo.getCantidadAviones() === 0) {
+        barco_rojo.setearSprite(1);
+    }
+    if (barco_rojo.getCantidadAviones() === 1) {
+        barco_rojo.setearSprite(2);
+    }
+    if (barco_rojo.getCantidadAviones() === 2) {
+        barco_rojo.setearSprite(3);
+    }
+    if (barco_rojo.getCantidadAviones() === 3) {
+        barco_rojo.setearSprite(4);
+    }
+    barco_rojo.agregarCantidadAviones();
+};
+
 
 function collisionHandler(a, b) {
     b.kill();
@@ -384,23 +378,121 @@ function sinAviones(arr){
 function moverCamara(){
     if (wasd.up.isDown)
     {
-        game.camera.y -= 4;
+        game.camera.y -= 10;
     }
     else if (wasd.down.isDown)
     {
-        game.camera.y += 4;
+        game.camera.y += 10;
     }
 
     if (wasd.left.isDown)
     {
-        game.camera.x -= 4;
+        game.camera.x -= 10;
     }
     else if (wasd.right.isDown)
     {
-        game.camera.x += 4;
+        game.camera.x += 10;
     }
 }
 
 function colisionBombaBarco(a, b){
     b.kill();
+}
+
+
+/*Le paso el objeto de aviones y el barco correspondiente al equipo, y si es azul o rojo*/
+function despegarAviones(aviones, barco, azul, rojo){
+    //Presiono 1 para despegar avion id 1
+    if((despegarAvion_1.isDown) && (despegarAvion_1.downDuration(1)) && (barco.getCantidadAviones() > 0)){
+        for (i = 0; i < aviones.largo(); i++) {
+            if (aviones.obtenerAvion(i).getId() === 1 && aviones.obtenerAvion(i).getBloqueado()===false) {
+                barco.despegarAvion();
+                aviones.obtenerAvion(i).setId(0);
+                aviones.obtenerAvion(i).setSprite(barco.getSprite().position.x - 300, barco.getSprite().position.y - 150);
+                if(azul){
+                    Fachada.despegueAvionAzul(i, function(){
+                        console.log("Avion despegado en fachada");
+                    });
+                }
+                else{
+                    if(rojo){
+                       Fachada.despegueAvionRojo(i, function(){
+                            console.log("Avion despegado en fachada");
+                        }); 
+                    }
+                }
+            }
+        }
+    }
+
+    //Presiono 2 para despegar avion id 2
+    if (despegarAvion_2.isDown && despegarAvion_2.downDuration(1) && barco.getCantidadAviones() > 0) {    //emfernandez a terminar
+        for (i = 0; i < aviones.largo(); i++) {
+            if (aviones.obtenerAvion(i).getId() === 2 && aviones.obtenerAvion(i).getBloqueado()===false) {
+                barco.despegarAvion();
+                aviones.obtenerAvion(i).setId(0);
+                aviones.obtenerAvion(i).setSprite(barco.getSprite().position.x - 300, barco.getSprite().position.y - 100);
+                if(azul){
+                    Fachada.despegueAvionAzul(i, function(){
+                        console.log("Avion despegado en fachada");
+                    });
+                }
+                else{
+                    if(rojo){
+                       Fachada.despegueAvionRojo(i, function(){
+                            console.log("Avion despegado en fachada");
+                        }); 
+                    }
+                }
+            }
+        }
+    }
+
+    //Presiono 3 para despegar avion id 3
+    if (despegarAvion_3.isDown && despegarAvion_3.downDuration(1) && barco.getCantidadAviones() > 0) {    //emfernandez a terminar
+        //console.log("id avion:" + 3);
+
+        for (i = 0; i < aviones.largo(); i++) {
+            if (aviones.obtenerAvion(i).getId() === 3 && aviones.obtenerAvion(i).getBloqueado()===false) {
+                barco.despegarAvion();
+                aviones.obtenerAvion(i).setId(0);
+                aviones.obtenerAvion(i).setSprite(barco.getSprite().position.x - 300, barco.getSprite().position.y - 50);
+                if(azul){
+                    Fachada.despegueAvionAzul(i, function(){
+                        console.log("Avion despegado en fachada");
+                    });
+                }
+                else{
+                    if(rojo){
+                       Fachada.despegueAvionRojo(i, function(){
+                            console.log("Avion despegado en fachada");
+                        }); 
+                    }
+                }
+            }
+        }
+    }
+
+    //Presiono 4 para despegar avion id 4
+    if (despegarAvion_4.isDown && despegarAvion_4.downDuration(1) && barco.getCantidadAviones() > 0) {    //emfernandez a terminar
+        for (i = 0; i < aviones.largo(); i++) {
+            if (aviones.obtenerAvion(i).getId() === 4 && aviones.obtenerAvion(i).getBloqueado()===false) {                       
+                barco.despegarAvion();
+                aviones.obtenerAvion(i).setId(0);
+                aviones.obtenerAvion(i).setSprite(barco.getSprite().position.x - 300, barco.getSprite().position.y);
+                if(azul){
+                    Fachada.despegueAvionAzul(i, function(){
+                        console.log("Avion despegado en fachada");
+                    });
+                }
+                else{
+                    if(rojo){
+                       Fachada.despegueAvionRojo(i, function(){
+                            console.log("Avion despegado en fachada");
+                        }); 
+                    }
+                }
+            }
+        }
+    }
 }

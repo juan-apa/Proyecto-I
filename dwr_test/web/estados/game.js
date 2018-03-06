@@ -1,6 +1,8 @@
 /*Inicio el canvas del juego*/
-var game = new Phaser.Game(2048,
-        900,
+/* global bootState, loadState, menuState, playState, looseState, winState */
+
+var game = new Phaser.Game(1280,
+        1024,
         Phaser.CANVAS,
         'Juego Midway'
 );
@@ -24,10 +26,10 @@ var barco_azul;
 var barco_rojo;
 var flechas;
 var informacion;
-var despegarAvionAzul_1;
-var despegarAvionAzul_2;
-var despegarAvionAzul_3;
-var despegarAvionAzul_4;
+var despegarAvion_1;
+var despegarAvion_2;
+var despegarAvion_3;
+var despegarAvion_4;
 var llamar = 0;
 var x = 0;
 var y = 0;

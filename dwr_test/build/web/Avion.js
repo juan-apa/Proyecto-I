@@ -92,6 +92,17 @@ Avion.prototype.getAltura = function(){
     return ret;
 };
 
+Avion.prototype.getAltura2 = function(){
+    var ret;
+    if (this.altura===1){
+        ret = 1;
+    }
+    else {
+        ret = 2;
+    }    
+    return ret;
+};
+
 Avion.prototype.cambiarAltura = function(){
     if (this.altura===1){
         this.altura=2;

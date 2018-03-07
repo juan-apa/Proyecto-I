@@ -16,6 +16,7 @@ import persistencia.ExceptionConfiguracion;
 public class Fachada {
     public final static int EQUIPO_AZUL = 0;
     public final static int EQUIPO_ROJO = 1;
+    
     private DAOConfiguraciones configuraciones;
     private static Fachada instancia;
     private Aviones avionesAzules;
@@ -114,7 +115,9 @@ public class Fachada {
                 this.barcoAzul.getRot(),
                 this.barcoAzul.getVelocidad(),
                 this.barcoAzul.isVivo(),
-                this.barcoAzul.getAviones().obtenerAvionesVivos()
+                this.barcoAzul.getAviones().obtenerAvionesVivos(),
+                this.avionesAzules.alturas(),
+                this.avionesAzules.getCombustibles()
         );
         
         return estAzul;
@@ -133,7 +136,9 @@ public class Fachada {
                 this.barcoRojo.getRot(),
                 this.barcoRojo.getVelocidad(),
                 this.barcoRojo.isVivo(),
-                this.barcoRojo.getAviones().obtenerAvionesVivos()
+                this.barcoRojo.getAviones().obtenerAvionesVivos(),
+                this.avionesRojos.alturas(),
+                this.avionesRojos.getCombustibles()
         );
         
         return estRojo;
@@ -146,12 +151,13 @@ public class Fachada {
         this.avionesAzules.updateRot(vo.getRot_aviones());
         this.avionesAzules.updateVel(vo.getVelocidadAviones());
         this.avionesAzules.updateMuniciones(vo.getMunicionesAviones());
+        this.avionesAzules.updateAlturas(vo.getAlturas());
         this.barcoAzul.setX(vo.getX_barco());
         this.barcoAzul.setY(vo.getY_barco());
         this.barcoAzul.setRot(vo.getRot_barco());
         this.barcoAzul.setVelocidad(vo.getVelocidadBarco());
         this.barcoAzul.setVivo(vo.isBarcoVivo());
-        this.barcoAzul.getAviones().updateAvionesVivos(vo.getAvionesEnBarco());        
+        this.barcoAzul.getAviones().updateAvionesVivos(vo.getAvionesEnBarco());
     }
     
     public void updateEstadoRojo(VOEstado vo){
@@ -161,12 +167,18 @@ public class Fachada {
         this.avionesRojos.updateRot(vo.getRot_aviones());
         this.avionesRojos.updateVel(vo.getVelocidadAviones());
         this.avionesRojos.updateMuniciones(vo.getMunicionesAviones());
+        this.avionesRojos.updateAlturas(vo.getAlturas());
         this.barcoRojo.setX(vo.getX_barco());
         this.barcoRojo.setY(vo.getY_barco());
         this.barcoRojo.setRot(vo.getRot_barco());
         this.barcoRojo.setVelocidad(vo.getVelocidadBarco());
         this.barcoRojo.setVivo(vo.isBarcoVivo());
         this.barcoRojo.getAviones().updateAvionesVivos(vo.getAvionesEnBarco());        
+    }
+    
+    public void choque_avion_avion(String nombreAvionAzul, String nombreAvionRojo){
+        this.avionesAzules.destruirAvion(nombreAvionAzul);
+        this.avionesRojos.destruirAvion(nombreAvionRojo);
     }
     
     /**
@@ -189,27 +201,41 @@ public class Fachada {
     
     public void disparo_avion_barco(int equipoObjetivo, String nombreAvion){
         if(equipoObjetivo == EQUIPO_AZUL){
+            int numeroAvionQueDisparo = Integer.parseInt(nombreAvion);
+            int tipoMunicion = this.avionesRojos.obtenerAvion(numeroAvionQueDisparo).getArma().getTipoMunicion();
+            
             if(this.barcoAzul.tieneAviones()){
-                Avion aMatar = this.barcoAzul.getAviones().popAvion();
-                String nombreAvionAMatar = aMatar.getNombre();
-                this.avionesAzules.destruirAvion(nombreAvionAMatar);
+                if(tipoMunicion == Arma.MUNICION_BOMBA){
+                    this.barcoAzul.recibeDisparoConAvionDeBomba();
+                }
+                else{
+                    if(tipoMunicion == Arma.MUNICION_TORPEDO){
+                        this.barcoAzul.recibeDisparoSinAviones();
+                    }
+                }
             }
             else{
-                int numeroAvionQueDisparo = Integer.parseInt(nombreAvion);
-                int tipoMunicion = this.avionesRojos.obtenerAvion(numeroAvionQueDisparo).getArma().getTipoMunicion();
-                switch(tipoMunicion){
-                    case Arma.MUNICION_BOMBA:
-                        this.barcoAzul.recibeDisparoSinAvionesDeBomba();
-                        break;
-                    case Arma.MUNICION_TORPEDO:
-                        this.barcoAzul.recibeDisparoSinAvionesDeBomba();
-                        break;
-                }
+                this.barcoAzul.recibeDisparoSinAviones();
             }
         }
         else{
             if(equipoObjetivo == EQUIPO_ROJO){
-                
+                int numeroAvionQueDisparo = Integer.parseInt(nombreAvion);
+                int tipoMunicion = this.avionesAzules.obtenerAvion(numeroAvionQueDisparo).getArma().getTipoMunicion();
+
+                if(this.barcoRojo.tieneAviones()){
+                    if(tipoMunicion == Arma.MUNICION_BOMBA){
+                        this.barcoRojo.recibeDisparoConAvionDeBomba();
+                    }
+                    else{
+                        if(tipoMunicion == Arma.MUNICION_TORPEDO){
+                            this.barcoRojo.recibeDisparoSinAviones();
+                        }
+                    }
+                }
+                else{
+                    this.barcoRojo.recibeDisparoSinAviones();
+                }
             }
         }
     }
@@ -232,6 +258,7 @@ public class Fachada {
     public void aterrizajeAvionAzul(int posAvion){
         Avion aux = this.avionesAzules.obtenerAvion(posAvion);
         this.barcoAzul.aterrizajeAvion(aux);
+        
         aux = null;
     }
     public void aterrizajeAvionRojo(int posAvion){
@@ -247,4 +274,19 @@ public class Fachada {
         this.barcoRojo.despegueAvion(posAvion);
     }
     
+    public void cambioAlturaAvion(int equipo, int indiceAvion, int alturaNueva){
+        if(equipo == EQUIPO_AZUL){
+            this.avionesAzules.obtenerAvion(indiceAvion).setAltura(alturaNueva);
+        }
+        else{
+            if(equipo == EQUIPO_ROJO){
+                this.avionesRojos.obtenerAvion(indiceAvion).setAltura(alturaNueva);
+            }
+        }
+    }
+    
+    public void disminuirCombustibles(){
+        this.avionesAzules.disminuirCombustibles();
+        this.avionesRojos.disminuirCombustibles();
+    }
 }

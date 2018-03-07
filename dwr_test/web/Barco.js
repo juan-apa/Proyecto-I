@@ -28,7 +28,6 @@ function Barco(nombre){
     this.sprite.width = 450;
     this.sprite.height = 128;
     this.sprite.anchor.set(0.5);
-//    this.sprite.inputEnabled(true);
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 }
 
@@ -95,10 +94,16 @@ Barco.prototype.actualizarPosicion = function(vop){
     this.sprite.rotation = vop.rot;
 };
 
+Barco.prototype.actualizarPosicion2 = function(x, y, r){
+    this.sprite.x = x;
+    this.sprite.y = y;
+    this.sprite.rotation = r;
+};
+
 Barco.prototype.setearSprite = function(valor){
     //console.log('valor==='+valor);
     if(valor===0){
-        this.sprite.loadTexture('barcoo', 0);
+        this.sprite.loadTexture('barco_0avion', 0);
     }
     if(valor===1){
         this.sprite.loadTexture('barco_1avion', 0);
@@ -146,4 +151,22 @@ Barco.prototype.isVivo = function(){
 
 Barco.prototype.destruir = function(){
   this.vivo = false;  
+  this.sprite.kill();
+};
+
+Barco.prototype.actualizarSpriteBarcoSegunAviones =  function (){
+//    console.log()
+    this.setearSprite(this.cantAviones);
+};
+
+Barco.prototype.updateAvionesEnBarco = function(arrBool){
+    let cant = 0;
+    
+    for(let i = 0; i < arrBool.length; i++){
+        if(arrBool[i] == true){
+            cant++;
+        }
+    }
+    this.cantAviones = cant;
+    this.actualizarSpriteBarcoSegunAviones();
 };

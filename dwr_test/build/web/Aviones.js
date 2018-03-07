@@ -72,6 +72,15 @@ Aviones.prototype.actualizarPosicionesAviones = function (posiciones) {
     }
 };
 
+Aviones.prototype.actualizarPosicionesAviones2 = function (x, y, r) {
+    for (let i = 0; i < this.aviones.length; i++) {
+        this.aviones[i].sprite.x = x[i];
+        this.aviones[i].sprite.y = y[i];
+        this.aviones[i].sprite.rotation = r[i];
+    }
+};
+
+
 Aviones.prototype.destruirAvion = function(i){
     try{
        let indiceEnGrupo = this.grupo.getChildIndex(this.aviones[i].sprite);
@@ -86,7 +95,7 @@ Aviones.prototype.destruirAvion = function(i){
 
 Aviones.prototype.disminuirCombustible = function(){
     for(let i = 0; i < this.aviones.length; i++){
-        if((! this.aviones[i].isAterrizado()) && (this.aviones[i].isVivo())){
+        if((!this.aviones[i].aterrizado) && this.aviones[i].vivo){
             this.aviones[i].disminuirCombustible();
             if(this.aviones[i].sinCombustible()){
                 this.destruirAvion(i);
@@ -112,13 +121,46 @@ Aviones.prototype.updateAvionesVivos = function(arrBooleano){
   }
 };
 
+Aviones.prototype.updateArmas = function(armas){
+    for(let i = 0; i < this.aviones.length; i++){
+        this.aviones[i].cambiarMunicion(armas[i]);
+    }
+};
+
 Aviones.prototype.aterrizarAviones = function(arr){
     for(let i = 0; i < this.aviones.length; i++){
         if(arr[i]){
+            this.aviones[i].aterrizado = true;
             this.aviones[i].sprite.visible = false;
         }
         else{
+            this.aviones[i].aterrizado = false;
             this.aviones[i].sprite.visible = true;
         }
+    }
+};
+
+Aviones.prototype.exconderAviones = function(arr){
+    for(let i = 0; i < this.aviones.length; i++){
+        if(arr[i]){
+            this.aviones[i].sprite.visible = false;
+//            this.aviones[i].sprite.body = false;
+        }
+        else{
+            this.aviones[i].sprite.visible = true;
+//            this.aviones[i].sprite.body = true;
+        }
+    }
+};
+
+Aviones.prototype.updateAlturasAviones = function(alturas){
+    for(let i = 0; i < this.aviones.length; i++){
+        this.aviones[i].setAltura(alturas[i]);
+    }
+};
+
+Aviones.prototype.updateCombustibles = function(combustibles){
+    for(let i = 0; i < this.aviones.length; i++){
+        this.aviones[i].setCombustible(combustibles[i]);
     }
 };

@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package logica;
 
 /**
- * 
+ *
  * @author Sammy Guergachi <sguergachi at gmail.com>
  */
 public class VOEstado {
+
     private boolean[] avionesVivos;
     private double[] x_aviones;
     private double[] y_aviones;
@@ -23,8 +23,10 @@ public class VOEstado {
     private int velocidadBarco;
     private boolean barcoVivo;
     private boolean[] avionesEnBarco;
+    private int[] alturas;
+    private int[] combustibles;
 
-    public VOEstado(boolean[] avionesVivos, double[] x_aviones, double[] y_aviones, double[] rot_aviones, int[] velocidadAviones, int[] municionesAviones, double x_barco, double y_barco, double rot_barco, int velocidadBarco, boolean barcoVivo, boolean[] avionesEnBarco) {
+    public VOEstado(boolean[] avionesVivos, double[] x_aviones, double[] y_aviones, double[] rot_aviones, int[] velocidadAviones, int[] municionesAviones, double x_barco, double y_barco, double rot_barco, int velocidadBarco, boolean barcoVivo, boolean[] avionesEnBarco, int[] alturas, int[] combustibles) {
         this.avionesVivos = avionesVivos;
         this.x_aviones = x_aviones;
         this.y_aviones = y_aviones;
@@ -37,6 +39,8 @@ public class VOEstado {
         this.velocidadBarco = velocidadBarco;
         this.barcoVivo = barcoVivo;
         this.avionesEnBarco = avionesEnBarco;
+        this.alturas = alturas;
+        this.combustibles = combustibles;
     }
 
     public boolean[] getAvionesVivos() {
@@ -134,5 +138,20 @@ public class VOEstado {
     public void setAvionesEnBarco(boolean[] avionesEnBarco) {
         this.avionesEnBarco = avionesEnBarco;
     }
-    
+
+    public int[] getAlturas() {
+        return this.alturas;
+    }
+
+    public void setAlturas(int[] alturas) {
+        this.alturas = alturas;
+    }
+
+    public int[] getCombustibles() {
+        return this.combustibles;
+    }
+
+    public void setCombustibles(int[] combustibles) {
+        this.combustibles = combustibles;
+    }
 }

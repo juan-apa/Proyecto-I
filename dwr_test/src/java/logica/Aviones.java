@@ -17,8 +17,9 @@ public class Aviones {
     public Aviones(int cantAviones) {
         this.cantAviones = cantAviones;
         this.aviones = new Avion[this.cantAviones];
+        int random = (int) (Math.floor(Math.random() * 100));
         for(int i = 0; i < this.cantAviones; i++){
-            this.aviones[i] = new Avion();
+            this.aviones[i] = new Avion(random, i*150, 0);
         }
     }
     
@@ -194,6 +195,14 @@ public class Aviones {
         return ret;
     }
     
+    public int[] getCombustibles(){
+        int[] ret = new int[this.cantAviones];
+        for(int i = 0; i < this.cantAviones; i++){
+            ret[i] = this.aviones[i].getComustible();
+        }
+        return ret;
+    }
+    
     public void updateCombustible(int[] combustibles){
         for(int i = 0; i < this.aviones.length; i++){
             this.aviones[i].setCombustible(combustibles[i]);
@@ -242,4 +251,31 @@ public class Aviones {
             this.aviones[i] = null;
         }
     }
+    
+    public int[] alturas(){
+        int[] ret = new int[this.cantAviones];
+        for(int i = 0; i < this.cantAviones; i++){
+            ret[i] = this.aviones[i].getAltura();
+        }
+        return ret;
+    }
+    
+    public void updateAlturas(int[] alturas){
+        for(int i = 0; i < this.cantAviones; i++){
+            this.aviones[i].setAltura(alturas[i]);
+        }
+    }
+
+    void disminuirCombustibles() {
+        for(int i = 0; i < this.cantAviones; i++){
+            if(this.aviones[i].isVivo() && (!this.aviones[i].isAterrizado())){
+                int nuevoCombustible = this.aviones[i].getComustible() - 1;
+                this.aviones[i].setCombustible(nuevoCombustible);
+                if(nuevoCombustible == 0){
+                    this.destruirAvion(String.valueOf(i));
+                }
+            }
+        }
+    }
+    
 }

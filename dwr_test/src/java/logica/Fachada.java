@@ -258,6 +258,7 @@ public class Fachada {
     public void aterrizajeAvionAzul(int posAvion){
         Avion aux = this.avionesAzules.obtenerAvion(posAvion);
         this.barcoAzul.aterrizajeAvion(aux);
+        
         aux = null;
     }
     public void aterrizajeAvionRojo(int posAvion){
@@ -282,5 +283,10 @@ public class Fachada {
                 this.avionesRojos.obtenerAvion(indiceAvion).setAltura(alturaNueva);
             }
         }
+    }
+    
+    public void disminuirCombustibles(){
+        this.avionesAzules.disminuirCombustibles();
+        this.avionesRojos.disminuirCombustibles();
     }
 }

@@ -94,10 +94,16 @@ Barco.prototype.actualizarPosicion = function(vop){
     this.sprite.rotation = vop.rot;
 };
 
+Barco.prototype.actualizarPosicion2 = function(x, y, r){
+    this.sprite.x = x;
+    this.sprite.y = y;
+    this.sprite.rotation = r;
+};
+
 Barco.prototype.setearSprite = function(valor){
     //console.log('valor==='+valor);
     if(valor===0){
-        this.sprite.loadTexture('barcoo', 0);
+        this.sprite.loadTexture('barco_0avion', 0);
     }
     if(valor===1){
         this.sprite.loadTexture('barco_1avion', 0);
@@ -148,17 +154,19 @@ Barco.prototype.destruir = function(){
   this.sprite.kill();
 };
 
-Barco.prototype.setearSpriteCantAviones =  function (){
+Barco.prototype.actualizarSpriteBarcoSegunAviones =  function (){
+//    console.log()
     this.setearSprite(this.cantAviones);
 };
 
 Barco.prototype.updateAvionesEnBarco = function(arrBool){
-    let cant;
-    for(let i = 0; i < this.cantAviones; i++){
-        if(arrBool[i]){
+    let cant = 0;
+    
+    for(let i = 0; i < arrBool.length; i++){
+        if(arrBool[i] == true){
             cant++;
         }
     }
     this.cantAviones = cant;
-    this.setearSpriteCantAviones();
-}
+    this.actualizarSpriteBarcoSegunAviones();
+};

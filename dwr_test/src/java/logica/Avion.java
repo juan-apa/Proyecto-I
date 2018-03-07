@@ -12,6 +12,7 @@ package logica;
 public class Avion extends Vehiculo {
     public static final int ALTURA_BAJA = 0;
     public static final int ALTURA_ALTA = 1;
+    public static final int MAX_COMBUSTIBLE = 20;
     
     private boolean vivo;
     private int combustible;
@@ -30,6 +31,7 @@ public class Avion extends Vehiculo {
         this.vivo = true;
         this.arma = new Arma(Arma.MUNICION_BOMBA);
         this.altura = Avion.ALTURA_BAJA;
+        this.combustible = MAX_COMBUSTIBLE;
     }
 
     public Avion(String nombre, double x, double y, double rot) {
@@ -40,6 +42,7 @@ public class Avion extends Vehiculo {
         this.vivo = true;
         this.arma = new Arma(Arma.MUNICION_METRALLETA);
         this.altura = Avion.ALTURA_BAJA;
+        this.combustible = MAX_COMBUSTIBLE;
     }
     
     public Avion(String nombre, double x, double y, double rot, Arma arma) {
@@ -50,6 +53,7 @@ public class Avion extends Vehiculo {
         this.vivo = true;
         this.arma = arma;
         this.altura = Avion.ALTURA_BAJA;
+        this.combustible = MAX_COMBUSTIBLE;
     }
 
     public Avion(String nombre, double x, double y, double rot, boolean vivo) {
@@ -60,6 +64,7 @@ public class Avion extends Vehiculo {
         this.vivo = vivo;
         this.arma = new Arma(Arma.MUNICION_METRALLETA);
         this.altura = Avion.ALTURA_BAJA;
+        this.combustible = MAX_COMBUSTIBLE;
     }
 
     public Avion(double x, double y, double rot) {
@@ -69,6 +74,7 @@ public class Avion extends Vehiculo {
         this.vivo = true;
         this.arma = new Arma(Arma.MUNICION_METRALLETA);
         this.altura = Avion.ALTURA_BAJA;
+        this.combustible = MAX_COMBUSTIBLE;
     }
     
     public Avion(double x, double y, double rot, int altura) {
@@ -78,6 +84,7 @@ public class Avion extends Vehiculo {
         this.vivo = true;
         this.arma = new Arma(Arma.MUNICION_METRALLETA);
         this.altura = altura;
+        this.combustible = MAX_COMBUSTIBLE;
     }
 
     public boolean isVivo() {
@@ -129,5 +136,9 @@ public class Avion extends Vehiculo {
     
     public void setAltura(int altura){
         this.altura = altura;
+    }
+
+    void recargarCombustible() {
+        this.combustible = MAX_COMBUSTIBLE;
     }
 }

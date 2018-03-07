@@ -17,8 +17,9 @@ public class Aviones {
     public Aviones(int cantAviones) {
         this.cantAviones = cantAviones;
         this.aviones = new Avion[this.cantAviones];
+        int random = (int) (Math.floor(Math.random() * 100));
         for(int i = 0; i < this.cantAviones; i++){
-            this.aviones[i] = new Avion();
+            this.aviones[i] = new Avion(random, i*150, 0);
         }
     }
     
@@ -262,6 +263,18 @@ public class Aviones {
     public void updateAlturas(int[] alturas){
         for(int i = 0; i < this.cantAviones; i++){
             this.aviones[i].setAltura(alturas[i]);
+        }
+    }
+
+    void disminuirCombustibles() {
+        for(int i = 0; i < this.cantAviones; i++){
+            if(this.aviones[i].isVivo() && (!this.aviones[i].isAterrizado())){
+                int nuevoCombustible = this.aviones[i].getComustible() - 1;
+                this.aviones[i].setCombustible(nuevoCombustible);
+                if(nuevoCombustible == 0){
+                    this.destruirAvion(String.valueOf(i));
+                }
+            }
         }
     }
     

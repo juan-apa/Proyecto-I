@@ -56,6 +56,11 @@ var playState = {
 
         cambiarAlturaAvion = game.input.keyboard.addKey(Phaser.KeyCode.Z);
 
+
+        //test visibilidad
+
+
+
         /*Creacion loop disminucion combustibles*/
 //        game.time.events.loop(1000, this.disminuirCombustible, this);
     },
@@ -227,12 +232,20 @@ var playState = {
             /*Mover barco*/
             barco_azul.moverBarco();
 
+            //visibilidad 1 (abajo esta el paso 2)
+            for (i = 0; i < aviones_rojos.largo(); i++) {
+                aviones_rojos.obtenerAvion(i).obtenerSpirte().visible = false;
+            }
+
+
             /*Despegar avion*/
             despegarAviones(aviones_azules, barco_azul, azul, rojo);
 
             for (i = 0; i < aviones_azules.largo(); i++) {
                 /*Mover avion*/
                 aviones_azules.obtenerAvion(i).moverAMouse();
+
+
 
                 /*Aterrizaje avion*/
                 let avionBarcoSuperpuestos = game.physics.arcade.overlap(aviones_azules.obtenerAvion(i).obtenerSpirte(), barco_azul.getSprite(), barcoAvionAzulColisionan, null, this);
@@ -251,7 +264,7 @@ var playState = {
                     aviones_azules.obtenerAvion(i).cambiarAltura();
                 }
 
-                //Colision entre aviones enemigos
+                //Colision entre aviones enemigos             PARA TERMINAR +%)($_)%*$)%*)($&%)($*%)$
                 for (y = 0; y < aviones_rojos.largo(); y++) {
                     if (aviones_azules.obtenerAvion(i).getAltura2() === aviones_rojos.obtenerAvion(i).getAltura2()) {
                         //game.physics.arcade.collide(aviones_azules.obtenerAvion(i).obtenerSpirte(), aviones_rojos.obtenerAvion(i).obtenerSpirte());
@@ -265,6 +278,10 @@ var playState = {
                                 }
                             });
                         }
+                    }
+                    //visibilidad 2
+                    if (visibilidad(aviones_azules.obtenerAvion(i).obtenerSpirte().x, aviones_azules.obtenerAvion(i).obtenerSpirte().y, aviones_rojos.obtenerAvion(y).obtenerSpirte().x, aviones_rojos.obtenerAvion(y).obtenerSpirte().y) <= 300) {
+                        aviones_rojos.obtenerAvion(y).mostrarSprite();
                     }
 
                 }
@@ -316,6 +333,14 @@ var playState = {
         Fachada.updateCombustibleRojo(aviones_rojos.obtenerCombustibles(), function () {});
     }
 };
+
+
+function visibilidad(x1, y1, x2, y2) {
+    var dx = x1 - x2;
+    var dy = y1 - y2;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+;
 
 
 function checkOverlap(spriteA, spriteB) {

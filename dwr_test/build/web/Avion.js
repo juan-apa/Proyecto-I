@@ -16,6 +16,7 @@ function Avion(nombreAvion, x, y, combustible){
     this.aterrizado = false;
     this.bloqueado = false;
     this.id = 0;
+    this.visible = true;
     
     this.sprite = game.add.sprite(x, y, 'block');
     this.sprite.anchor.set(0.5);
@@ -38,6 +39,18 @@ function Avion(nombreAvion, x, y, combustible){
 Avion.prototype.obtenerSpirte = function(){
     return this.sprite;
 };
+
+Avion.prototype.ocultarSprite = function(){
+    this.visible = false;
+    this.sprite.visible = false;
+};
+
+Avion.prototype.mostrarSprite = function(){
+    this.visible = true;
+    this.sprite.visible = true;
+};
+
+
 
 Avion.prototype.setSprite = function(x,y){
     this.sprite.reset(x, y);

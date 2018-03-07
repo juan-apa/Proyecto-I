@@ -1,8 +1,8 @@
 /*Class Avion.js*/
 /* global game, parametros, Phaser, BOMBA, informacion */
 
-const ALTURA_BAJA = 1;
-const ALTURA_ALTA = 2;
+const ALTURA_BAJA = 0;
+const ALTURA_ALTA = 1;
 
 function Avion(nombreAvion, x, y, combustible){
     this.maxBalas = 200;
@@ -71,8 +71,6 @@ Avion.prototype.getId = function(){
     return this.id;
 };
 
-
-
 Avion.prototype.disparar = function(){
     if (this.seleccionado===true){
        this.cantBalas--;
@@ -96,7 +94,7 @@ Avion.prototype.recargar = function(){
 
 Avion.prototype.getAltura = function(){
     var ret;
-    if (this.altura===1){
+    if (this.altura===ALTURA_BAJA){
         ret = 'ALTURA BAJA';
     }
     else {
@@ -106,29 +104,22 @@ Avion.prototype.getAltura = function(){
 };
 
 Avion.prototype.getAltura2 = function(){
-    var ret;
-    if (this.altura===1){
-        ret = 1;
-    }
-    else {
-        ret = 2;
-    }    
-    return ret;
+    return this.altura;
 };
 
 Avion.prototype.cambiarAltura = function(){
-    if (this.altura===1){
-        this.altura=2;
+    if (this.altura===ALTURA_BAJA){
+        this.altura=ALTURA_ALTA;
     }
     else {
-        this.altura=1;
+        this.altura=ALTURA_BAJA;
     }    
 };
 
 
 Avion.prototype.moverAMouse = function(){
     if(this.seleccionado){
-        informacion.setText("Municion: "+this.getMunicion() + " Tipo Municion: METRALLETA" + "Altura Actual: " +this.getAltura());
+        informacion.setText("Municion: "+this.getMunicion() + " Tipo Municion: " + this.arma.tipoArma + " Altura Actual: " +this.getAltura());
         mouse_x = game.input.x;
         mouse_y = game.input.y;
         if (game.input.mousePointer.isDown){
@@ -138,8 +129,6 @@ Avion.prototype.moverAMouse = function(){
             {
                 this.sprite.body.velocity.setTo(0, 0);
             }
-            /*TODO modificar para que la camara siga al mouse*/
-//            game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1);
         }
         else{
             this.sprite.body.velocity.setTo(0,0);
@@ -208,4 +197,16 @@ Avion.prototype.obtenerCombustible = function(){
 
 Avion.prototype.obtenerTipoArma = function(){
     return this.arma.tipoArma;
+};
+
+Avion.prototype.setAltura = function(altura){
+    this.altura = altura;
+};
+
+Avion.prototype.setCombustible = function(combustible){
+    this.combustible = combustible;
+};
+
+Avion.prototype.cambiarMunicion = function(tipoMunicion){
+    this.arma.cambiarMunicion(tipoMunicion);
 };

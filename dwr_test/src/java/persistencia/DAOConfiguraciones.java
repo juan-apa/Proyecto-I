@@ -12,8 +12,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -25,7 +23,7 @@ public class DAOConfiguraciones {
     public DAOConfiguraciones() throws ExceptionConfiguracion {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            this.conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","root");
+            this.conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/","admin","admin");
         } catch (ClassNotFoundException ex) {
             throw new ExceptionConfiguracion(ExceptionConfiguracion.ERROR_OBTENER_CONFIGURACIONES);
         } catch (SQLException ex) {

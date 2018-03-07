@@ -37,6 +37,8 @@ var azul = false;
 var rojo = false;
 var informacion;
 var wasd;
+var EQUIPO_AZUL = 0;
+var EQUIPO_ROJO = 1;
 
 //test:
 var huboImpacto = false;

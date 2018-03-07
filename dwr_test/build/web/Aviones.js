@@ -112,13 +112,33 @@ Aviones.prototype.updateAvionesVivos = function(arrBooleano){
   }
 };
 
+Aviones.prototype.updateArmas = function(armas){
+    for(let i = 0; i < this.aviones.length; i++){
+        this.aviones[i].cambiarMunicion(armas[i]);
+    }
+};
+
 Aviones.prototype.aterrizarAviones = function(arr){
     for(let i = 0; i < this.aviones.length; i++){
         if(arr[i]){
             this.aviones[i].sprite.visible = false;
+//            this.aviones[i].sprite.body = false;
         }
         else{
             this.aviones[i].sprite.visible = true;
+//            this.aviones[i].sprite.body = true;
         }
+    }
+};
+
+Aviones.prototype.updateAlturasAviones = function(alturas){
+    for(let i = 0; i < this.aviones.length; i++){
+        this.aviones[i].setAltura(alturas[i]);
+    }
+};
+
+Aviones.prototype.updateCombustibles = function(combustibles){
+    for(let i = 0; i < this.aviones.length; i++){
+        this.aviones[i].setCombustible(combustibles);
     }
 };

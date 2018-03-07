@@ -194,6 +194,14 @@ public class Aviones {
         return ret;
     }
     
+    public int[] getCombustibles(){
+        int[] ret = new int[this.cantAviones];
+        for(int i = 0; i < this.cantAviones; i++){
+            ret[i] = this.aviones[i].getComustible();
+        }
+        return ret;
+    }
+    
     public void updateCombustible(int[] combustibles){
         for(int i = 0; i < this.aviones.length; i++){
             this.aviones[i].setCombustible(combustibles[i]);
@@ -242,4 +250,19 @@ public class Aviones {
             this.aviones[i] = null;
         }
     }
+    
+    public int[] alturas(){
+        int[] ret = new int[this.cantAviones];
+        for(int i = 0; i < this.cantAviones; i++){
+            ret[i] = this.aviones[i].getAltura();
+        }
+        return ret;
+    }
+    
+    public void updateAlturas(int[] alturas){
+        for(int i = 0; i < this.cantAviones; i++){
+            this.aviones[i].setAltura(alturas[i]);
+        }
+    }
+    
 }

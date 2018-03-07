@@ -15,7 +15,9 @@ y_barco,
 rot_barco,
 velocidadBarco,
 barcoVivo,
-avionesEnBarco
+avionesEnBarco,
+alturas,
+combustibles
 ){
     this.avionesVivos = avionesVivos;
     this.x_aviones = x_aviones;
@@ -29,6 +31,8 @@ avionesEnBarco
     this.velocidadBarco = velocidadBarco;
     this.barcoVivo = barcoVivo;
     this.avionesEnBarco = avionesEnBarco;
+    this.alturas = alturas;
+    this.combustibles = combustibles;
 }
 
 

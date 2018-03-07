@@ -86,3 +86,16 @@ Arma.prototype.dispararr = function (x, y) {
         }
     }
 };
+
+Arma.prototype.cambiarMunicion = function(tipoArma){
+    if(this.tipoArma !== tipoArma){
+        this.tipoArma = tipoArma;
+        if(this.tipoArma === METRALLETA){
+            this.maxBalas = 200;
+        }
+        if(this.tipoArma === BOMBA || this.tipoArma === TORPEDO){
+            this.maxBalas = 1
+        }
+        this.recargar();
+    }
+};

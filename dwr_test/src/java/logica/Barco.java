@@ -12,6 +12,7 @@ package logica;
  */
 public class Barco extends Vehiculo{
     private Aviones aviones;
+    private final int velMaxima = 100;
     private int velocidad = 100;
     private boolean vivo = true;
     
@@ -58,18 +59,40 @@ public class Barco extends Vehiculo{
         return this.aviones;
     }
 
-    public void recibeDisparoSinAvionesDeBomba() {
-        /*Le saco 1/4 de la velocidad*/
-        /*Le voy restando de a 25 la velocidad*/
-        int resta = this.velocidad - 25;
-        this.velocidad -= resta;
-        if(this.velocidad <= 0){
-            this.x = Double.NaN;
-            this.y = Double.NaN;
-            this.rot = Double.NaN;
+    public void recibeDisparoSinAviones() {
+        int fullVel = this.velMaxima;
+        int cuartoVel = (int) (this.velMaxima * 0.75);
+        int mitadVel = (int) (this.velMaxima * 0.5);
+        
+        if(this.velocidad == fullVel){
+            this.velocidad = cuartoVel;
+        }else{
+            if(this.velocidad == cuartoVel){
+                this.velocidad = mitadVel;
+            }
+            else{
+                if(this.velocidad == mitadVel){
+                    this.velocidad = 0;
+                }
+                else{
+                    if(this.velocidad == 0){
+                        this.velocidad = 0;
+                        this.vivo = false;
+                        this.x = Double.NaN;
+                        this.y = Double.NaN;
+                        this.rot = Double.NaN;
+                        this.vivo = false;
+                    }
+                }
+            }
         }
     }
     
+    
+    public void recibeDisparoConAvionDeBomba(){
+        Avion av = this.aviones.popAvion();
+        av.destruir();
+    }
     public void recibeDisparoSinAvionesDeTorpedo(){
         /*Le saco 1/2 de la velocidad*/
         this.velocidad = this.velocidad - (this.velocidad * (1/4));

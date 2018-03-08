@@ -1,9 +1,14 @@
 /*Class Aviones.js*/
+/* global Phaser, game */
+
 function Aviones(nombre) {
     this.grupo = game.add.group();
     /*Permito el click en los hijos*/
     this.grupo.inputEnableChildren = true;
-
+    this.grupo.enableBody = true;
+    this.grupo.physicsBodyType = Phaser.Physics.P2JS;
+    this.collisionGroup = game.physics.p2.createCollisionGroup();
+    
     if (nombre === null) {
         this.grupo.name = nombre;
     }
@@ -24,7 +29,11 @@ function Aviones(nombre) {
 };
 
 /*Funciones del objeto*/
-Aviones.prototype.agregarAvion = function (avion) {
+Aviones.prototype.agregarAvion = function (avion, avionesEnemigos, barcoAliado, balasEnemigas) {
+
+    avion.sprite.body.setCollisionGroup(this.collisionGroup);
+        console.log(avion);
+    avion.sprite.body.collides([avionesEnemigos.collisionGroup, barcoAliado.sprite.body]);
     this.grupo.add(avion.sprite);
     this.aviones.push(avion);
 };
@@ -122,8 +131,9 @@ Aviones.prototype.updateAvionesVivos = function(arrBooleano){
 };
 
 Aviones.prototype.updateArmas = function(armas){
+//    console.log(armas);
     for(let i = 0; i < this.aviones.length; i++){
-        this.aviones[i].cambiarMunicion(armas[i]);
+        this.aviones[i].setearTipoArma(armas[i]);
     }
 };
 

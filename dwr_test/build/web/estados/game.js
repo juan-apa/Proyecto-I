@@ -39,6 +39,7 @@ var informacion;
 var wasd;
 var EQUIPO_AZUL = 0;
 var EQUIPO_ROJO = 1;
+var mouseBody;
 
 //test:
 var huboImpacto = false;

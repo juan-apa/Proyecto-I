@@ -1,0 +1,21 @@
+{ 
+    
+    "portaviones_1": [
+        
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   44, 377  ,  41, 51  ,  145, 140  ,  145, 204  ,  134, 435  ,  60, 449  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   98, 1  ,  143, 99  ,  145, 140  ,  41, 51  ,  67, -1  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   41, 51  ,  44, 377  ,  30, 377  ,  1, 51  ]
+        }
+    ]
+}

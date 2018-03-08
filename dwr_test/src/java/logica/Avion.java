@@ -12,7 +12,7 @@ package logica;
 public class Avion extends Vehiculo {
     public static final int ALTURA_BAJA = 0;
     public static final int ALTURA_ALTA = 1;
-    public static final int MAX_COMBUSTIBLE = 20;
+    public static final int MAX_COMBUSTIBLE = 3000;
     
     private boolean vivo;
     private int combustible;
@@ -40,7 +40,7 @@ public class Avion extends Vehiculo {
         this.y = y;
         this.rot = rot;
         this.vivo = true;
-        this.arma = new Arma(Arma.MUNICION_METRALLETA);
+        this.arma = new Arma(Arma.MUNICION_BOMBA);
         this.altura = Avion.ALTURA_BAJA;
         this.combustible = MAX_COMBUSTIBLE;
     }
@@ -62,7 +62,7 @@ public class Avion extends Vehiculo {
         this.y = y;
         this.rot = rot;
         this.vivo = vivo;
-        this.arma = new Arma(Arma.MUNICION_METRALLETA);
+        this.arma = new Arma(Arma.MUNICION_BOMBA);
         this.altura = Avion.ALTURA_BAJA;
         this.combustible = MAX_COMBUSTIBLE;
     }
@@ -72,7 +72,7 @@ public class Avion extends Vehiculo {
         this.y = y;
         this.rot = rot;
         this.vivo = true;
-        this.arma = new Arma(Arma.MUNICION_METRALLETA);
+        this.arma = new Arma(Arma.MUNICION_BOMBA);
         this.altura = Avion.ALTURA_BAJA;
         this.combustible = MAX_COMBUSTIBLE;
     }
@@ -82,7 +82,7 @@ public class Avion extends Vehiculo {
         this.y = y;
         this.rot = rot;
         this.vivo = true;
-        this.arma = new Arma(Arma.MUNICION_METRALLETA);
+        this.arma = new Arma(Arma.MUNICION_BOMBA);
         this.altura = altura;
         this.combustible = MAX_COMBUSTIBLE;
     }

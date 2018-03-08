@@ -18,13 +18,15 @@ var playState = {
 
         /*Aviones Azules*/
         aviones_azules = new Aviones("Azules");
-        for (let i = 0; i < 4; i++) {
-            aviones_azules.agregarAvion(new Avion(i, 100, i * 100, i + 5));
-        }
+        
         /*Aviones Rojos*/
         aviones_rojos = new Aviones("Rojos");
+        
         for (let i = 0; i < 4; i++) {
-            aviones_rojos.agregarAvion(new Avion(i, 900, i * 100, i + 9));
+            aviones_azules.agregarAvion(new Avion(i, 100, i * 100, i + 5), aviones_azules);
+        }
+        for (let i = 0; i < 4; i++) {
+            aviones_rojos.agregarAvion(new Avion(i, 900, i * 100, i + 9), aviones_rojos);
         }
 
         /*Creo los barcos*/
@@ -56,8 +58,10 @@ var playState = {
 
         cambiarAlturaAvion = game.input.keyboard.addKey(Phaser.KeyCode.Z);
 
-
-        //test visibilidad
+        /*Cuerpo del mouse para mover aviones*/
+        mouseBody = new p2.Body();
+        game.physics.p2.world.addBody(mouseBody);
+        game.physics.p2.enable(mouseBody, true);
 
 
 
@@ -66,8 +70,6 @@ var playState = {
     },
 
     update: function () {
-        var estAzulObtenido = false;
-        var estRojoObtenido = false;
         var estadoAzul;
         var estadoRojo;
         llamar++;
@@ -99,6 +101,8 @@ var playState = {
                 if (azul === true) {
                     /*Actualizo los aviones en el barco*/
                     barco_azul.updateAvionesEnBarco(estadoAz.avionesEnBarco);
+                    aviones_azules.esconderAviones(estadoAz.avionesEnBarco);
+//                    aviones_azules.updateAvionesFueraBarco(estadoAz.avionesEnBarco);
                     /*Condicion de perdida*/
                     if (!estadoAz.barcoVivo) {
                         game.state.start("loose");
@@ -128,6 +132,7 @@ var playState = {
                 }
                 if (rojo === true) {
                     /*Condicion de perdida*/
+                    aviones_rojos.aterrizarAviones(estadoRo.avionesEnBarco);
                     if (!estadoRo.barcoVivo) {
                         game.state.start("loose");
                     }
@@ -397,8 +402,8 @@ var playState = {
     disminuirCombustible: function () {
 //        aviones_azules.disminuirCombustible();
 //        aviones_rojos.disminuirCombustible();
-        console.log(aviones_azules.obtenerCombustibles());
-        console.log(aviones_rojos.obtenerCombustibles());
+//        console.log(aviones_azules.obtenerCombustibles());
+//        console.log(aviones_rojos.obtenerCombustibles());
 //        Fachada.updateCombustibleAzul(aviones_azules.obtenerCombustibles());
 //        Fachada.updateCombustibleRojo(aviones_rojos.obtenerCombustibles());
         Fachada.disminuirCombustibles(function(){

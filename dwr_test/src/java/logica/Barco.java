@@ -13,7 +13,7 @@ package logica;
 public class Barco extends Vehiculo{
     private Aviones aviones;
     private final int velMaxima = 100;
-    private int velocidad = 100;
+    private int velocidad = 20000;
     private boolean vivo = true;
     
     public Barco() {

@@ -29,13 +29,15 @@ public class Fachada {
         this.configuraciones = new DAOConfiguraciones();
         this.avionesAzules = new Aviones(4);
         this.avionesRojos = new Aviones(4);
+        this.barcoAzul = new Barco("Barco Azul", 50, 50, 1);
+        this.barcoRojo = new Barco("Barco Rojo", 200, 200, 3);
         for(int i = 0; i < 4; i++){
             String nombre = String.valueOf(i);
             this.avionesAzules.obtenerAvion(i).setNombre(nombre);
+//            this.aterrizajeAvionAzul(i);
             this.avionesRojos.obtenerAvion(i).setNombre(nombre);
+//            this.aterrizajeAvionRojo(i);
         }
-        this.barcoAzul = new Barco("Barco Azul", 50, 50, 1);
-        this.barcoRojo = new Barco("Barco Rojo", 200, 200, 3);
     }
     
     public static Fachada getInstance() throws ExceptionConfiguracion{
@@ -258,7 +260,6 @@ public class Fachada {
     public void aterrizajeAvionAzul(int posAvion){
         Avion aux = this.avionesAzules.obtenerAvion(posAvion);
         this.barcoAzul.aterrizajeAvion(aux);
-        
         aux = null;
     }
     public void aterrizajeAvionRojo(int posAvion){

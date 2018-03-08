@@ -4,11 +4,11 @@ const VELOCIDAD_BARCO = 2;
 
 function Barco(nombre){
     this.seleccionado = false;
-    this.velocidad = 50;
-    this.velocidadRotacion = 0.5;
+    this.velocidad = 200;
+    this.velocidadRotacion = 10;
     this.velocidadActual = 0;
     this.cantAviones = 0;
-    this.sprite = game.add.sprite(64 + (64 * 1)+800, 200 + (1*4)+300, 'barco');
+    this.sprite = game.add.sprite(64 + (64 * 1)+800, Math.random() * 200, 'barco_0avion');
     this.sprite.immovable = false;
     this.vivo = true;
     this.aviones = new Array(4);
@@ -25,39 +25,33 @@ function Barco(nombre){
     else{
         this.sprite.name = "Barco";
     }
-    this.sprite.width = 450;
-    this.sprite.height = 128;
+//    this.sprite.width = 128;
+//    this.sprite.height = 450;
     this.sprite.anchor.set(0.5);
-    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    
+    game.physics.p2.enable([this.sprite], false);
+    this.sprite.body.clearShapes();
+    this.sprite.body.loadPolygon("portaviones_1", "portaviones_1");
+    this.sprite.body.damping = 0.7;
+    
+//    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 }
 
 Barco.prototype.moverBarco = function(){
-    if (flechas.left.isDown)
-    {
-        this.sprite.angle -= this.velocidadRotacion;
+    this.sprite.body.setZeroVelocity();
+    if (flechas.left.isDown) {
+        this.sprite.body.rotateLeft(this.velocidadRotacion);
+    }   //ship movement
+    else if (flechas.right.isDown){
+        this.sprite.body.rotateRight(this.velocidadRotacion);
     }
-    else if (flechas.right.isDown)
-    {
-        this.sprite.angle += this.velocidadRotacion;
+    else {
+        this.sprite.body.setZeroRotation();
     }
-
-    if (flechas.up.isDown)
-    {
-        //  The speed we'll travel at
-        this.velocidadActual = this.velocidad;
-    }
-    else
-    {
-        if (this.velocidadActual > 0)
-        {
-            this.velocidadActual -= 1;
-        }
+    if (flechas.up.isDown){
+        this.sprite.body.thrust(this.velocidad);
     }
 
-    if (this.velocidadActual > 0)
-    {
-        game.physics.arcade.velocityFromRotation(this.sprite.rotation, this.velocidadActual, this.sprite.body.velocity);
-    }
 };
 
 Barco.prototype.sumarCantidadAviones = function(){

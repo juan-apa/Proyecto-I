@@ -23,7 +23,12 @@ function Avion(nombreAvion, x, y, combustible){
     this.sprite.name = nombreAvion;
     this.sprite.inputEnabled = true;
     
-    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+//    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    game.physics.p2.enable([this.sprite], false);
+    this.sprite.body.clearShapes();
+    this.sprite.body.loadPolygon("avion", "avion");
+    this.sprite.body.damping = 0.9;
+//    this.sprite.body.allowRotation = true;
     
     this.deseleccionar = function() {
         this.seleccionado = false;
@@ -71,12 +76,7 @@ Avion.prototype.getId = function(){
     return this.id;
 };
 
-Avion.prototype.disparar = function(){
-    if (this.seleccionado===true){
-       this.cantBalas--;
-       this.arma.dispararr(this.sprite.x, this.sprite.y);
-    }
-};
+
 
 Avion.prototype.getArma = function(){
     return this.arma.getSprite();
@@ -120,22 +120,26 @@ Avion.prototype.cambiarAltura = function(){
 Avion.prototype.moverAMouse = function(){
     if(this.seleccionado){
         informacion.setText("Municion: "+this.getMunicion() + " Tipo Municion: " + this.arma.tipoArma + " Altura Actual: " +this.getAltura());
-        mouse_x = game.input.x;
-        mouse_y = game.input.y;
+        mouse_x = game.input.x + game.camera.view.x;
+        mouse_y = game.input.y + game.camera.view.y;
+        mouseBody.x = mouse_x;
+        mouseBody.y = mouse_y;
+//        mouseBody.x = 
         if (game.input.mousePointer.isDown){
-            game.physics.arcade.moveToPointer(this.sprite, 500);
-            this.sprite.rotation = game.physics.arcade.angleToPointer(this.sprite) - 300;
-            if (Phaser.Rectangle.contains(this.sprite.body, mouse_x, mouse_y))
-            {
-                this.sprite.body.velocity.setTo(0, 0);
-            }
+            this.sprite.body.static = false;
+            this.accelerateToObject(this.sprite, mouseBody, 800);
         }
         else{
-            this.sprite.body.velocity.setTo(0,0);
+            this.sprite.body.setZeroVelocity();
+            this.sprite.body.static = true;
+            
+            this.sprite.body.rotateLeft(0);
         }
-        if(! this.seleccionado){
-            this.sprite.velocity.setTo(0,0);
-        }
+    }
+    else{
+        this.sprite.body.static = true;
+        this.sprite.body.setZeroVelocity();
+        this.sprite.body.rotateLeft(0);
     }
 };
 
@@ -209,4 +213,25 @@ Avion.prototype.setCombustible = function(combustible){
 
 Avion.prototype.cambiarMunicion = function(tipoMunicion){
     this.arma.cambiarMunicion(tipoMunicion);
+};
+
+Avion.prototype.setearTipoArma = function(tipoMunicion){
+    this.arma.setTipoArma(tipoMunicion);
+    
+}
+//
+Avion.prototype.accelerateToObject = function(obj1, obj2, speed) {
+//    console.log(obj2);
+    if (typeof speed === 'undefined') { speed = 60; }
+    var angle = Math.atan2(obj2.y - obj1.y, obj2.x - obj1.x);
+    obj1.body.rotation = angle + game.math.degToRad(90);  // correct angle of angry bullets (depends on the sprite used)
+    obj1.body.force.x = Math.cos(angle) * speed;    // accelerateToObject 
+    obj1.body.force.y = Math.sin(angle) * speed;
+}
+
+Avion.prototype.disparar = function(){
+    if (this.seleccionado===true){
+       this.cantBalas--;
+       this.arma.dispararr(this.sprite.x, this.sprite.y, -this.sprite.rotation + game.math.degToRad(180));
+    }
 };

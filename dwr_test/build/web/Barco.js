@@ -8,7 +8,7 @@ function Barco(nombre){
     this.velocidadRotacion = 10;
     this.velocidadActual = 0;
     this.cantAviones = 0;
-    this.sprite = game.add.sprite(64 + (64 * 1)+800, Math.random() * 200, 'barco_0avion');
+    this.sprite = game.add.sprite(64 + (64 * 1)+800, Math.random() * 200, 'barco_4avion', "portaviones_1.png");
     this.sprite.immovable = false;
     this.vivo = true;
     this.aviones = new Array(4);
@@ -16,25 +16,23 @@ function Barco(nombre){
         this.aviones[i] = false;
     }
     
-    
     /*Ojo con el !== porque por defecto lo pone como undefined, no null. Entonces
      * uso el != para que haga la conversion de undefined -> null.*/
-    if(nombre != null){
+    if(nombre != null || nombre == "undefined"){
         this.sprite.name = nombre;
     }
     else{
         this.sprite.name = "Barco";
     }
-//    this.sprite.width = 128;
-//    this.sprite.height = 450;
     this.sprite.anchor.set(0.5);
-    
-    game.physics.p2.enable([this.sprite], false);
+    this.collisionGroup = game.physics.p2.createCollisionGroup();
+    game.physics.p2.enable([this.sprite], true);
     this.sprite.body.clearShapes();
     this.sprite.body.loadPolygon("portaviones_1", "portaviones_1");
+    this.sprite.enableBody = true;
+    this.sprite.body.setCollisionGroup(this.collisionGroup);
     this.sprite.body.damping = 0.7;
-    
-//    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+//    this.sprite.body.collideWorldBounds = true;
 }
 
 Barco.prototype.moverBarco = function(){
@@ -51,7 +49,6 @@ Barco.prototype.moverBarco = function(){
     if (flechas.up.isDown){
         this.sprite.body.thrust(this.velocidad);
     }
-
 };
 
 Barco.prototype.sumarCantidadAviones = function(){
@@ -101,15 +98,29 @@ Barco.prototype.setearSprite = function(valor){
     }
     if(valor===1){
         this.sprite.loadTexture('barco_1avion', 0);
+//        this.sprite.body.clearShapes();
+//        this.sprite.body.loadPolygon("portaviones_1", "portaviones_1");
     }
     if(valor===2){
         this.sprite.loadTexture('barco_2avion', 0);
+//        this.sprite.body.clearShapes();
+//        this.sprite.body.loadPolygon("portaviones_1", "portaviones_1");
     }
     if(valor===3){
         this.sprite.loadTexture('barco_3avion', 0);
+//        this.sprite.body.clearShapes();
+//        this.sprite.body.loadPolygon("portaviones_1", "portaviones_1");
     }
     if(valor===4){
         this.sprite.loadTexture('barco_4avion', 0);
+//        this.sprite.body.clearShapes();
+//        this.sprite.body.loadPolygon("portaviones_1", "portaviones_1");
+    }
+    this.sprite.body.clearShapes();
+    this.sprite.body.loadPolygon("portaviones_1", "portaviones_1");
+    if(this.sprite.body.collisionGruop != this.collisionGroup)
+    {
+        console.log("distintos");
     }
 };
 
@@ -117,18 +128,26 @@ Barco.prototype.despegarAvion = function(){
     if (this.cantAviones===4){
         //this.cantAviones = 3;
         this.sprite.loadTexture('barco_3avion', 0);
+        this.sprite.body.clearShapes();
+        this.sprite.body.loadPolygon("portaviones_1", "portaviones_1");
     }
     if (this.cantAviones===3){
         //this.cantAviones = 2;
         this.sprite.loadTexture('barco_2avion', 0);
+        this.sprite.body.clearShapes();
+        this.sprite.body.loadPolygon("portaviones_1", "portaviones_1");
     }
     if (this.cantAviones===2){
         //this.cantAviones = 1;
         this.sprite.loadTexture('barco_1avion', 0);
+        this.sprite.body.clearShapes();
+        this.sprite.body.loadPolygon("portaviones_1", "portaviones_1");
     }
     if (this.cantAviones===1){
         //this.cantAviones = 0;
         this.sprite.loadTexture('barco_0avion', 0);
+        this.sprite.body.clearShapes();
+        this.sprite.body.loadPolygon("portaviones_1", "portaviones_1");
     }
     
     if (this.cantAviones>=1 && this.cantAviones<=4){

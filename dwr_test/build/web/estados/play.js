@@ -15,23 +15,36 @@ var playState = {
         mapa.fixedToCamara = true;
         game.stage.backgroundColor = "#4488AA";
         game.world.setBounds(0, 0, 3000, 3000);
+        game.physics.startSystem(Phaser.Physics.P2JS);
 
         /*Aviones Azules*/
         aviones_azules = new Aviones("Azules");
+        aviones_azules.inicializar();
         
         /*Aviones Rojos*/
         aviones_rojos = new Aviones("Rojos");
-        
-        for (let i = 0; i < 4; i++) {
-            aviones_azules.agregarAvion(new Avion(i, 100, i * 100, i + 5), aviones_azules);
-        }
-        for (let i = 0; i < 4; i++) {
-            aviones_rojos.agregarAvion(new Avion(i, 900, i * 100, i + 9), aviones_rojos);
-        }
+        aviones_rojos.inicializar();
 
         /*Creo los barcos*/
         barco_azul = new Barco("barco_azul");
         barco_rojo = new Barco("barco_rojo");
+        
+        console.log("barcoAzul: " + barco_azul.collisionGroup.mask);
+        console.log("barcoRojo: " + barco_rojo.collisionGroup.mask);
+        console.log("avionesAzules: " + aviones_azules.collisionGroup.mask);
+        console.log("avionesRojos: " + aviones_rojos.collisionGroup.mask);
+        
+        
+        for (let i = 0; i < 4; i++) {
+            let avAux = new Avion(i, 100, i * 100, i + 5);
+            aviones_azules.agregarAvion(avAux, aviones_rojos);
+        }
+        aviones_azules.agregarGrupoColision(barco_azul.collisionGroup);
+        for (let i = 0; i < 4; i++) {
+            let avAux = new Avion(i, 900, i * 100, i + 9);
+            aviones_rojos.agregarAvion(avAux, aviones_azules);
+        }
+        aviones_rojos.agregarGrupoColision(barco_rojo.collisionGroup);
 
         /*Seteo los botones de disparo*/
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
@@ -101,7 +114,7 @@ var playState = {
                 if (azul === true) {
                     /*Actualizo los aviones en el barco*/
                     barco_azul.updateAvionesEnBarco(estadoAz.avionesEnBarco);
-                    aviones_azules.esconderAviones(estadoAz.avionesEnBarco);
+                    aviones_azules.aterrizarAviones(estadoAz.avionesEnBarco);
 //                    aviones_azules.updateAvionesFueraBarco(estadoAz.avionesEnBarco);
                     /*Condicion de perdida*/
                     if (!estadoAz.barcoVivo) {

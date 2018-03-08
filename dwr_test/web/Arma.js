@@ -84,7 +84,7 @@ Arma.prototype.dispararr = function (x, y, angle) {
                 bullet.body.loadPolygon("balas2", "balas2");
                 bullet.reset(x + (Math.sin(angle) * 40), y + (Math.cos(angle) * 40)); // de donde sale la bala
                 bullet.lifespan = 1000;                        //vida de la bala
-                this.accelerateToObject(bullet, this.objetivo, 8000);
+                this.accelerateToObject(bullet, this.objetivo, 80000);
             }
         }
         

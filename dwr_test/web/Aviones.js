@@ -12,7 +12,7 @@ function Aviones(nombre) {
     if (nombre === null) {
         this.grupo.name = nombre;
     }
-    
+    this.collisionGroup = game.physics.p2.createCollisionGroup();
     this.aviones = new Array();
     
     /*Cuando le hago click*/
@@ -29,13 +29,29 @@ function Aviones(nombre) {
 };
 
 /*Funciones del objeto*/
-Aviones.prototype.agregarAvion = function (avion, avionesEnemigos, barcoAliado, balasEnemigas) {
+Aviones.prototype.inicializar = function(){
+//    this.collisionGroup = game.physics.p2.createCollisionGroup();
+};
 
+//Aviones.prototype.crearAviones = function(cantidadAviones){
+//    for(let i = 0; i < cantidadAviones; i++){
+//        var spriteAvion = 
+//    }
+//};
+
+
+Aviones.prototype.agregarAvion = function (avion, avionesEnemigos) {
     avion.sprite.body.setCollisionGroup(this.collisionGroup);
-        console.log(avion);
-    avion.sprite.body.collides([avionesEnemigos.collisionGroup, barcoAliado.sprite.body]);
+//    console.log(avion);
+    avion.sprite.body.collides([avionesEnemigos.collisionGroup]);
     this.grupo.add(avion.sprite);
     this.aviones.push(avion);
+};
+
+Aviones.prototype.agregarGrupoColision = function(grupoColision){
+    for(let i = 0; i < this.aviones.length; i++){
+        this.aviones[i].sprite.body.collides(grupoColision);
+    }
 };
 
 Aviones.prototype.existeAvion = function (avion) {

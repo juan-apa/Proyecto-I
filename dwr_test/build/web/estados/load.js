@@ -3,7 +3,6 @@
 var loadState = {
     /*Función preload del juego*/
     preload: function(){
-        game.physics.startSystem(Phaser.Physics.P2JS);
         /*Cargo todas las imagenes que voy a usar en el juego*/
         game.load.image('block', 'assets/avionn.png');
         game.load.image("fondoOceano", "assets/oceano2.jpg");
@@ -18,12 +17,11 @@ var loadState = {
         game.load.image("barco_4avion", "assets/portaviones_5.png");
         
         game.load.physics("portaviones_1", "assets/body_barco.json");
-        game.load.physics("portaviones_2", "assets/body_barco.json");
-        game.load.physics("portaviones_3", "assets/body_barco.json");
-        game.load.physics("portaviones_4", "assets/body_barco.json");
-        game.load.physics("portaviones_5", "assets/body_barco.json");
         game.load.physics("avion", "assets/body_avion.json");
         game.load.physics("balas2", "assets/body_balas2.json");
+        
+//        game.load.atlasJSONHash('BARCO', 'assets/barco.png', 'assets/BARCO.json');
+//        game.load.physics("balas2", "assets/body_balas2.json");
     },
     
     /*Función create del juego*/

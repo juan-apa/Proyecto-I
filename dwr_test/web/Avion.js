@@ -24,10 +24,11 @@ function Avion(nombreAvion, x, y, combustible){
     this.sprite.inputEnabled = true;
     
 //    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-    game.physics.p2.enable([this.sprite], false);
+    game.physics.p2.enable([this.sprite], true);
     this.sprite.body.clearShapes();
     this.sprite.body.loadPolygon("avion", "avion");
     this.sprite.body.damping = 0.9;
+    this.sprite.body.collideWorldBounds = true;
 //    this.sprite.body.allowRotation = true;
     
     this.deseleccionar = function() {

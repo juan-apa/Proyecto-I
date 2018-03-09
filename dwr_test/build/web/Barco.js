@@ -8,8 +8,13 @@ function Barco(nombre){
     this.velocidadRotacion = 0.5;
     this.velocidadActual = 0;
     this.cantAviones = 0;
-    this.sprite = game.add.sprite(64 + (64 * 1)+800, 200 + (1*4)+300, 'barco');
+    this.sprite = game.add.sprite(64 + (64 * 1)+800, 200 + (1*4)+300, 'barco_0avion');
+    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    this.sprite.body.setCircle(60, 20, -30);
+//    sprite.body.setSize(400, 50, -100, 20);
+    this.sprite.body.collideWorldBounds = true;
     this.sprite.immovable = false;
+    
     this.vivo = true;
     this.aviones = new Array(4);
     for(let i = 0; i < 4; i++){
@@ -25,8 +30,7 @@ function Barco(nombre){
     else{
         this.sprite.name = "Barco";
     }
-    this.sprite.width = 450;
-    this.sprite.height = 128;
+    
     this.sprite.anchor.set(0.5);
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 }
@@ -57,6 +61,15 @@ Barco.prototype.moverBarco = function(){
     if (this.velocidadActual > 0)
     {
         game.physics.arcade.velocityFromRotation(this.sprite.rotation, this.velocidadActual, this.sprite.body.velocity);
+    }
+    
+    /*Actualizo el cuerpo del barco*/
+    let ang = this.sprite.angle;
+    if(((45 <= ang)&&(ang <= 135)) && ((-135 <= ang) && (ang <= -45))){
+        /*tomo el ancho*/
+    }
+    else{
+        
     }
 };
 

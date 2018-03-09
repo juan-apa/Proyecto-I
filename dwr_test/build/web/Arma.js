@@ -13,16 +13,18 @@ function Arma(tipoArma) {
     if(this.tipoArma === METRALLETA){   //si es metra, tiene mas municion
         this.municion = 200;
         this.maxBalas = 200;
-    }
+    }    
     this.sprite = game.add.sprite('balas');
     this.sprite.anchor.set(0.5);
 
-    this.sprite = game.add.group();
-    this.sprite.enableBody = true;
-    this.sprite.physicsBodyType = Phaser.Physics.ARCADE;
-    this.sprite.createMultiple(50, "balas");
-    this.sprite.setAll('checkWorldBounds', true);
-    this.sprite.setAll('outOfBoundsKill', true);
+    this.balas = game.add.group();
+    this.balas.enableBody = true;
+    this.balas.physicsBodyType = Phaser.Physics.ARCADE;
+    this.balas.createMultiple(50, "balas");
+    this.balas.setAll('checkWorldBounds', true);
+    this.balas.setAll('outOfBoundsKill', true);
+    
+    this.nextFire = 0;
 };
 
 /*Funciones del objeto*/
@@ -39,23 +41,25 @@ Arma.prototype.getSprite = function () {
     return this.sprite;
 };
 
-Arma.prototype.dispararr = function (x, y) {
+Arma.prototype.dispararr = function (x, y, angulo) {
     if (fireButton.isDown && this.municion > 0) {
         //informacion de municion del avion
         
         if (this.tipoArma === METRALLETA) {
+            let x = x + (Math.sin(angulo) * 300);
+            let y = y + (Math.cos(angulo) * 300);
             //informacion.setText("Municion: "+this.municion + " Tipo Municion: METRALLETA" );
             this.municion--;
-            nextFire = 0;
-            fireRate = 80;  //parametrizable
-            if (game.time.now > nextFire && this.sprite.countDead() > 0)
+            this.nextFire = 0;
+            fireRate = 200;  //parametrizable
+            if (game.time.now > this.nextFire && this.sprite.countDead() > 0)
             {
-                nextFire = game.time.now + fireRate;
-                let bullet = this.sprite.getFirstDead();
-                bullet.reset(x - 8, y - 8); // de donde sale la bala
+                this.nextFire = game.time.now + fireRate;
+                let bullet = this.balas.getFirstDead();
+                bullet.reset(x + (Math.sin(angulo) * 40), y + (Math.cos(angulo) * 40)); // de donde sale la bala
                 bullet.lifespan = 200;		//distancia de la bala
                 bullet.trackrotation = true;
-                game.physics.arcade.moveToPointer(bullet, 2000);	//velocidad de la bala
+                game.physics.arcade.moveToXY(bullet, x, y, 200);	//velocidad de la bala
             }
         }
         

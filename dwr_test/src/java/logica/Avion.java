@@ -12,7 +12,7 @@ package logica;
 public class Avion extends Vehiculo {
     public static final int ALTURA_BAJA = 0;
     public static final int ALTURA_ALTA = 1;
-    public static final int MAX_COMBUSTIBLE = 20;
+    public static final int MAX_COMBUSTIBLE = 2000;
     
     private boolean vivo;
     private int combustible;

@@ -59,13 +59,16 @@ var playState = {
 
         //test visibilidad
 
-
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+//        game.debug.renderSpriteBody(barco_azul.sprite);
+//        game.debug.renderSpriteBounds(barco_azul.sprite);
 
         /*Creacion loop disminucion combustibles*/
         game.time.events.loop(1000, this.disminuirCombustible, this);
     },
 
     update: function () {
+        console.log(barco_azul.sprite.angle);
         var estAzulObtenido = false;
         var estRojoObtenido = false;
         var estadoAzul;
@@ -393,6 +396,12 @@ var playState = {
 //                }
 //            });
         }
+    },
+    
+    render: function(){
+        game.debug.body(barco_azul.sprite);
+        game.debug.body(barco_rojo.sprite);
+//        game.debug.body(ball2);
     },
     disminuirCombustible: function () {
 //        aviones_azules.disminuirCombustible();

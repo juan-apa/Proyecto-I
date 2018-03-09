@@ -74,7 +74,7 @@ Avion.prototype.getId = function(){
 Avion.prototype.disparar = function(){
     if (this.seleccionado===true){
        this.cantBalas--;
-       this.arma.dispararr(this.sprite.x, this.sprite.y);
+       this.arma.dispararr(this.sprite.x, this.sprite.y, -this.sprite.rotation + game.math.degToRad(180));
     }
 };
 

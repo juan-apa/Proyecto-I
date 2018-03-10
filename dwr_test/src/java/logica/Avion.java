@@ -40,7 +40,7 @@ public class Avion extends Vehiculo {
         this.y = y;
         this.rot = rot;
         this.vivo = true;
-        this.arma = new Arma(Arma.MUNICION_METRALLETA);
+        this.arma = new Arma(Arma.MUNICION_BOMBA);
         this.altura = Avion.ALTURA_BAJA;
         this.combustible = MAX_COMBUSTIBLE;
     }
@@ -62,7 +62,7 @@ public class Avion extends Vehiculo {
         this.y = y;
         this.rot = rot;
         this.vivo = vivo;
-        this.arma = new Arma(Arma.MUNICION_METRALLETA);
+        this.arma = new Arma(Arma.MUNICION_BOMBA);
         this.altura = Avion.ALTURA_BAJA;
         this.combustible = MAX_COMBUSTIBLE;
     }
@@ -72,7 +72,7 @@ public class Avion extends Vehiculo {
         this.y = y;
         this.rot = rot;
         this.vivo = true;
-        this.arma = new Arma(Arma.MUNICION_METRALLETA);
+        this.arma = new Arma(Arma.MUNICION_TORPEDO);
         this.altura = Avion.ALTURA_BAJA;
         this.combustible = MAX_COMBUSTIBLE;
     }
@@ -82,7 +82,7 @@ public class Avion extends Vehiculo {
         this.y = y;
         this.rot = rot;
         this.vivo = true;
-        this.arma = new Arma(Arma.MUNICION_METRALLETA);
+        this.arma = new Arma(Arma.MUNICION_BOMBA);
         this.altura = altura;
         this.combustible = MAX_COMBUSTIBLE;
     }

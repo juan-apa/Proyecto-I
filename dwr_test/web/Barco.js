@@ -2,25 +2,45 @@
 
 const VELOCIDAD_BARCO = 2;
 
-function Barco(nombre){
+function Barco(nombre, equipo){
     this.seleccionado = false;
     this.velocidad = 50;
     this.velocidadRotacion = 0.5;
     this.velocidadActual = 0;
     this.cantAviones = 0;
-    this.sprite = game.add.sprite(64 + (64 * 1)+800, 200 + (1*4)+300, 'barco_0avion');
+    this.sprite = game.add.sprite(800, 300, 'barco_0avion');
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-    this.sprite.body.setCircle(60, 20, -30);
+    this.sprite.body.setCircle(210, 15.8, -136);
+    this.sprite.scale.setTo(0.65, 0.65);
+    this.sprite.anchor.set(0.5);
 //    sprite.body.setSize(400, 50, -100, 20);
     this.sprite.body.collideWorldBounds = true;
     this.sprite.immovable = false;
+    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
     
     this.vivo = true;
     this.aviones = new Array(4);
     for(let i = 0; i < 4; i++){
         this.aviones[i] = false;
     }
+    this.hitBox = game.add.graphics(0, 0);
+    console.log(this.hitBox);
+//    this.hitBox.lineWidth(20);
+//    this.hitbox.lineColor(0x000000);
+    this.hitBox.beginFill(0xFF0000, 0.5);
+    this.hitBox.drawCircle(0, 0, 420);
+    this.sprite.addChild(this.hitBox);
+    this.equipo = equipo; // SI ES TRUE, ES AZUL, SI ES FALSE, ES ROJO
     
+    
+    if(nombre == "azul"){
+        this.hitBox.tint = 0x005ce8;
+        this.sprite.tint = 0x005ce8;
+    }
+    else{
+        this.hitBox.tint = 0xe80000;
+        this.sprite.tint = 0xe80000;
+    }
     
     /*Ojo con el !== porque por defecto lo pone como undefined, no null. Entonces
      * uso el != para que haga la conversion de undefined -> null.*/
@@ -30,46 +50,34 @@ function Barco(nombre){
     else{
         this.sprite.name = "Barco";
     }
-    
-    this.sprite.anchor.set(0.5);
-    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 }
 
 Barco.prototype.moverBarco = function(){
-    if (flechas.left.isDown)
-    {
-        this.sprite.angle -= this.velocidadRotacion;
-    }
-    else if (flechas.right.isDown)
-    {
-        this.sprite.angle += this.velocidadRotacion;
-    }
+    if(this.velocidad > 0){
+        if (flechas.left.isDown)
+        {
+            this.sprite.angle -= this.velocidadRotacion;
+        }
+        else if (flechas.right.isDown)
+        {
+            this.sprite.angle += this.velocidadRotacion;
+        }
 
-    if (flechas.up.isDown)
-    {
-        //  The speed we'll travel at
-        this.velocidadActual = this.velocidad;
-    }
-    else
-    {
+        if (flechas.up.isDown)
+        {
+            this.velocidadActual = this.velocidad;
+        }
+        else
+        {
+            if (this.velocidadActual > 0)
+            {
+                this.velocidadActual -= 1;
+            }
+        }
         if (this.velocidadActual > 0)
         {
-            this.velocidadActual -= 1;
+            game.physics.arcade.velocityFromRotation(this.sprite.rotation, this.velocidadActual, this.sprite.body.velocity);
         }
-    }
-
-    if (this.velocidadActual > 0)
-    {
-        game.physics.arcade.velocityFromRotation(this.sprite.rotation, this.velocidadActual, this.sprite.body.velocity);
-    }
-    
-    /*Actualizo el cuerpo del barco*/
-    let ang = this.sprite.angle;
-    if(((45 <= ang)&&(ang <= 135)) && ((-135 <= ang) && (ang <= -45))){
-        /*tomo el ancho*/
-    }
-    else{
-        
     }
 };
 

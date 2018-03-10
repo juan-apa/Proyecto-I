@@ -7,7 +7,6 @@
 package persistencia;
 
 import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +22,7 @@ public class DAOConfiguraciones {
     public DAOConfiguraciones() throws ExceptionConfiguracion {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            this.conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","root");
+            this.conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/","admin","admin");
         } catch (ClassNotFoundException ex) {
             throw new ExceptionConfiguracion(ExceptionConfiguracion.ERROR_OBTENER_CONFIGURACIONES);
         } catch (SQLException ex) {

@@ -122,7 +122,7 @@ public class Barco extends Vehiculo{
     public void aterrizajeAvion(Avion av){
         av.setAterrizado(true);
         av.recargarCombustible();
-        System.out.println(av.getNombre());
+//        System.out.println(av.getNombre());
         this.aviones.insertarAvion(av, Integer.parseInt(av.getNombre()));
     }
     

@@ -13,28 +13,32 @@
             <file>file:/C:/Users/pc-61/Documents/proyectos-java/Proyecto-I/dwr_test/src/java/logica/Fachada.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Aviones.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Barco.java</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Aviones.java</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/WEB-INF/dwr.xml</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/boot.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Arma.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/loose.js</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/assets/barco.png</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/assets/portaviones_1.png</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/win.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/index.jsp</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/VOEstado.java</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/game.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/menu.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/play.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Avion.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Vehiculo.java</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/persistencia/DAOConfiguraciones.java</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Fachada.java</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Barco.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Avion.java</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/load.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/main.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/VOEstado.js</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Arma.java</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Aviones.js</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/WEB-INF/dwr.xml</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Arma.js</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/loose.js</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/menu.js</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Vehiculo.java</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/persistencia/DAOConfiguraciones.java</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/assets/portaviones_2.png</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Avion.js</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Fachada.java</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/assets/barcoo.png</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Avion.java</file>
         </group>
     </open-files>
 </project-private>

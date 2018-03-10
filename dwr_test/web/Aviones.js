@@ -140,7 +140,7 @@ Aviones.prototype.aterrizarAviones = function(arr){
     }
 };
 
-Aviones.prototype.exconderAviones = function(arr){
+Aviones.prototype.esconderAviones = function(arr){
     for(let i = 0; i < this.aviones.length; i++){
         if(arr[i]){
             this.aviones[i].sprite.visible = false;

@@ -4,7 +4,7 @@
 const ALTURA_BAJA = 0;
 const ALTURA_ALTA = 1;
 
-function Avion(nombreAvion, x, y, combustible){
+function Avion(nombreAvion, x, y, combustible, equipo){
     this.maxBalas = 200;
     this.maxVida = 400;
     this.maxCombustible = 20;
@@ -18,6 +18,7 @@ function Avion(nombreAvion, x, y, combustible){
     this.id = 0;
     this.visible = true;
     
+    this.equipo = equipo;
     this.sprite = game.add.sprite(x, y, 'block');
     this.sprite.anchor.set(0.5);
     this.sprite.name = nombreAvion;
@@ -31,7 +32,12 @@ function Avion(nombreAvion, x, y, combustible){
     this.getSeleccionado = function() {
         return this.seleccionado;
     };
-    
+    if(this.equipo === "azul"){
+        this.sprite.tint = 0x005ce8;
+    }
+    else{
+        this.sprite.tint = 0xe80000;
+    }
     
 }
 

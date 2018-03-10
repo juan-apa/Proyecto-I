@@ -37,6 +37,7 @@ function Hud(){
     }
     
     this.barco = game.add.sprite(0, 500 * factorEscaladoHud, 'hudBarco');
+    this.barco.fixedToCamera = true; 
     this.velocidadBarco = game.add.text(60, 70, 0, this.estiloLetra);
     this.barco.addChild(this.velocidadBarco);
     

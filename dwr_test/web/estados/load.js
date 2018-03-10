@@ -13,9 +13,17 @@ var loadState = {
         game.load.image("barco_2avion", "assets/portaviones_3.png");
         game.load.image("barco_3avion", "assets/portaviones_4.png");
         game.load.image("barco_4avion", "assets/portaviones_5.png");
+        game.load.image("quilla", "assets/quilla3.png");
         
         game.load.spritesheet('button', 'assets/buttons/button_sprite_sheet.png', 193, 71);
         game.load.image('background','assets/misc/starfield.jpg');
+        
+        /*Elementos Hud*/
+        game.load.image('hudAvion', 'assets/hud_avion.png');
+        game.load.image('hudBarco', 'assets/hud_barco.png');
+        game.load.image(BOMBA.toString(), 'assets/tipoBomba.png');
+        game.load.image(METRALLETA.toString(), 'assets/tipoMetralleta.png');
+        game.load.image(TORPEDO.toString(), 'assets/tipoTorpedo.png');
     },
     
     /*Función create del juego*/

@@ -16,6 +16,9 @@
         <script src="phaser.min.js" charset="utf-8"> </script>
         
         <script type="text/javascript">
+            var factorEscaladoBarco = 0.8;
+            var factorEscaladoAvion = 1;
+            var factorEscaladoHud = 1;
             var parametros = {
                 VIDA_MAX_AVION:400,
                 MAX_BALAS:300
@@ -34,6 +37,9 @@
 //            dwr.engine.setActiveReverseAjax(true);
         </script>
         
+        <script src="InfoAvion.js" charset="utf-8"> </script>
+        <script src="InfoBarco.js" charset="utf-8"> </script>
+        <script src="Hud.js" charset="utf-8"> </script>
         <script src="VOPosicion.js" charset="utf-8"> </script>
         <script src="Barco.js" charset="utf-8"> </script>
         <script src="Arma.js" charset="utf-8"> </script>

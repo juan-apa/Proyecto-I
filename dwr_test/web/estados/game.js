@@ -1,11 +1,12 @@
 /*Inicio el canvas del juego*/
 /* global bootState, loadState, menuState, playState, looseState, winState */
 
-var game = new Phaser.Game(1280,
-        1024,
+var game = new Phaser.Game(1100,
+        618,
         Phaser.CANVAS,
         'Juego Midway'
 );
+
 
 /*Defino las variables globales del juego*/
 var text = '';
@@ -43,6 +44,7 @@ var informacion;
 var wasd;
 var EQUIPO_AZUL = 0;
 var EQUIPO_ROJO = 1;
+var HUD;
 
 //test:
 var huboImpacto = false;

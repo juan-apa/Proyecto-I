@@ -42,6 +42,10 @@ function Avion(nombreAvion, x, y, combustible, equipo){
 }
 
 /*Funciones del objeto*/
+Avion.prototype.reEscalar = function(){
+    this.sprite.scale.set(1 * factorEscaladoAvion);
+};
+
 Avion.prototype.obtenerSpirte = function(){
     return this.sprite;
 };
@@ -129,7 +133,7 @@ Avion.prototype.cambiarAltura = function(){
 
 Avion.prototype.moverAMouse = function(){
     if(this.seleccionado){
-        informacion.setText("Municion: "+this.getMunicion() + " Tipo Municion: " + this.arma.tipoArma + " Altura Actual: " +this.getAltura());
+//        informacion.setText("Municion: "+this.getMunicion() + " Tipo Municion: " + this.arma.tipoArma + " Altura Actual: " +this.getAltura());
         mouse_x = game.input.x;
         mouse_y = game.input.y;
         if (game.input.mousePointer.isDown){

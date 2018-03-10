@@ -2,6 +2,11 @@
 
 var playState = {
     create: function () {
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.setMinMax(400, 300, 1920, 1080);
+        
+        
+//        game.stage.scale.startFullScreen();
         /*Seteo las flechas de la camara*/
         wasd = {
             up: game.input.keyboard.addKey(Phaser.Keyboard.W),
@@ -36,13 +41,13 @@ var playState = {
         explosions = game.add.group();
         explosions.createMultiple(30, 'kaboom');
 
-        //seteo el panel de mensajes
-        informacion = game.add.text(10, 10, "", {
-            font: "30px Arial",
-            fill: "#ff0044",
-            align: "center"
-        });
-        informacion.fixedToCamera = true;
+//        //seteo el panel de mensajes
+//        informacion = game.add.text(10, 10, "", {
+//            font: "30px Arial",
+//            fill: "#ff0044",
+//            align: "center"
+//        });
+//        informacion.fixedToCamera = true;
 
         /*Seteo las flehcas de movimiento de los barcos*/
         flechas = game.input.keyboard.createCursorKeys();
@@ -68,10 +73,14 @@ var playState = {
 
         /*Creacion loop disminucion de tiempo*/
         game.time.events.loop(1000, this.disminuirTiempoPartida, this);
+        HUD = new Hud();
     },
 
     update: function () {
-//        console.log(barco_azul.sprite.angle);
+        game.physics.arcade.collide(barco_rojo.quilla, barco_azul.quilla, colQuillaQuilla);
+        game.physics.arcade.collide(barco_rojo.quilla, barco_azul.sprite, colQuillaRojo);
+        game.physics.arcade.collide(barco_rojo.sprite, barco_azul.quilla, colQuillaAzul);
+        
         var estAzulObtenido = false;
         var estRojoObtenido = false;
         var estadoAzul;
@@ -103,6 +112,9 @@ var playState = {
                 }
 
                 if (azul === true) {
+                    /*Actualizo el HUD*/
+                    HUD.updateInfoAviones(estadoAz.avionesVivos, estadoAz.municionesAviones, estadoAz.combustibles);
+                    HUD.updateInfoBarco(estadoAz.barcoVivo, estadoAz.velocidadBarco);
                     /*Condicion de perdida*/
                     if (!estadoAz.barcoVivo) {
                         game.state.start("loose");
@@ -132,6 +144,8 @@ var playState = {
                     }
                 }
                 if (rojo === true) {
+                    HUD.updateInfoAviones(estadoRo.avionesVivos, estadoRo.municionesAviones, estadoRo.combustibles);
+                    HUD.updateInfoBarco(estadoRo.barcoVivo, estadoRo.velocidadBarco);
                     /*Condicion de perdida*/
                     if (!estadoRo.barcoVivo) {
                         game.state.start("loose");
@@ -147,7 +161,7 @@ var playState = {
 
         mapa.tilePosition.x = -game.camera.x;
         mapa.tilePosition.y = -game.camera.y;
-
+        
         moverCamara();
 
 
@@ -274,6 +288,8 @@ var playState = {
 
                 }
             }
+            /*Actualizo las balas del Hud*/
+            HUD.updateBalas(aviones_rojos.obtenerBalasRestantes());
         }
 
         if (azul === true) {
@@ -380,6 +396,8 @@ var playState = {
                     }
                 }
             }
+            /*Actualizo las balas del Hud*/
+            HUD.updateBalas(aviones_azules.obtenerBalasRestantes());
         }
 
         /*Aviso las posiciones de los aviones y barco a la fachada*/
@@ -406,10 +424,10 @@ var playState = {
             });
         }
     },
-
-    render: function () {
-//        game.debug.body(barco_azul.sprite);
-//        game.debug.body(barco_rojo.sprite);
+    
+    render: function(){
+        game.debug.body(barco_azul.quilla);
+        game.debug.body(barco_rojo.quilla);
         game.debug.body(aviones_rojos.aviones[0].arma.balas);
     },
     disminuirCombustible: function () {
@@ -429,8 +447,7 @@ function visibilidad(x1, y1, x2, y2) {
     var dx = x1 - x2;
     var dy = y1 - y2;
     return Math.sqrt(dx * dx + dy * dy);
-}
-;
+};
 
 function barcoAvionAzulColisionan(a, b) {
     /*a es el avion, y b es el barco*/
@@ -449,10 +466,7 @@ function barcoAvionAzulColisionan(a, b) {
         barco_azul.setearSprite(4);
     }
     barco_azul.agregarCantidadAviones();
-}
-;
-
-
+};
 
 function barcoAvionRojoColisionan(a, b) {
     /*a es el avion, y b es el barco*/
@@ -471,21 +485,17 @@ function barcoAvionRojoColisionan(a, b) {
         barco_rojo.setearSprite(4);
     }
     barco_rojo.agregarCantidadAviones();
-}
-;
-
+};
 
 function collisionHandler(a, b) {
     b.kill();
     a.kill();
-}
-;
+};
 
 function collisionHandler2(a, b) {
     a.kill();
     b.kill();
-}
-;
+};
 
 function numeroRandom(min, max) {
     return Math.round(Math.random() * (max - min) + min);
@@ -520,7 +530,6 @@ function colisionBombaBarco(a, b) {
 //    console.log("colision bomba barco");
 }
 
-
 /*Le paso el objeto de aviones y el barco correspondiente al equipo, y si es azul o rojo*/
 function despegarAviones(aviones, barco, azul, rojo) {
     //Presiono 1 para despegar avion id 1
@@ -529,6 +538,7 @@ function despegarAviones(aviones, barco, azul, rojo) {
             console.log("entra 1");
             barco.despegarAvion();
             barco.despegarAvion();
+            /*Hago que los aviones salgan al frente o hacia atras segun si hay espacio*/
             aviones.obtenerAvion(0).setSprite(barco.getSprite().position.x - 300, barco.getSprite().position.y - 150);
             if (azul) {
                 Fachada.despegueAvionAzul(0, function () {
@@ -639,3 +649,21 @@ function aterrizajeAvionRojo() {
         });
     }
 }
+
+function colQuillaRojo(ba, br){
+//    Fachada.embisteRojoAzul();
+    barco_rojo.velocidadActual = 0;
+    console.log("embisteRojoAzul");
+};
+function colQuillaAzul(ba, br){
+//    Fachada.embisteAzulRojo();
+    barco_azul.velocidadActual = 0;
+    console.log("embisteAzulRojo");
+};
+function colQuillaQuilla(ba, br){
+//    Fachada.embisteEmpate();
+    barco_rojo.velocidadActual = 0;
+    barco_azul.velocidadActual = 0;
+    console.log("embisteEmpate");
+};
+

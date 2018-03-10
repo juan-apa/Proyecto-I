@@ -164,3 +164,11 @@ Aviones.prototype.updateCombustibles = function(combustibles){
         this.aviones[i].setCombustible(combustibles[i]);
     }
 };
+
+Aviones.prototype.obtenerBalasRestantes = function(){
+    let ret = new Array(this.aviones.length);
+    for(let i = 0; i < this.aviones.length; i++){
+        ret[i] = this.aviones[i].arma.municion;
+    }
+    return ret;
+};

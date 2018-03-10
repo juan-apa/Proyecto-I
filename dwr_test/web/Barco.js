@@ -1,4 +1,4 @@
-/* global game, Phaser, flechas */
+/* global game, Phaser, flechas, factorEscaladoBarco */
 
 const VELOCIDAD_BARCO = 2;
 
@@ -11,7 +11,7 @@ function Barco(nombre, equipo){
     this.sprite = game.add.sprite(800, 300, 'barco_0avion');
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
     this.sprite.body.setCircle(210, 15.8, -136);
-    this.sprite.scale.setTo(0.65, 0.65);
+    this.sprite.scale.set(0.65 * factorEscaladoBarco);
     this.sprite.anchor.set(0.5);
 //    sprite.body.setSize(400, 50, -100, 20);
     this.sprite.body.collideWorldBounds = true;
@@ -32,7 +32,6 @@ function Barco(nombre, equipo){
     this.sprite.addChild(this.hitBox);
     this.equipo = equipo; // SI ES TRUE, ES AZUL, SI ES FALSE, ES ROJO
     
-    
     if(nombre == "azul"){
         this.hitBox.tint = 0x005ce8;
         this.sprite.tint = 0x005ce8;
@@ -50,7 +49,40 @@ function Barco(nombre, equipo){
     else{
         this.sprite.name = "Barco";
     }
+    
+    
+    /*quilla*/
+    
+    this.quilla = game.add.sprite(this.sprite.x + 300, this.sprite.y, 'quilla');
+    
+    
+    game.physics.enable(this.quilla, Phaser.Physics.ARCADE);
+    
+    
+    this.quilla.enableBody = true;
+    
+    
+    this.quilla.body.setCircle(5, 0, 0);    
+    
+    this.quilla.x = this.sprite.x -30;
+    this.quilla.y = this.sprite.y -30;
+    
+    this.quilla.scale.set(5.5 * factorEscaladoBarco);
+    this.quilla.anchor.set(0.5, 0.5);
+    this.quilla.enableBody = true;
+    this.grupo = game.add.group();
+    this.grupo.add(this.sprite);
+    this.grupo.add(this.quilla);
+//    this.sprite.addChild(this.quilla);
+    
+    
+//    this.quilla.body.setSize(300, 750, 500, 150);
 }
+
+Barco.prototype.reEscalar = function(){
+  this.sprite.scale.set(0.65 * factorEscaladoBarco);
+  this.quilla.scale.set(5.5 * factorEscaladoBarco);
+};
 
 Barco.prototype.moverBarco = function(){
     if(this.velocidad > 0){
@@ -78,7 +110,14 @@ Barco.prototype.moverBarco = function(){
         {
             game.physics.arcade.velocityFromRotation(this.sprite.rotation, this.velocidadActual, this.sprite.body.velocity);
         }
+        this.moverQuilla();
     }
+};
+
+Barco.prototype.moverQuilla = function(){
+    this.quilla.x = this.sprite.x + (Math.sin(-this.sprite.rotation + game.math.degToRad(87)) * this.sprite.width * 0.47);
+    this.quilla.y = this.sprite.y + (Math.cos(-this.sprite.rotation + game.math.degToRad(87)) * this.sprite.width * 0.47);
+    this.quilla.rotation = this.sprite.rotation;
 };
 
 Barco.prototype.sumarCantidadAviones = function(){
@@ -124,6 +163,7 @@ Barco.prototype.actualizarPosicion2 = function(x, y, r){
     this.sprite.x = x;
     this.sprite.y = y;
     this.sprite.rotation = r;
+    this.moverQuilla();
 };
 
 Barco.prototype.setearSprite = function(valor){

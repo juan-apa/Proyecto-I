@@ -177,7 +177,8 @@ var playState = {
                 }
             }
             barco_azul.getSprite().visible = false;
-
+            barco_azul.getQuilla().visible = false;
+            
             /*Despegar avion*/
             despegarAviones(aviones_rojos, barco_rojo, azul, rojo);
 
@@ -260,6 +261,7 @@ var playState = {
                 }
                 if (visibilidad(aviones_rojos.obtenerAvion(i).obtenerSpirte().x, aviones_rojos.obtenerAvion(i).obtenerSpirte().y, barco_azul.getSprite().x, barco_azul.getSprite().y) <= 300 || visibilidad(barco_rojo.getSprite().x, barco_rojo.getSprite().y, barco_azul.getSprite().x, barco_azul.getSprite().y) <= 400) {
                     barco_azul.mostrarSprite();
+                    barco_azul.getQuilla().visible = true;
                 }
 
 
@@ -331,7 +333,7 @@ var playState = {
                 }
             }
             barco_rojo.getSprite().visible = false;
-
+            barco_rojo.getQuilla().visible = false;
 
             /*Despegar avion*/
             despegarAviones(aviones_azules, barco_azul, azul, rojo);
@@ -418,6 +420,7 @@ var playState = {
                 }
                 if (visibilidad(aviones_azules.obtenerAvion(i).obtenerSpirte().x, aviones_azules.obtenerAvion(i).obtenerSpirte().y, barco_rojo.getSprite().x, barco_rojo.getSprite().y) <= 300 || visibilidad(barco_azul.getSprite().x, barco_azul.getSprite().y, barco_rojo.getSprite().x, barco_rojo.getSprite().y) <= 400) {
                     barco_rojo.mostrarSprite();
+                    barco_rojo.getQuilla().visible = true;
                 }
 
                 /*Manejo de disparo*/
@@ -494,9 +497,9 @@ var playState = {
     },
 
     render: function () {
-        game.debug.body(barco_azul.quilla);
-        game.debug.body(barco_rojo.quilla);
-        game.debug.body(aviones_rojos.aviones[0].arma.balas);
+        //game.debug.body(barco_azul.quilla);
+        //game.debug.body(barco_rojo.quilla);
+        //game.debug.body(aviones_rojos.aviones[0].arma.balas);
     },
     disminuirCombustible: function () {
 //        console.log(aviones_azules.obtenerCombustibles());

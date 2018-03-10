@@ -79,6 +79,12 @@ function Barco(nombre, equipo){
 //    this.quilla.body.setSize(300, 750, 500, 150);
 }
 
+
+Barco.prototype.getQuilla = function(){
+  return this.quilla;
+};
+
+
 Barco.prototype.reEscalar = function(){
   this.sprite.scale.set(0.65 * factorEscaladoBarco);
   this.quilla.scale.set(5.5 * factorEscaladoBarco);

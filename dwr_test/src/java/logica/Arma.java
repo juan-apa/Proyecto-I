@@ -12,8 +12,8 @@ package logica;
  */
 public class Arma {
     public final static int MUNICION_METRALLETA = 1;
-    public final static int MUNICION_BOMBA = 3;
     public final static int MUNICION_TORPEDO = 2;
+    public final static int MUNICION_BOMBA = 3;
     
     private int tipoMunicion;
     

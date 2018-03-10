@@ -99,6 +99,11 @@ Barco.prototype.getSprite = function(){
     return this.sprite;
 };
 
+Barco.prototype.mostrarSprite = function(){
+    this.visible = true;
+    this.sprite.visible = true;
+};
+
 Barco.prototype.restarCantidadAviones = function(){
     if(this.cantAviones>0){
         this.cantAviones--;

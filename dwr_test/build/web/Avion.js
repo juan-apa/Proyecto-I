@@ -50,6 +50,10 @@ Avion.prototype.obtenerSpirte = function(){
     return this.sprite;
 };
 
+Avion.prototype.getNombre = function(){
+    return this.sprite.name;
+};
+
 Avion.prototype.ocultarSprite = function(){
     this.visible = false;
     this.sprite.visible = false;
@@ -220,3 +224,10 @@ Avion.prototype.setCombustible = function(combustible){
 Avion.prototype.cambiarMunicion = function(tipoMunicion){
     this.arma.cambiarMunicion(tipoMunicion);
 };
+
+Avion.prototype.cambiarTipoDeArma = function(){
+    var nuevaArma = this.arma.cambiarArma();
+    this.arma.tipoArma = nuevaArma;
+    return nuevaArma;
+};
+

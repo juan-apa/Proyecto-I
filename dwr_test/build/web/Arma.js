@@ -10,7 +10,7 @@ function Arma(tipoArma) {
     this.tipoArma = tipoArma;
     this.municion = 1;
     this.maxBalas = 1;                  //si es bomba o torpedo tiene 1 municion
-    if(this.tipoArma === METRALLETA){   //si es metra, tiene mas municion
+    if (this.tipoArma === METRALLETA) {   //si es metra, tiene mas municion
         this.municion = 200;
         this.maxBalas = 200;
     }
@@ -25,16 +25,17 @@ function Arma(tipoArma) {
     this.balas.setAll('checkWorldBounds', true);
     this.balas.setAll('outOfBoundsKill', true);
     this.balas.setAll('bounce', 1);
-    this.balas.forEach(function(item){
+    this.balas.forEach(function (item) {
         game.debug.body(item);
     });
-    
+
     this.nextFire = 0;
-};
+}
+;
 
 /*Funciones del objeto*/
 
-Arma.prototype.recargar = function(){
+Arma.prototype.recargar = function () {
     this.municion = this.maxBalas;
 };
 
@@ -66,13 +67,13 @@ Arma.prototype.dispararr = function (x, y, angulo) {
                 game.physics.arcade.moveToXY(bullet, x1, y1, 600);	//velocidad de la bala
             }
         }
-        
-        if(this.tipoArma === BOMBA){
+
+        if (this.tipoArma === BOMBA) {
             let x1 = x + (Math.sin(angulo) * 300);
             let y1 = y + (Math.cos(angulo) * 300);
 //            informacion.setText("Municion: "+ this.municion + " Tipo Municion: BOMBA" );
             fireRate = 2000;  //parametrizable
-            if (game.time.now > this.nextFire && this.balas.countDead() > 0 )
+            if (game.time.now > this.nextFire && this.balas.countDead() > 0)
             {
                 this.municion--;
                 this.nextFire = game.time.now + fireRate;
@@ -84,7 +85,7 @@ Arma.prototype.dispararr = function (x, y, angulo) {
                 bullet.trackrotation = true;
                 game.physics.arcade.moveToXY(bullet, x1, y1, 600 );	//velocidad de la bala
             }
-            
+
         }
         
         if(this.tipoArma === TORPEDO){
@@ -108,15 +109,32 @@ Arma.prototype.dispararr = function (x, y, angulo) {
     }
 };
 
-Arma.prototype.cambiarMunicion = function(tipoArma){
-    if(this.tipoArma !== tipoArma){
+Arma.prototype.cambiarMunicion = function (tipoArma) {
+    if (this.tipoArma !== tipoArma) {
         this.tipoArma = tipoArma;
-        if(this.tipoArma === METRALLETA){
+        if (this.tipoArma === METRALLETA) {
             this.maxBalas = 200;
         }
-        if(this.tipoArma === BOMBA || this.tipoArma === TORPEDO){
+        if (this.tipoArma === BOMBA || this.tipoArma === TORPEDO) {
             this.maxBalas = 1;
         }
         this.recargar();
     }
+};
+
+
+Arma.prototype.cambiarArma = function () {
+    var tipoDeArmaNueva;
+    if (this.tipoArma === METRALLETA) {
+        tipoDeArmaNueva = BOMBA;
+    } else {
+        if (this.tipoArma === BOMBA) {
+            tipoDeArmaNueva = TORPEDO;
+        } else {
+            if (this.tipoArma === TORPEDO) {
+                tipoDeArmaNueva = METRALLETA;
+            }
+        }
+    }
+    return tipoDeArmaNueva;
 };

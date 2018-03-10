@@ -127,12 +127,15 @@ Arma.prototype.cambiarArma = function () {
     var tipoDeArmaNueva;
     if (this.tipoArma === METRALLETA) {
         tipoDeArmaNueva = BOMBA;
+        this.municion = 1;
     } else {
         if (this.tipoArma === BOMBA) {
             tipoDeArmaNueva = TORPEDO;
+            this.municion = 1;
         } else {
             if (this.tipoArma === TORPEDO) {
                 tipoDeArmaNueva = METRALLETA;
+                this.municion = 200;
             }
         }
     }

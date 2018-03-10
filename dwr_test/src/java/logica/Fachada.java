@@ -297,11 +297,11 @@ public class Fachada {
     
     public void cambiarTipoMunicionAvion(int equipo,int indice, int armaNueva){
          if(equipo == EQUIPO_ROJO){
-            this.avionesAzules.obtenerAvion(indice).cambiarTipoArma(armaNueva);
+            this.avionesRojos.obtenerAvion(indice).cambiarTipoArma(armaNueva);
         }
         else{
             if(equipo == EQUIPO_AZUL){
-                //
+                this.avionesAzules.obtenerAvion(indice).cambiarTipoArma(armaNueva);
             }
         }
     }

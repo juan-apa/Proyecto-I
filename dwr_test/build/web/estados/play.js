@@ -4,8 +4,8 @@ var playState = {
     create: function () {
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         game.scale.setMinMax(400, 300, 1920, 1080);
-        
-        
+
+
 //        game.stage.scale.startFullScreen();
         /*Seteo las flechas de la camara*/
         wasd = {
@@ -60,10 +60,10 @@ var playState = {
         cambiarAlturaAvion = game.input.keyboard.addKey(Phaser.KeyCode.Z);
 
         //Botones cambio municion
-        cambiarMunicionAvion_1 = game.input.keyboard.addKey(Phaser.Keyboard.E);
-        cambiarMunicionAvion_2 = game.input.keyboard.addKey(Phaser.Keyboard.R);
-        cambiarMunicionAvion_3 = game.input.keyboard.addKey(Phaser.Keyboard.T);
-        cambiarMunicionAvion_4 = game.input.keyboard.addKey(Phaser.Keyboard.Y);
+        cambiarMunicionAvion_4 = game.input.keyboard.addKey(Phaser.Keyboard.E);
+        cambiarMunicionAvion_1 = game.input.keyboard.addKey(Phaser.Keyboard.R);
+        cambiarMunicionAvion_2 = game.input.keyboard.addKey(Phaser.Keyboard.T);
+        cambiarMunicionAvion_3 = game.input.keyboard.addKey(Phaser.Keyboard.Y);
 
         /*Inicio el tipo de fisicas del juego*/
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -80,7 +80,7 @@ var playState = {
         game.physics.arcade.collide(barco_rojo.quilla, barco_azul.quilla, colQuillaQuilla);
         game.physics.arcade.collide(barco_rojo.quilla, barco_azul.sprite, colQuillaRojo);
         game.physics.arcade.collide(barco_rojo.sprite, barco_azul.quilla, colQuillaAzul);
-        
+
         var estAzulObtenido = false;
         var estRojoObtenido = false;
         var estadoAzul;
@@ -161,7 +161,7 @@ var playState = {
 
         mapa.tilePosition.x = -game.camera.x;
         mapa.tilePosition.y = -game.camera.y;
-        
+
         moverCamara();
 
 
@@ -188,18 +188,45 @@ var playState = {
                 /*Aterrizaje avion*/
                 aterrizajeAvionRojo();
 
-                ////Cambio de municion 
+                //Cambio de municion 
                 if (cambiarMunicionAvion_1.isDown && cambiarMunicionAvion_1.downDuration(1) && aviones_rojos.obtenerAvion(i).getNombre() === 1) {
                     if (aviones_rojos.obtenerAvion(i).isAterrizado() === true) {
-                        console.log('arma antes de cambio:' + aviones_rojos.obtenerAvion(i).obtenerTipoArma());
                         var nuevaArma = aviones_rojos.obtenerAvion(i).cambiarTipoDeArma();
-                        console.log('arma despues de cambio:' + aviones_rojos.obtenerAvion(i).obtenerTipoArma());
                         Fachada.cambiarTipoMunicionAvion(1, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
                             console.log("arma de avion cambiada en la fachada.");
                         });
                     }
                 }
-
+                
+                if (cambiarMunicionAvion_2.isDown && cambiarMunicionAvion_2.downDuration(1) && aviones_rojos.obtenerAvion(i).getNombre() === 2) {
+                    if (aviones_rojos.obtenerAvion(i).isAterrizado() === true) {
+                        var nuevaArma = aviones_rojos.obtenerAvion(i).cambiarTipoDeArma();
+                        Fachada.cambiarTipoMunicionAvion(1, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
+                            console.log("arma de avion cambiada en la fachada.");
+                        });
+                    }
+                }
+                
+                if (cambiarMunicionAvion_3.isDown && cambiarMunicionAvion_3.downDuration(1) && aviones_rojos.obtenerAvion(i).getNombre() === 3) {
+                    if (aviones_rojos.obtenerAvion(i).isAterrizado() === true) {
+                        var nuevaArma = aviones_rojos.obtenerAvion(i).cambiarTipoDeArma();
+                        Fachada.cambiarTipoMunicionAvion(1, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
+                            console.log("arma de avion cambiada en la fachada.");
+                        });
+                    }
+                }
+                
+                if (cambiarMunicionAvion_4.isDown && cambiarMunicionAvion_4.downDuration(1) && aviones_rojos.obtenerAvion(i).getNombre() === 0) {
+                    if (aviones_rojos.obtenerAvion(i).isAterrizado() === true) {
+                        var nuevaArma = aviones_rojos.obtenerAvion(i).cambiarTipoDeArma();
+                        Fachada.cambiarTipoMunicionAvion(1, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
+                            console.log("arma de avion cambiada en la fachada.");
+                        });
+                    }
+                }
+                
+                //fin cambio municion
+                
                 //Manejo de altura
                 if (cambiarAlturaAvion.isDown && cambiarAlturaAvion.downDuration(1)) {
                     aviones_rojos.obtenerAvion(i).cambiarAltura();
@@ -316,6 +343,47 @@ var playState = {
                 /*Aterrizaje avion*/
                 aterrizajeAvionAzul();
 
+                //Cambio de municion 
+                if (cambiarMunicionAvion_1.isDown && cambiarMunicionAvion_1.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() === 1) {
+                    if (aviones_azules.obtenerAvion(i).isAterrizado() === true) {
+                        var nuevaArma = aviones_azules.obtenerAvion(i).cambiarTipoDeArma();
+                        Fachada.cambiarTipoMunicionAvion(0, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
+                            console.log("arma de avion cambiada en la fachada.");
+                        });
+                    }
+                }
+                
+                if (cambiarMunicionAvion_2.isDown && cambiarMunicionAvion_2.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() === 2) {
+                    if (aviones_azules.obtenerAvion(i).isAterrizado() === true) {
+                        var nuevaArma = aviones_azules.obtenerAvion(i).cambiarTipoDeArma();
+                        Fachada.cambiarTipoMunicionAvion(0, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
+                            console.log("arma de avion cambiada en la fachada.");
+                        });
+                    }
+                }
+                
+                if (cambiarMunicionAvion_3.isDown && cambiarMunicionAvion_3.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() === 3) {
+                    if (aviones_azules.obtenerAvion(i).isAterrizado() === true) {
+                        var nuevaArma = aviones_azules.obtenerAvion(i).cambiarTipoDeArma();
+                        Fachada.cambiarTipoMunicionAvion(0, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
+                            console.log("arma de avion cambiada en la fachada.");
+                        });
+                    }
+                }
+                
+                if (cambiarMunicionAvion_4.isDown && cambiarMunicionAvion_4.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() === 0) {
+                    if (aviones_azules.obtenerAvion(i).isAterrizado() === true) {
+                        var nuevaArma = aviones_azules.obtenerAvion(i).cambiarTipoDeArma();
+                        Fachada.cambiarTipoMunicionAvion(0, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
+                            console.log("arma de avion cambiada en la fachada.");
+                        });
+                    }
+                }
+                
+                //fin cambio municion
+
+
+
                 //Manejo de altura
                 if (cambiarAlturaAvion.isDown && cambiarAlturaAvion.downDuration(1)) {
                     aviones_azules.obtenerAvion(i).cambiarAltura();
@@ -424,8 +492,8 @@ var playState = {
             });
         }
     },
-    
-    render: function(){
+
+    render: function () {
         game.debug.body(barco_azul.quilla);
         game.debug.body(barco_rojo.quilla);
         game.debug.body(aviones_rojos.aviones[0].arma.balas);
@@ -447,7 +515,8 @@ function visibilidad(x1, y1, x2, y2) {
     var dx = x1 - x2;
     var dy = y1 - y2;
     return Math.sqrt(dx * dx + dy * dy);
-};
+}
+;
 
 function barcoAvionAzulColisionan(a, b) {
     /*a es el avion, y b es el barco*/
@@ -466,7 +535,8 @@ function barcoAvionAzulColisionan(a, b) {
         barco_azul.setearSprite(4);
     }
     barco_azul.agregarCantidadAviones();
-};
+}
+;
 
 function barcoAvionRojoColisionan(a, b) {
     /*a es el avion, y b es el barco*/
@@ -485,17 +555,20 @@ function barcoAvionRojoColisionan(a, b) {
         barco_rojo.setearSprite(4);
     }
     barco_rojo.agregarCantidadAviones();
-};
+}
+;
 
 function collisionHandler(a, b) {
     b.kill();
     a.kill();
-};
+}
+;
 
 function collisionHandler2(a, b) {
     a.kill();
     b.kill();
-};
+}
+;
 
 function numeroRandom(min, max) {
     return Math.round(Math.random() * (max - min) + min);
@@ -650,20 +723,23 @@ function aterrizajeAvionRojo() {
     }
 }
 
-function colQuillaRojo(ba, br){
+function colQuillaRojo(ba, br) {
 //    Fachada.embisteRojoAzul();
     barco_rojo.velocidadActual = 0;
     console.log("embisteRojoAzul");
-};
-function colQuillaAzul(ba, br){
+}
+;
+function colQuillaAzul(ba, br) {
 //    Fachada.embisteAzulRojo();
     barco_azul.velocidadActual = 0;
     console.log("embisteAzulRojo");
-};
-function colQuillaQuilla(ba, br){
+}
+;
+function colQuillaQuilla(ba, br) {
 //    Fachada.embisteEmpate();
     barco_rojo.velocidadActual = 0;
     barco_azul.velocidadActual = 0;
     console.log("embisteEmpate");
-};
+}
+;
 

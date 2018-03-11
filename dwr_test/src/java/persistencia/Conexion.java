@@ -29,6 +29,7 @@ public class Conexion {
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
+<<<<<<< HEAD
             this.conn = (com.mysql.jdbc.Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/","admin","admin");
             /*Creo la base de datos. Si no existe no hace nada*/
             s = this.conn.createStatement();
@@ -38,6 +39,9 @@ public class Conexion {
             s.executeUpdate(Consultas.TABLA_PARTIDAS);
             s.executeUpdate(Consultas.TABLA_BARCOS);
             s.executeUpdate(Consultas.TABLA_AVIONES);
+=======
+            this.conn = (com.mysql.jdbc.Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","root");
+>>>>>>> desarrollo_2
             this.conn.setAutoCommit(false);
             this.conn.commit();
         } catch (ClassNotFoundException ex) {

@@ -12,6 +12,7 @@
             <file>file:/C:/Users/pc-61/Documents/proyectos-java/Proyecto-I/dwr_test/src/java/logica/Barco.java</file>
             <file>file:/C:/Users/pc-61/Documents/proyectos-java/Proyecto-I/dwr_test/src/java/logica/Fachada.java</file>
         </group>
+<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Barco.java</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Aviones.java</file>
@@ -52,5 +53,8 @@
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/persistencia/ExceptionPersistencia.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> desarrollo_2
     </open-files>
 </project-private>

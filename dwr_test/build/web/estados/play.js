@@ -477,20 +477,19 @@ var playState = {
                 timeout: 5000,
                 errorHandler: function (message, exception) {
                     console.log("error updatePosRojo ");
-                    console.log(dwr.util.toDescriptiveString(exception, 2));
+//                    console.log(dwr.util.toDescriptiveString(exception, 2));
                 }
             });
         }
 
         if (rojo === true) {
             Fachada.updatePosRojo(aviones_rojos.obtenerPosicionesAviones(), barco_rojo.obtenerPosicion(), {
-                callback: function () {},
                 timeout: 5000,
                 errorHandler: function (message) {
                     console.log("error updatePosAzul " + message);
                 },
                 callback: function () {
-                    estRojoObtenido = false;
+//                    estRojoObtenido = false;
                 }
             });
         }
@@ -729,20 +728,20 @@ function aterrizajeAvionRojo() {
 function colQuillaRojo(ba, br) {
 //    Fachada.embisteRojoAzul();
     barco_rojo.velocidadActual = 0;
-    console.log("embisteRojoAzul");
+//    console.log("embisteRojoAzul");
 }
 ;
 function colQuillaAzul(ba, br) {
 //    Fachada.embisteAzulRojo();
     barco_azul.velocidadActual = 0;
-    console.log("embisteAzulRojo");
+//    console.log("embisteAzulRojo");
 }
 ;
 function colQuillaQuilla(ba, br) {
 //    Fachada.embisteEmpate();
     barco_rojo.velocidadActual = 0;
     barco_azul.velocidadActual = 0;
-    console.log("embisteEmpate");
+//    console.log("embisteEmpate");
 }
 ;
 

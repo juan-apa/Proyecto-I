@@ -6,17 +6,19 @@
 
 package logica;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Juan Aparicio
  */
-public class Barco extends Vehiculo{
+public class Barco extends Vehiculo implements Serializable{
     private Aviones aviones;
     private final int velMaxima = 100;
     private int velocidad = 100;
     private boolean vivo = true;
     
-    public Barco() {
+    public Barco() { 
         this.nombre = "-1";
         this.x = 0;
         this.y = 0;

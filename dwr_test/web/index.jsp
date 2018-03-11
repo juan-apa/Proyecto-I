@@ -26,7 +26,7 @@
             console.log("UNO " + parametros.MAX_BALAS);
             
             
-            Fachada.obtenerMAX_BALAS({callback:obtenerMaxBalas});
+//            Fachada.obtenerMAX_BALAS({callback:obtenerMaxBalas});
             
             function obtenerMaxBalas(respuesta){
                 console.log(respuesta);

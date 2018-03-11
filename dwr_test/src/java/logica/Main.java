@@ -8,6 +8,8 @@ package logica;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+//import persistencia.DAOPartida;
+import persistencia.ExcepcionDAOPartida;
 import persistencia.ExceptionConfiguracion;
 
 /**
@@ -17,16 +19,14 @@ import persistencia.ExceptionConfiguracion;
 public class Main {
     public static void main(String[] args) {
         try {
+            Equipos e = new Equipos();
+            System.out.println("LLEGUEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
             Fachada f = Fachada.getInstance();
-//            f.obtenerMAX_BALAS();
-            VOPosicion[] vops = new VOPosicion[4];
-            for(int i = 0; i < vops.length; i++){
-                vops[i] = new VOPosicion(0, 0, 0);
-            }
-            
-//            f.updatePosAzul(vops);
-            f.getPosAzul();
-        } catch (ExceptionConfiguracion ex) {
+            f.guardarPartida();
+
+        } catch (ExcepcionDAOPartida ex) {
+            ex.printStackTrace();
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

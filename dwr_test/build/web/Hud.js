@@ -44,7 +44,7 @@ function Hud(){
 }
 
 Hud.prototype.updateInfoAviones = function(vivo, tipoArma, combustibles, bloqueado){
-    console.log(combustibles)
+//    console.log(combustibles)
     for(let i = 0; i < this.cantAviones; i++){
         if(vivo[i]){
             this.aviones[i].tint = 0x68ff86;
@@ -52,8 +52,9 @@ Hud.prototype.updateInfoAviones = function(vivo, tipoArma, combustibles, bloquea
         else{
             this.aviones[i].tint = 0xff3535;
         }
-        
-        this.armas[i].loadTexture(tipoArma[i].toString());
+        if(tipoArma[i] != "-1"){
+            this.armas[i].loadTexture(tipoArma[i].toString());
+        }
         
         if(combustibles[i] > 60){
             this.combustibles[i].tint = 0x59ff00;

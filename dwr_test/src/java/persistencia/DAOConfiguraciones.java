@@ -22,7 +22,7 @@ public class DAOConfiguraciones {
     public DAOConfiguraciones() throws ExceptionConfiguracion {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            this.conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","root");
+            this.conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/","admin","admin");
         } catch (ClassNotFoundException ex) {
             throw new ExceptionConfiguracion(ExceptionConfiguracion.ERROR_OBTENER_CONFIGURACIONES);
         } catch (SQLException ex) {
@@ -40,6 +40,7 @@ public class DAOConfiguraciones {
             }
             rs.close();
             stmt.close();
+            this.conn.close();
         } catch (SQLException ex) {
             throw new ExceptionConfiguracion(ExceptionConfiguracion.ERROR_OBTENER_CONFIGURACIONES);
         }

@@ -34,9 +34,13 @@ function Avion(nombreAvion, x, y, combustible, equipo){
     };
     if(this.equipo === "azul"){
         this.sprite.tint = 0x005ce8;
+        this.sprite.x = 0;
+        this.sprite.y = 0;
     }
     else{
         this.sprite.tint = 0xe80000;
+        this.sprite.x = 500;
+        this.sprite.y = 500;
     }
     
 }

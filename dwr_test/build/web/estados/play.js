@@ -289,6 +289,9 @@ var playState = {
                         case BOMBA:
                             colision = game.physics.arcade.collide(aviones_rojos.obtenerAvion(i).getArma(), barco_azul.getSprite(), colisionBombaBarco, null, this);
                             if (colision) {
+                                imagen_impacto = game.add.sprite(aviones_rojos.obtenerAvion(i).obtenerSpirte().x,aviones_rojos.obtenerAvion(i).obtenerSpirte().y, 'impacto');
+                                imagen_impacto.anchor.setTo(0.2, 0.2);
+                                game.time.events.add(Phaser.Timer.SECOND/2, borrarImpacto, this);
                                 Fachada.disparo_avion_barco(0, i.toString(), {
                                     callback: function () {
                                         console.log("respuesta fachada bomba");
@@ -304,6 +307,9 @@ var playState = {
                         case TORPEDO:
                             colision = game.physics.arcade.overlap(aviones_rojos.obtenerAvion(i).getArma(), barco_azul.getSprite(), colisionBombaBarco, null, this);
                             if (colision) {
+                                imagen_impacto = game.add.sprite(aviones_rojos.obtenerAvion(i).obtenerSpirte().x,aviones_rojos.obtenerAvion(i).obtenerSpirte().y, 'impacto');
+                                imagen_impacto.anchor.setTo(0.2, 0.2);
+                                game.time.events.add(Phaser.Timer.SECOND/2, borrarImpacto, this);
                                 Fachada.disparo_avion_barco(0, i.toString(), function () {
                                     console.log("respuesta fachada torpedo");
                                 });
@@ -446,6 +452,9 @@ var playState = {
                         case BOMBA:
                             colision = game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), barco_rojo.getSprite(), colisionBombaBarco, null, this);
                             if (colision) {
+                                imagen_impacto = game.add.sprite(aviones_azules.obtenerAvion(i).obtenerSpirte().x,aviones_azules.obtenerAvion(i).obtenerSpirte().y, 'impacto');
+                                imagen_impacto.anchor.setTo(0.2, 0.2);
+                                game.time.events.add(Phaser.Timer.SECOND/2, borrarImpacto, this);
                                 Fachada.disparo_avion_barco(1, i.toString(), function () {
                                     console.log("respuesta fachada bomba");
                                 });
@@ -455,6 +464,9 @@ var playState = {
                         case TORPEDO:
                             colision = game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), barco_rojo.getSprite(), colisionBombaBarco);
                             if (colision) {
+                                imagen_impacto = game.add.sprite(aviones_azules.obtenerAvion(i).obtenerSpirte().x,aviones_azules.obtenerAvion(i).obtenerSpirte().y, 'impacto');
+                                imagen_impacto.anchor.setTo(0.2, 0.2);
+                                game.time.events.add(Phaser.Timer.SECOND/2, borrarImpacto, this);
                                 Fachada.disparo_avion_barco(1, i.toString(), function () {
                                     console.log("respuesta fachada torpedo");
                                 });
@@ -518,6 +530,10 @@ var playState = {
         /*TODO avisar al a facahada de la disminucion del tiempo de la partida*/
     }
 };
+
+function borrarImpacto() {
+    game.add.tween(imagen_impacto).to({alpha: 0}, 2000, Phaser.Easing.Linear.None, true);
+}
 
 
 function visibilidad(x1, y1, x2, y2) {

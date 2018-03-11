@@ -23,7 +23,7 @@ public class Conexion {
     public Conexion() throws ExceptionPersistencia{
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            this.conn = (com.mysql.jdbc.Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/","admin","admin");
+            this.conn = (com.mysql.jdbc.Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","root");
             this.conn.setAutoCommit(false);
         } catch (ClassNotFoundException ex) {
            throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_CONEXION);

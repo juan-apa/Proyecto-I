@@ -251,5 +251,9 @@ public class Fachada {
     public void nuevaPartida(){
         this.partida = new Partida();
     }
+    public void verificarUsuario(String nomUser, String passUser, boolean esValido){
+        esValido = false;
+        //TODO chequeo si usuario y pass estan en la BD, si estan pongo esValido = true, sino false
+    }
     
 }

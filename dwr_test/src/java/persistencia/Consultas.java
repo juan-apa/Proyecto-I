@@ -31,6 +31,8 @@ public class Consultas {
     public static final String LARGO_BARCOS = "Select count(*) FROM Proyecto.Barco";
     public static final String LARGO_AVIONES = "Select count(*) FROM Proyecto.Avion";
     
+    public static final String USUARIO_VALIDO = "Select * FROM Proyecto.Jugadores WHERE nombre = ? AND password = ? ORDER BY nombre";
+    
     public static final String CREAR_DB = "CREATE DATABASE IF NOT EXISTS Proyecto";
     
     public static final String TABLA_EQUIPOS = "CREATE TABLE IF NOT EXISTS Proyecto.Equipo(\n" +

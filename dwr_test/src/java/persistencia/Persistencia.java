@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package persistencia;
 
 import java.sql.Connection;
@@ -26,18 +25,19 @@ import persistencia.Consultas;
 import persistencia.ExceptionPersistencia;
 
 /**
- * 
+ *
  * @author Sammy Guergachi <sguergachi at gmail.com>
  */
 public class Persistencia {
-    public Persistencia(){
-        
+
+    public Persistencia() {
+
     }
-    
-    public void persistirPartida(Partida p, String nombreJugador, int colorJugadorGuardado, Conexion con)throws ExceptionPersistencia {
+
+    public void persistirPartida(Partida p, String nombreJugador, int colorJugadorGuardado, Conexion con) throws ExceptionPersistencia {
         Connection c = con.getConexion();
         PreparedStatement pstmt = null;
-        
+
         try {
             int[] idEquipos = this.persistirEquipos(p.getEquipos(), con);
             p.setId(this.largoPartidas(con));
@@ -54,27 +54,26 @@ public class Persistencia {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_INSERT);
         }
     }
-    
+
     public int largoPartidas(Conexion con) throws ExceptionPersistencia {
         Connection c = con.getConexion();
         PreparedStatement p = null;
         ResultSet rs = null;
         int largo = 0;
-        try{
+        try {
             p = c.prepareStatement(Consultas.LARGO_PARTIDAS);
             rs = p.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 largo = rs.getInt(1);
             }
-        } catch(SQLException e){
+        } catch (SQLException e) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_OBTENER_DATOS);
-        }
-        finally{
+        } finally {
             try {
-                if(rs != null){
+                if (rs != null) {
                     rs.close();
                 }
-                if(p != null){
+                if (p != null) {
                     p.close();
                 }
             } catch (SQLException ex) {
@@ -83,13 +82,13 @@ public class Persistencia {
         }
         return largo;
     }
-    
+
     private int[] persistirEquipos(Equipos e, Conexion con) throws ExceptionPersistencia {
         Connection c = con.getConexion();
         int[] ids = new int[2];
-        try{
+        try {
             /*obtengo el largo de la cantidad de equipos para asignarle ese numero y el siguiente a los equipos.*/
-            /*Si el numero de equipo es par, entonces es azul, de lo contrario es rojo*/
+ /*Si el numero de equipo es par, entonces es azul, de lo contrario es rojo*/
             int idAzul = this.largoEquipos(con);
             int idRojo = idAzul + 1;
             ids[0] = idAzul;
@@ -98,28 +97,27 @@ public class Persistencia {
             e.getEquipoRojo().setId(idRojo);
             this.persistirEquipo(e.getEquipoAzul(), con);
             this.persistirEquipo(e.getEquipoRojo(), con);
-        } catch(ExceptionPersistencia ex) {
+        } catch (ExceptionPersistencia ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_INSERT);
         } finally {
         }
         return ids;
     }
-    
+
     private int largoEquipos(Conexion con) throws ExceptionPersistencia {
         Connection c = con.getConexion();
         PreparedStatement p = null;
         ResultSet rs = null;
         int largo = 0;
-        try{
+        try {
             p = c.prepareStatement(Consultas.LARGO_EQUIPOS);
             rs = p.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 largo = rs.getInt(1);
             }
-        } catch(SQLException e){
+        } catch (SQLException e) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_OBTENER_DATOS);
-        }
-        finally{
+        } finally {
             try {
                 rs.close();
                 p.close();
@@ -129,19 +127,19 @@ public class Persistencia {
         }
         return largo;
     }
-    
+
     private void persistirEquipo(Equipo e, Conexion con) throws ExceptionPersistencia {
         Connection c = con.getConexion();
         PreparedStatement p = null;
         int idBarco = 0;
-        try{
+        try {
             p = c.prepareStatement(Consultas.INGRESAR_EQUIPO);
             p.setInt(1, e.getId());
             p.setInt(2, e.getColor());
             p.executeUpdate();
             this.persistirBarco(e.getBarco(), e.getId(), con);
             this.persistirAviones(e.getAviones(), e.getId(), false, con);
-        } catch(SQLException ex) {
+        } catch (SQLException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_INSERT);
         } finally {
             try {
@@ -151,11 +149,11 @@ public class Persistencia {
             }
         }
     }
-    
+
     private void persistirBarco(Barco b, int idEquipo, Conexion con) throws ExceptionPersistencia {
         Connection c = con.getConexion();
         PreparedStatement p = null;
-        try{
+        try {
             b.setId(idEquipo);
             this.persistirAviones(b.getAviones(), idEquipo, true, con);
             p = c.prepareStatement(Consultas.INGRESAR_BARCO);
@@ -167,7 +165,7 @@ public class Persistencia {
             p.setDouble(6, b.getY());
             p.setDouble(7, b.getRot());
             p.executeUpdate();
-        } catch(SQLException ex) {
+        } catch (SQLException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_INSERT);
         } finally {
             try {
@@ -177,22 +175,21 @@ public class Persistencia {
             }
         }
     }
-    
+
     private int largoBarcos(Conexion con) throws ExceptionPersistencia {
         Connection c = con.getConexion();
         PreparedStatement p = null;
         ResultSet rs = null;
         int largo = 0;
-        try{
+        try {
             p = c.prepareStatement(Consultas.LARGO_BARCOS);
             rs = p.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 largo = rs.getInt(1);
             }
-        } catch(SQLException e){
+        } catch (SQLException e) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_OBTENER_DATOS);
-        }
-        finally{
+        } finally {
             try {
                 rs.close();
                 p.close();
@@ -202,16 +199,16 @@ public class Persistencia {
         }
         return largo;
     }
-    
+
     private void persistirAviones(Aviones av, int idEquipo, boolean deBarco, Conexion con) throws ExceptionPersistencia {
 //        Connection c = con.getConexion();
 //        PreparedStatement p = null;
-        try{
+        try {
             List<Avion> aux = av.getAviones();
-            for(Avion a : aux){
+            for (Avion a : aux) {
                 this.persistirAvion(a, idEquipo, deBarco, con);
             }
-        } catch(ExceptionPersistencia ex) {
+        } catch (ExceptionPersistencia ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_INSERT);
         } finally {
 //            try {
@@ -221,13 +218,13 @@ public class Persistencia {
 //            }
         }
     }
-    
+
     private void persistirAvion(Avion av, int idEquipo, boolean deBarco, Conexion con) throws ExceptionPersistencia {
         Connection c = con.getConexion();
         PreparedStatement p = null;
-        try{
+        try {
             p = c.prepareStatement(Consultas.INGRESAR_AVION);
-            if(av != null){
+            if (av != null) {
                 p.setInt(1, idEquipo);
                 p.setString(2, av.getNombre());
                 p.setDouble(3, av.getX());
@@ -256,7 +253,7 @@ public class Persistencia {
                 p.setBoolean(13, deBarco);
             }
             p.executeUpdate();
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_INSERT);
         } finally {
             try {
@@ -265,10 +262,9 @@ public class Persistencia {
                 throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_CERRAR_CONEXION);
             }
         }
-        
+
     }
-    
-    
+
     public Partida obtenerPartida(int idPartida, Conexion con) throws ExceptionPersistencia {
         Partida ret = new Partida();
         Connection c = con.getConexion();
@@ -276,11 +272,11 @@ public class Persistencia {
         ResultSet rs = null;
         int idEquipoAzul = 0;
         int idEquipoRojo = 1;
-        try{
+        try {
             p = c.prepareStatement(Consultas.FIND_PARTIDA);
             p.setInt(1, idPartida);
             rs = p.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 ret.setId(idPartida);
                 ret.setTiempo(rs.getInt("tiempo"));
                 ret.setDificultad(rs.getInt("dificultad"));
@@ -293,17 +289,17 @@ public class Persistencia {
             aux.setEquipoRojo(this.obtenerEquipo(idEquipoRojo, con));
             aux.getEquipoRojo().setColor(Equipos.EQUIPO_ROJO);
             ret.setEquipos(aux);
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_OBTENER_DATOS);
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
                     throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_CONEXION);
                 }
             }
-            if(p!=null){
+            if (p != null) {
                 try {
                     p.close();
                 } catch (SQLException ex) {
@@ -313,33 +309,33 @@ public class Persistencia {
         }
         return ret;
     }
-    
+
     private Equipo obtenerEquipo(int idEquipo, Conexion con) throws ExceptionPersistencia {
         Equipo ret = new Equipo();
         Connection c = con.getConexion();
         PreparedStatement p = null;
         ResultSet rs = null;
-        try{
+        try {
             p = c.prepareStatement(Consultas.FIND_EQUIPO);
             p.setInt(1, idEquipo);
             rs = p.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 ret.setColor(rs.getInt("color"));
             }
             ret.setId(idEquipo);
             ret.setBarco(this.obtenerBarco(idEquipo, con));
             ret.setAviones(this.obtenerAviones(idEquipo, false, con));
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_OBTENER_DATOS);
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
                     throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_CONEXION);
                 }
             }
-            if(p!=null){
+            if (p != null) {
                 try {
                     p.close();
                 } catch (SQLException ex) {
@@ -349,34 +345,34 @@ public class Persistencia {
         }
         return ret;
     }
-    
-    private Barco obtenerBarco(int idEquipo, Conexion con) throws ExceptionPersistencia{
+
+    private Barco obtenerBarco(int idEquipo, Conexion con) throws ExceptionPersistencia {
         Barco ret = new Barco();
         Connection c = con.getConexion();
         PreparedStatement p = null;
         ResultSet rs = null;
-        try{
+        try {
             p = c.prepareStatement(Consultas.FIND_BARCO);
             p.setInt(1, idEquipo);
             rs = p.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 ret.setId(idEquipo);
                 ret.setVelMaxima(rs.getInt("velMaxima"));
                 ret.setVelocidad(rs.getInt("velocidad"));
                 ret.setVivo(rs.getBoolean("vivo"));
             }
             ret.setAviones(this.obtenerAviones(idEquipo, true, con));
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_OBTENER_DATOS);
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
                     throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_CONEXION);
                 }
             }
-            if(p!=null){
+            if (p != null) {
                 try {
                     p.close();
                 } catch (SQLException ex) {
@@ -392,19 +388,19 @@ public class Persistencia {
         Connection c = con.getConexion();
         PreparedStatement p = null;
         ResultSet rs = null;
-        try{
+        try {
             p = c.prepareStatement(Consultas.FIND_AVIONES);
             p.setInt(1, idEquipo);
             p.setBoolean(2, enBarco);
             rs = p.executeQuery();
             List<Avion> aux = new ArrayList<>(4);
             Avion avAux = null;
-            while(rs.next()){
+            while (rs.next()) {
                 avAux = null;
                 String nombre = rs.getString("nombre");
                 double x = rs.getDouble("x");
                 /*Si no fue null, es porque hay un barco en esta posición*/
-                if(!rs.wasNull()){
+                if (!rs.wasNull()) {
                     avAux = new Avion();
                     avAux.setNombre(nombre);
                     avAux.setX(x);
@@ -423,17 +419,17 @@ public class Persistencia {
                 aux.add(avAux);
             }
             ret.setAviones(aux);
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_OBTENER_DATOS);
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
                     throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_CONEXION);
                 }
             }
-            if(p!=null){
+            if (p != null) {
                 try {
                     p.close();
                 } catch (SQLException ex) {
@@ -443,4 +439,24 @@ public class Persistencia {
         }
         return ret;
     }
+
+    public boolean usuarioValido(String nom, String pass, Conexion con) throws ExceptionPersistencia {
+        Connection c = con.getConexion();
+        PreparedStatement p = null;
+        ResultSet rs = null;
+        boolean existe = false;
+        try {
+            p = c.prepareStatement(Consultas.USUARIO_VALIDO);
+            p.setString(1, nom);
+            p.setString(2, pass);
+            rs = p.executeQuery();
+            while (rs.next()) {
+                existe = true;
+            }
+        } catch (SQLException e) {
+            throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_OBTENER_DATOS);
+        }
+        return existe;
+    }
+
 }

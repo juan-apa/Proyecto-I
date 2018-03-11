@@ -8,7 +8,7 @@ package logica;
 
 import persistencia.Conexion;
 import persistencia.ExceptionPersistencia;
-import persistencia.daos.Persistencia;
+import persistencia.Persistencia;
 
 /**
  *
@@ -20,7 +20,7 @@ public class Main {
             Partida p = new Partida();
             Conexion c = new Conexion();
             Persistencia per = new Persistencia();
-            per.persistirPartida(p, c);
+//            per.persistirPartida(p, c);
             Partida obtenida = per.obtenerPartida(1, c);
             c.cerrarConexion();
             

@@ -56,14 +56,14 @@ Hud.prototype.updateInfoAviones = function(vivo, tipoArma, combustibles, bloquea
             this.armas[i].loadTexture(tipoArma[i].toString());
         }
         
-        if(combustibles[i] > 60){
+        if(combustibles[i] > 35){
             this.combustibles[i].tint = 0x59ff00;
         }
-        else if(combustibles[i] > 30){
-            this.combustibles[i].tint = 0x68ff86;
+        else if(combustibles[i] > 15){
+            this.combustibles[i].tint = 0xfffa00;
         }
         else{
-            this.combustibles[i].tint = 0xff1500;
+            this.combustibles[i].tint = 0xff0000;
         }
     }
 };

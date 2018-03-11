@@ -6,16 +6,10 @@
 
 package logica;
 
-//import persistencia.DAOConfiguraciones;
-//import persistencia.DAOPartida;
-//import persistencia.DAOPartidas;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import persistencia.Conexion;
-import persistencia.ExcepcionDAOPartida;
 import persistencia.ExceptionConfiguracion;
 import persistencia.ExceptionPersistencia;
-import persistencia.daos.Persistencia;
+import persistencia.Persistencia;
 
 /**
  *
@@ -23,29 +17,29 @@ import persistencia.daos.Persistencia;
  */
 public class Fachada {
     
-//    private DAOConfiguraciones configuraciones;
     private static Fachada instancia;
-//    private Aviones avionesAzules;
-//    private Aviones avionesRojos;
-//    private Barco barcoAzul;
-//    private Barco barcoRojo;
-//    private int tiempoRestante = 60;
-    
-//    private DAOPartida partidas;
     
     private Persistencia persistenceManager;
     private Conexion conexionBDD;
     
+    private Jugador jAzul;
+    private Jugador jRojo;
+    private boolean jAzulListo;
+    private boolean jRojoListo;
     private Partida partida;
     
     
     private Fachada() throws ExceptionPersistencia {
         this.partida = new Partida();
-        this.persistenceManager = new Persistencia();
         this.conexionBDD = new Conexion();
+        this.persistenceManager = new Persistencia();
+        this.jAzul = new Jugador();
+        this.jRojo = new Jugador();
+        this.jAzulListo = false;
+        this.jRojoListo = false;
     }
     
-    public static Fachada getInstance() throws ExceptionConfiguracion, ExcepcionDAOPartida, Exception{
+    public static Fachada getInstance() throws ExceptionConfiguracion, Exception{
         if(Fachada.instancia == null){
             Fachada.instancia = new Fachada();
         }
@@ -228,9 +222,15 @@ public class Fachada {
         }
     }
     
-    public void guardarPartida() throws ExceptionPersistencia{
+    public void guardarPartida(boolean azul, boolean rojo) throws ExceptionPersistencia{
         try {
-            persistenceManager.persistirPartida(partida, conexionBDD);
+            if(azul == true){
+                persistenceManager.persistirPartida(partida, jAzul.getNombre(), Equipos.EQUIPO_AZUL, conexionBDD);
+            }
+            else{
+                persistenceManager.persistirPartida(partida, jRojo.getNombre(), Equipos.EQUIPO_ROJO, conexionBDD);
+            }
+//            persistenceManager.persistirPartida(partida, conexionBDD);
             conexionBDD.liberarConexionExitosa();
         } catch (ExceptionPersistencia ex) {
             conexionBDD.liberarConexionFallida();
@@ -250,6 +250,27 @@ public class Fachada {
     
     public void nuevaPartida(){
         this.partida = new Partida();
+    }
+    
+    public void embisteRojoAzul(){
+        this.partida.getEquipos().getEquipoAzul().getBarco().setVivo(false);
+    }
+    
+    public void embisteAzulRojo(){
+        this.partida.getEquipos().getEquipoRojo().getBarco().setVivo(false);
+    }
+    
+    public void embisteEmpate(){
+        this.partida.getEquipos().getEquipoAzul().getBarco().setVivo(false);
+        this.partida.getEquipos().getEquipoRojo().getBarco().setVivo(false);
+    }
+    
+    public void jugadorAzulListo(){
+        this.jAzulListo = true;
+    }
+    
+    public void jugadorRojoListo(){
+        this.jRojoListo = true;
     }
     
 }

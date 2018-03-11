@@ -8,14 +8,6 @@ package logica;
 
 import java.io.Serializable;
 import java.util.Random;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-/**
- * 
- * @author Sammy Guergachi <sguergachi at gmail.com>
- */
 
 public class Equipo implements Serializable{    
     private int puntaje;
@@ -28,9 +20,12 @@ public class Equipo implements Serializable{
         this.puntaje = puntaje;
         this.aviones = new Aviones(4);
         Random r = new Random();
+        
         int x_minimo = 200;
         int x_maximo = 600;
-        int x = r.nextInt(x_maximo - x_minimo);
+        
+        int x = (int) (Math.floor(Math.random() * x_maximo) + x_minimo);
+//        int x = r.nextInt(x_maximo - x_minimo);
         
         int y_minimo = 200;
         int y_maximo = 800;
@@ -80,6 +75,7 @@ public class Equipo implements Serializable{
         
         int x = r.nextInt(x_maximo - x_minimo);
         int y = r.nextInt(y_maximo - y_minimo);
+        System.out.println(" x " + x + " y " + y);
         
         if(equipo == Equipos.EQUIPO_AZUL){
             this.barco = new Barco("azul", x, y, 0);

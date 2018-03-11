@@ -6,15 +6,6 @@
 
 package logica;
 
-import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-/**
- * 
- * @author Sammy Guergachi <sguergachi at gmail.com>
- */
 public class Arma{
     
     public final static int MUNICION_METRALLETA = 1;

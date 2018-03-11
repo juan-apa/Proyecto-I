@@ -61,11 +61,14 @@ Avion.prototype.getNombre = function(){
 Avion.prototype.ocultarSprite = function(){
     this.visible = false;
     this.sprite.visible = false;
+    this.sprite.body.enable = false;
+    
 };
 
 Avion.prototype.mostrarSprite = function(){
     this.visible = true;
     this.sprite.visible = true;
+    this.sprite.body.enable = true;
 };
 
 
@@ -183,6 +186,8 @@ Avion.prototype.descender = function(){
 
 Avion.prototype.destruir = function(){
     this.vivo = false;
+    this.sprite.body.enable = false;
+    this.sprite.visible = false;
     this.sprite.kill();
 };
 

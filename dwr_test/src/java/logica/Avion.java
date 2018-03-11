@@ -1,9 +1,6 @@
 package logica;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,13 +12,10 @@ import javax.persistence.Id;
  * @author Juan Aparicio
  */
 public class Avion extends Vehiculo implements Serializable{
-    @Id
-    @GeneratedValue
-    private Long id;
     
     public static final int ALTURA_BAJA = 0;
     public static final int ALTURA_ALTA = 1;
-    public static final int MAX_COMBUSTIBLE = 2000;
+    public static final int MAX_COMBUSTIBLE = 60;
 
     private boolean vivo;
     private int combustible;

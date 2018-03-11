@@ -18,6 +18,8 @@ public class ExceptionPersistencia extends Exception{
     public static final int ERROR_CERRAR_CONEXION = 4;
     public static final int ERROR_COMMIT = 5;
     public static final int ERROR_ROLLBACK = 6;
+    public static final int ERROR_CREAR_DB = 7;
+    
     
     
     private static final String[] MENSAJES_ERROR = {
@@ -27,7 +29,8 @@ public class ExceptionPersistencia extends Exception{
         "Error al obtener datos de la base de datos",
         "Error al cerrar la conexion con la base de datos.",
         "Error al ejectuar la transaccion a la base de datos.",
-        "Error al revertir los cambios en la base de datos."
+        "Error al revertir los cambios en la base de datos.",
+        "Error al crear la base de datos."
     };
 
     public ExceptionPersistencia() {

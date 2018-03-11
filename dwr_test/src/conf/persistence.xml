@@ -8,7 +8,6 @@
     <class>logica.Equipo</class>
     <class>logica.Equipos</class>
     <class>logica.Partida</class>
-    <class>persistencia.daos.DAOPartidas</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/proyecto"/>

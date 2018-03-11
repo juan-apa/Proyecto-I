@@ -54,7 +54,7 @@ Arma.prototype.dispararr = function (x, y, angulo) {
             let x1 = x + (Math.sin(angulo) * 300);
             let y1 = y + (Math.cos(angulo) * 300);
 //            informacion.setText("Municion: "+this.municion + " Tipo Municion: METRALLETA" );
-            fireRate = 1500;  //parametrizable
+            fireRate = 400;  //parametrizable
             if (game.time.now > this.nextFire && this.balas.countDead() > 0)
             {
                 this.municion--;

@@ -8,7 +8,15 @@ function Barco(nombre, equipo){
     this.velocidadRotacion = 0.5;
     this.velocidadActual = 0;
     this.cantAviones = 0;
-    this.sprite = game.add.sprite(800, 300, 'barco_0avion');
+    if(azul){
+        this.sprite = game.add.sprite(Math.floor(Math.random() * 600) + 200, Math.floor(Math.random() * 1300) + 200, 'barco_0avion');
+        console.log("x: " + this.sprite.x + "y: " + this.sprite.y);
+    }
+    if(rojo){
+        this.sprite = game.add.sprite(Math.floor(Math.random() * 1800) + 1600, Math.floor(Math.random() * 1300) + 200, 'barco_0avion');
+        console.log("x: " + this.sprite.x + "y: " + this.sprite.y);
+    }
+    
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
     this.sprite.body.setCircle(210, 15.8, -136);
     this.sprite.scale.set(0.65 * factorEscaladoBarco);
@@ -147,6 +155,8 @@ Barco.prototype.getSprite = function(){
 Barco.prototype.mostrarSprite = function(){
     this.visible = true;
     this.sprite.visible = true;
+    this.sprite.body.enable = true;
+    
 };
 
 Barco.prototype.restarCantidadAviones = function(){

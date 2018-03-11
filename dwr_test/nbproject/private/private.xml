@@ -15,22 +15,23 @@
         <group>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Barco.java</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Aviones.java</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/assets/barco.png</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/boot.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/assets/portaviones_1.png</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/index.jsp</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/win.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Partida.java</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/VOEstado.java</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/game.js</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Jugador.java</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/parametros.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/play.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/persistencia/daos/Persistencia.java</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Barco.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/persistencia/ExcepcionDAOPartida.java</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/VOPosicion.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/load.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/persistencia/Conexion.java</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/InfoAvion.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/main.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Arma.java</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/VOEstado.js</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/persistencia/Persistencia.java</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Aviones.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Hud.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Main.java</file>
@@ -38,20 +39,18 @@
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/WEB-INF/dwr.xml</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Arma.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/loose.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/persistencia/daos/DAOPartidas.java</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/empate.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/estados/menu.js</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/assets/portaviones_2.png</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/Avion.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Vehiculo.java</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/persistencia/DAOConfiguraciones.java</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Fachada.java</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Avion.java</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/persistencia/daos/DAOEquipos.java</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/persistencia/Consultas.java</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/InfoBarco.js</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/persistencia/ExceptionPersistencia.java</file>
-            <file>file:/C:/Users/apari/Documents/GitHub/Proyecto-I/Proyecto-I/dwr_test/src/java/logica/Equipos.java</file>
         </group>
     </open-files>
 </project-private>

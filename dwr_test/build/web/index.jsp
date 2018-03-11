@@ -46,6 +46,7 @@
         <script src="Avion.js" charset="utf-8"> </script>
         <script src="Aviones.js" charset="utf-8"> </script>
         <!--<script src="main.js" charset="utf-8"> </script>-->
+        <script src="estados/empate.js" charset="utf-8"> </script>
         <script src="estados/win.js" charset="utf-8"> </script>
         <script src="estados/loose.js" charset="utf-8"> </script>
         <script src="estados/boot.js" charset="utf-8"> </script>

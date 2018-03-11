@@ -132,10 +132,12 @@ Aviones.prototype.aterrizarAviones = function(arr){
         if(arr[i]){
             this.aviones[i].aterrizado = true;
             this.aviones[i].sprite.visible = false;
+            this.aviones[i].sprite.body.enable = false;
         }
         else{
             this.aviones[i].aterrizado = false;
             this.aviones[i].sprite.visible = true;
+            this.aviones[i].sprite.body.enable = true;
         }
     }
 };
@@ -144,11 +146,11 @@ Aviones.prototype.esconderAviones = function(arr){
     for(let i = 0; i < this.aviones.length; i++){
         if(arr[i]){
             this.aviones[i].sprite.visible = false;
-//            this.aviones[i].sprite.body = false;
+            this.aviones[i].sprite.body.enable = false;
         }
         else{
             this.aviones[i].sprite.visible = true;
-//            this.aviones[i].sprite.body = true;
+            this.aviones[i].sprite.body.enable = true;
         }
     }
 };

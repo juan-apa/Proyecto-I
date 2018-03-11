@@ -8,7 +8,10 @@ package persistencia;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,14 +24,51 @@ public class Conexion {
     private Connection conn = null;
     
     public Conexion() throws ExceptionPersistencia{
+        Statement s = null;
+        ResultSet rs = null;
+        
         try {
             Class.forName("com.mysql.jdbc.Driver");
             this.conn = (com.mysql.jdbc.Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/","admin","admin");
+            /*Creo la base de datos. Si no existe no hace nada*/
+            s = this.conn.createStatement();
+            s.executeUpdate(Consultas.CREAR_DB);
+            s.executeUpdate(Consultas.TABLA_JUGADORES);
+            s.executeUpdate(Consultas.TABLA_EQUIPOS);
+            s.executeUpdate(Consultas.TABLA_PARTIDAS);
+            s.executeUpdate(Consultas.TABLA_BARCOS);
+            s.executeUpdate(Consultas.TABLA_AVIONES);
             this.conn.setAutoCommit(false);
+            this.conn.commit();
         } catch (ClassNotFoundException ex) {
+            try {
+                this.conn.rollback();
+            } catch (SQLException ex1) {
+                throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_ROLLBACK);
+            }
            throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_CONEXION);
         } catch (SQLException ex) {
+            try {
+                this.conn.rollback();
+            } catch (SQLException ex1) {
+                throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_ROLLBACK);
+            }
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_CONEXION);
+        } finally {
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_CREAR_DB);
+                }
+            }
+            if(s != null){
+                try {
+                    s.close();
+                } catch (SQLException ex) {
+                    throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_CREAR_DB);
+                }
+            }
         }
     }
     

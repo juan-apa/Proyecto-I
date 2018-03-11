@@ -54,7 +54,7 @@
         <script src="estados/load.js" charset="utf-8"> </script>
         <script src="estados/menu.js" charset="utf-8"> </script>
         <script src="estados/play.js" charset="utf-8"> </script>
-        <script src="estados/game.js" charset="utf-8"> </script>
+        <!--<script src="estados/game.js" charset="utf-8"> </script>-->
         
         
         

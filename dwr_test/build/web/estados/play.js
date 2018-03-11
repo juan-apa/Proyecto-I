@@ -26,12 +26,12 @@ var playState = {
         /*Aviones Azules*/
         aviones_azules = new Aviones("Azules");
         for (let i = 0; i < 4; i++) {
-            aviones_azules.agregarAvion(new Avion(i, 100, i * 100, i + 5, "azul"));
+            aviones_azules.agregarAvion(new Avion(i.toString(), 0, 0, 1000, "azul"));
         }
         /*Aviones Rojos*/
         aviones_rojos = new Aviones("Rojos");
         for (let i = 0; i < 4; i++) {
-            aviones_rojos.agregarAvion(new Avion(i, 900, i * 100, i + 9, "rojo"));
+            aviones_rojos.agregarAvion(new Avion(i.toString(), 2400, 1500, 1000, "rojo"));
         }
 
         /*Creo los barcos*/
@@ -218,6 +218,7 @@ var playState = {
                 
                 if (cambiarMunicionAvion_4.isDown && cambiarMunicionAvion_4.downDuration(1) && aviones_rojos.obtenerAvion(i).getNombre() === 0) {
                     if (aviones_rojos.obtenerAvion(i).isAterrizado() === true) {
+                        console.log("entra");
                         var nuevaArma = aviones_rojos.obtenerAvion(i).cambiarTipoDeArma();
                         Fachada.cambiarTipoMunicionAvion(1, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
                             console.log("arma de avion cambiada en la fachada.");
@@ -352,6 +353,7 @@ var playState = {
                 //Cambio de municion 
                 if (cambiarMunicionAvion_1.isDown && cambiarMunicionAvion_1.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() === 1) {
                     if (aviones_azules.obtenerAvion(i).isAterrizado() === true) {
+                        console.log("entra");
                         var nuevaArma = aviones_azules.obtenerAvion(i).cambiarTipoDeArma();
                         Fachada.cambiarTipoMunicionAvion(0, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
                             console.log("arma de avion cambiada en la fachada.");
@@ -361,6 +363,7 @@ var playState = {
                 
                 if (cambiarMunicionAvion_2.isDown && cambiarMunicionAvion_2.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() === 2) {
                     if (aviones_azules.obtenerAvion(i).isAterrizado() === true) {
+                        console.log("entra");
                         var nuevaArma = aviones_azules.obtenerAvion(i).cambiarTipoDeArma();
                         Fachada.cambiarTipoMunicionAvion(0, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
                             console.log("arma de avion cambiada en la fachada.");
@@ -370,6 +373,7 @@ var playState = {
                 
                 if (cambiarMunicionAvion_3.isDown && cambiarMunicionAvion_3.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() === 3) {
                     if (aviones_azules.obtenerAvion(i).isAterrizado() === true) {
+                        console.log("entra");
                         var nuevaArma = aviones_azules.obtenerAvion(i).cambiarTipoDeArma();
                         Fachada.cambiarTipoMunicionAvion(0, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
                             console.log("arma de avion cambiada en la fachada.");
@@ -379,6 +383,7 @@ var playState = {
                 
                 if (cambiarMunicionAvion_4.isDown && cambiarMunicionAvion_4.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() === 0) {
                     if (aviones_azules.obtenerAvion(i).isAterrizado() === true) {
+                        console.log("entra");
                         var nuevaArma = aviones_azules.obtenerAvion(i).cambiarTipoDeArma();
                         Fachada.cambiarTipoMunicionAvion(0, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
                             console.log("arma de avion cambiada en la fachada.");

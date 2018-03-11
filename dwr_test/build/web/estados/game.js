@@ -1,8 +1,8 @@
 /*Inicio el canvas del juego*/
 /* global bootState, loadState, menuState, playState, looseState, winState */
 
-var game = new Phaser.Game(1100,
-        618,
+var game = new Phaser.Game("100",
+        "100",
         Phaser.CANVAS,
         'Juego Midway'
 );
@@ -51,6 +51,8 @@ var huboImpacto = false;
 var team;
 var pos = 9;
 var cant = 0;
+var datosAzulesObtenidos = false;
+var datosRojosObtenidos = false;
 
 /*Defino los estados que va a tener el juego*/
 game.state.add('boot', bootState);

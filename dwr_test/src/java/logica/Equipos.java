@@ -29,5 +29,21 @@ public class Equipos {
     public Equipo getEquipoRojo(){
         return this.equipoRojo;
     }
+
+    public void setEquipoAzul(Equipo equipoAzul) {
+        this.equipoAzul = equipoAzul;
+    }
+
+    public void setEquipoRojo(Equipo equipoRojo) {
+        this.equipoRojo = equipoRojo;
+    }
+
+    public void setIdPartida(int idPartida) {
+        this.idPartida = idPartida;
+    }
+
+    public int getIdPartida() {
+        return idPartida;
+    }
     
 }

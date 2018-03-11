@@ -6,11 +6,9 @@
 
 package logica;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-//import persistencia.DAOPartida;
-import persistencia.ExcepcionDAOPartida;
-import persistencia.ExceptionConfiguracion;
+import persistencia.Conexion;
+import persistencia.ExceptionPersistencia;
+import persistencia.daos.Persistencia;
 
 /**
  *
@@ -19,12 +17,14 @@ import persistencia.ExceptionConfiguracion;
 public class Main {
     public static void main(String[] args) {
         try {
-            Equipos e = new Equipos();
-            System.out.println("LLEGUEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-            Fachada f = Fachada.getInstance();
-            f.guardarPartida();
-
-        } catch (ExcepcionDAOPartida ex) {
+            Partida p = new Partida();
+            Conexion c = new Conexion();
+            Persistencia per = new Persistencia();
+            per.persistirPartida(p, c);
+            Partida obtenida = per.obtenerPartida(1, c);
+            c.cerrarConexion();
+            
+        } catch (ExceptionPersistencia ex) {
             ex.printStackTrace();
         } catch (Exception ex) {
             ex.printStackTrace();

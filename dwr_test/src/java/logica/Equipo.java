@@ -17,15 +17,12 @@ import javax.persistence.Id;
  * @author Sammy Guergachi <sguergachi at gmail.com>
  */
 
-public class Equipo implements Serializable{
-    @Id
-    @GeneratedValue
-    private Long id;
-    
+public class Equipo implements Serializable{    
     private int puntaje;
     private Aviones aviones;
     private Barco barco;
     private int color;
+    private int id;
 
     public Equipo(int puntaje, int color) {
         this.puntaje = puntaje;
@@ -40,6 +37,7 @@ public class Equipo implements Serializable{
         int y = r.nextInt(y_maximo - y_minimo);
         this.barco = new Barco("azul", x, y, 0);
         this.color = color;
+        this.id = 0;
     }
 
     public Equipo() {
@@ -55,6 +53,7 @@ public class Equipo implements Serializable{
         int y = r.nextInt(y_maximo - y_minimo);
         this.barco = new Barco("azul", x, y, 0);
         this.color = Equipos.EQUIPO_AZUL;
+        this.id = 0;
     }
     
     public Equipo(int equipo) {
@@ -94,6 +93,7 @@ public class Equipo implements Serializable{
             Avion aux = this.aviones.obtenerAvion(i);
             this.barco.aterrizajeAvion(aux);
         }
+        this.id = 0;
     }
 
     public int getPuntaje() {
@@ -147,5 +147,13 @@ public class Equipo implements Serializable{
         );
         
         return estado;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

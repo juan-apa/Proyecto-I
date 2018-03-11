@@ -14,7 +14,6 @@ import javax.persistence.Id;
  *
  * @author Juan Aparicio
  */
-@Entity
 public class Avion extends Vehiculo implements Serializable{
     @Id
     @GeneratedValue
@@ -164,6 +163,9 @@ public class Avion extends Vehiculo implements Serializable{
                 }
             }
         }
-
+    }
+    
+    public void setArma(Arma a){
+        this.arma = a;
     }
 }

@@ -4,6 +4,7 @@ var playState = {
     create: function () {
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         game.scale.setMinMax(400, 300, 1920, 1080);
+        game.stage.destroy();
 
 
 //        game.stage.scale.startFullScreen();
@@ -16,10 +17,11 @@ var playState = {
         };
 
         /*Seteo el mapa en que voy a jugar*/
-        mapa = game.add.tileSprite(0, 0, 1600, 1200, 'fondoOceano');
+        mapa = game.add.tileSprite(0, 0, 2400, 2400, 'fondoOceano');
+        mapa.texxtureDebug = true;
         mapa.fixedToCamara = true;
-        game.stage.backgroundColor = "#4488AA";
-        game.world.setBounds(0, 0, 3000, 3000);
+//        game.stage.backgroundColor = "#4488AA";
+        game.world.setBounds(0, 0, 2400, 2400);
 
         /*Aviones Azules*/
         aviones_azules = new Aviones("Azules");
@@ -40,14 +42,6 @@ var playState = {
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
         explosions = game.add.group();
         explosions.createMultiple(30, 'kaboom');
-
-//        //seteo el panel de mensajes
-//        informacion = game.add.text(10, 10, "", {
-//            font: "30px Arial",
-//            fill: "#ff0044",
-//            align: "center"
-//        });
-//        informacion.fixedToCamera = true;
 
         /*Seteo las flehcas de movimiento de los barcos*/
         flechas = game.input.keyboard.createCursorKeys();
@@ -96,7 +90,7 @@ var playState = {
                 aviones_azules.updateArmas(estadoAz.municionesAviones);
                 aviones_azules.updateCombustibles(estadoAz.combustibles);
                 aviones_azules.aterrizarAviones(estadoAz.avionesEnBarco);
-
+                
                 barco_azul.updateAvionesEnBarco(estadoAz.avionesEnBarco);
 
                 barco_azul.velocidad = estadoAz.velocidadBarco;
@@ -120,6 +114,7 @@ var playState = {
                         game.state.start("loose");
                     }
                 }
+                datosAzulesObtenidos = true;
             });
             Fachada.getEstadoEquipoRojo(function (estadoRo) {
                 estadoRojo = estadoRo;
@@ -151,6 +146,7 @@ var playState = {
                         game.state.start("loose");
                     }
                 }
+                datosRojosObtenidos = true;
             });
 
         } else {
@@ -159,8 +155,8 @@ var playState = {
             }
         }
 
-        mapa.tilePosition.x = -game.camera.x;
-        mapa.tilePosition.y = -game.camera.y;
+//        mapa.tilePosition.x = -game.camera.x;
+//        mapa.tilePosition.y = -game.camera.y;
 
         moverCamara();
 
@@ -473,32 +469,43 @@ var playState = {
 
         /*Aviso las posiciones de los aviones y barco a la fachada*/
         if (azul === true) {
-            Fachada.updatePosAzul(aviones_azules.obtenerPosicionesAviones(), barco_azul.obtenerPosicion(), {
-                timeout: 5000,
-                errorHandler: function (message, exception) {
-                    console.log("error updatePosRojo ");
-//                    console.log(dwr.util.toDescriptiveString(exception, 2));
-                }
-            });
+            if(datosAzulesObtenidos){
+                Fachada.updatePosAzul(aviones_azules.obtenerPosicionesAviones(), barco_azul.obtenerPosicion(), {
+                    timeout: 5000,
+                    errorHandler: function (message, exception) {
+                        console.log("error updatePosRojo ");
+    //                    console.log(dwr.util.toDescriptiveString(exception, 2));
+                    }
+                });
+            }
         }
 
         if (rojo === true) {
-            Fachada.updatePosRojo(aviones_rojos.obtenerPosicionesAviones(), barco_rojo.obtenerPosicion(), {
-                timeout: 5000,
-                errorHandler: function (message) {
-                    console.log("error updatePosAzul " + message);
-                },
-                callback: function () {
-//                    estRojoObtenido = false;
-                }
-            });
+            if(datosRojosObtenidos){
+                Fachada.updatePosRojo(aviones_rojos.obtenerPosicionesAviones(), barco_rojo.obtenerPosicion(), {
+                    timeout: 5000,
+                    errorHandler: function (message) {
+                        console.log("error updatePosAzul " + message);
+                    },
+                    callback: function () {
+    //                    estRojoObtenido = false;
+                    }
+                });
+            }
         }
     },
 
     render: function () {
-        //game.debug.body(barco_azul.quilla);
-        //game.debug.body(barco_rojo.quilla);
-        //game.debug.body(aviones_rojos.aviones[0].arma.balas);
+        game.debug.body(barco_azul.quilla);
+        game.debug.body(barco_rojo.quilla);
+        game.debug.body(aviones_rojos.aviones[0].sprite);
+        game.debug.body(aviones_rojos.aviones[1].sprite);
+        game.debug.body(aviones_rojos.aviones[2].sprite);
+        game.debug.body(aviones_rojos.aviones[3].sprite);
+        game.debug.body(aviones_azules.aviones[0].sprite);
+        game.debug.body(aviones_azules.aviones[1].sprite);
+        game.debug.body(aviones_azules.aviones[2].sprite);
+        game.debug.body(aviones_azules.aviones[3].sprite);
     },
     disminuirCombustible: function () {
 //        console.log(aviones_azules.obtenerCombustibles());

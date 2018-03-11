@@ -9,8 +9,13 @@ package logica;
 //import persistencia.DAOConfiguraciones;
 //import persistencia.DAOPartida;
 //import persistencia.DAOPartidas;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import persistencia.Conexion;
 import persistencia.ExcepcionDAOPartida;
 import persistencia.ExceptionConfiguracion;
+import persistencia.ExceptionPersistencia;
+import persistencia.daos.Persistencia;
 
 /**
  *
@@ -28,25 +33,16 @@ public class Fachada {
     
 //    private DAOPartida partidas;
     
+    private Persistencia persistenceManager;
+    private Conexion conexionBDD;
+    
     private Partida partida;
     
     
-    private Fachada() throws ExcepcionDAOPartida, Exception {
-//        this.configuraciones = new DAOConfiguraciones();
-//        this.avionesAzules = new Aviones(4);
-//        this.avionesRojos = new Aviones(4);
-//        this.barcoAzul = new Barco("Barco Azul", 50, 50, 1);
-//        this.barcoRojo = new Barco("Barco Rojo", 200, 200, 3);
-//        for(int i = 0; i < 4; i++){
-//            String nombre = String.valueOf(i);
-//            this.avionesAzules.obtenerAvion(i).setNombre(nombre);
-//            this.avionesRojos.obtenerAvion(i).setNombre(nombre);
-//            this.aterrizajeAvionAzul(i);
-//            this.aterrizajeAvionRojo(i);
-//        }
-//        this.partidas = new DAOPartida();
-//        this.partidas = new DAOPartida();
+    private Fachada() throws ExceptionPersistencia {
         this.partida = new Partida();
+        this.persistenceManager = new Persistencia();
+        this.conexionBDD = new Conexion();
     }
     
     public static Fachada getInstance() throws ExceptionConfiguracion, ExcepcionDAOPartida, Exception{
@@ -56,112 +52,25 @@ public class Fachada {
         return Fachada.instancia;
     }
     
-//    public int obtenerMAX_BALAS() throws ExceptionConfiguracion {
-//        return this.configuraciones.obtenerMAX_BALAS();
-//    }
-    
     public void updatePosRojo(VOPosicion[] vop, VOPosicion vopBarco){
-//        /*Actualizo la posicion de los aviones rojos*/
-//        this.avionesRojos.updatePosiciones(vop);
-//        
-//        /*Actualizo la posicion del barco rojo*/
-//        this.barcoRojo.updatePosicion(vopBarco.getX(), vopBarco.getY(), vopBarco.getRot());
         
         this.partida.getEquipos().getEquipoRojo().getAviones().updatePosiciones(vop);
         this.partida.getEquipos().getEquipoRojo().getBarco().updatePosicion(vopBarco.getX(), vopBarco.getY(), vopBarco.getRot());
     }
     
     public void updatePosAzul(VOPosicion[] vop, VOPosicion vopBarco){
-//        /*Actualizo la posicion de los aviones azules*/
-//        this.avionesAzules.updatePosiciones(vop);
-//        
-//        /*Actualizo la posicion del barco azul*/
-//        this.barcoAzul.updatePosicion(vopBarco.getX(), vopBarco.getY(), vopBarco.getRot());
         this.partida.getEquipos().getEquipoAzul().getAviones().updatePosiciones(vop);
         this.partida.getEquipos().getEquipoAzul().getBarco().updatePosicion(vopBarco.getX(), vopBarco.getY(), vopBarco.getRot());
     }
     
-//    public VOPosicion[] getPosRojo(){
-//        /*Hago un arreglo en donde entren las VOPosiciones de los avioens y el 
-//        barco, por eso es que le sumo 1.*/
-//        VOPosicion[] ret = new VOPosicion[this.avionesRojos.largo() + 1];
-//        
-//        /*Obtengo las posiciones de los aviones rojos.*/
-//        VOPosicion[] vopAviones = this.avionesRojos.obtenerPosicionesAviones();
-//        
-//        /*Obtengo las posiciones del barco en un VOPosiciones.*/
-//        VOPosicion vopBarco = this.barcoRojo.getPosicion();
-//        
-//        /*Junto los vop de los aviones y el barco en la variable ret.*/
-//        System.arraycopy(vopAviones, 0, ret, 0, vopAviones.length);
-//        ret[ret.length-1] = vopBarco;
-//        
-//        return ret;
-//    }
-//    
-//    public VOPosicion[] getPosAzul(){
-//        /*Hago un arreglo en donde entren las VOPosiciones de los avioens y el 
-//        barco, por eso es que le sumo 1.*/
-//        VOPosicion[] ret = new VOPosicion[this.avionesAzules.largo() + 1];
-//        
-//        /*Obtengo las posiciones de los aviones rojos.*/
-//        VOPosicion[] vopAviones = this.avionesAzules.obtenerPosicionesAviones();
-//        
-//        /*Obtengo las posiciones del barco en un VOPosiciones.*/
-//        VOPosicion vopBarco = this.barcoAzul.getPosicion();
-//        
-//        /*Junto los vop de los aviones y el barco en la variable ret.*/
-//        System.arraycopy(vopAviones, 0, ret, 0, vopAviones.length);
-//        ret[ret.length-1] = vopBarco;
-//        
-//        return ret;
-//    }
-    
         
     public VOEstado getEstadoEquipoAzul(){
-//        VOEstado estAzul = new VOEstado(
-//                this.avionesAzules.obtenerAvionesVivos(), 
-//                this.avionesAzules.xAviones(),
-//                this.avionesAzules.yAviones(),
-//                this.avionesAzules.rotAviones(),
-//                this.avionesAzules.velAviones(),
-//                this.avionesAzules.municionesAviones(),
-//                this.barcoAzul.getX(),
-//                this.barcoAzul.getY(),
-//                this.barcoAzul.getRot(),
-//                this.barcoAzul.getVelocidad(),
-//                this.barcoAzul.isVivo(),
-//                this.barcoAzul.getAviones().obtenerAvionesVivos(),
-//                this.avionesAzules.alturas(),
-//                this.avionesAzules.getCombustibles()
-//        );
-//        
-//        return estAzul;
         return this.partida.getEquipos().getEquipoAzul().getEstado();
     }
     
     public VOEstado getEstadoEquipoRojo(){
-//        VOEstado estRojo = new VOEstado(
-//                this.avionesRojos.obtenerAvionesVivos(), 
-//                this.avionesRojos.xAviones(),
-//                this.avionesRojos.yAviones(),
-//                this.avionesRojos.rotAviones(),
-//                this.avionesRojos.velAviones(),
-//                this.avionesRojos.municionesAviones(),
-//                this.barcoRojo.getX(),
-//                this.barcoRojo.getY(),
-//                this.barcoRojo.getRot(),
-//                this.barcoRojo.getVelocidad(),
-//                this.barcoRojo.isVivo(),
-//                this.barcoRojo.getAviones().obtenerAvionesVivos(),
-//                this.avionesRojos.alturas(),
-//                this.avionesRojos.getCombustibles()
-//        );
-//        
-//        return estRojo;
         return this.partida.getEquipos().getEquipoRojo().getEstado();
     }
-    
 //    public void updateEstadoAzul(VOEstado vo){
 //        this.avionesAzules.updateAvionesVivos(vo.getAvionesVivos());
 //        this.avionesAzules.updateX(vo.getX_aviones());
@@ -195,13 +104,11 @@ public class Fachada {
 //    }
     
     public void choque_avion_avion(String nombreAvionAzul, String nombreAvionRojo){
-//        this.avionesAzules.destruirAvion(nombreAvionAzul);
-//        this.avionesRojos.destruirAvion(nombreAvionRojo);
         this.partida.getEquipos().getEquipoAzul().getAviones().destruirAvion(nombreAvionAzul);
         this.partida.getEquipos().getEquipoRojo().getAviones().destruirAvion(nombreAvionRojo);
     }
     
-    /**
+    /**x
      * @param equipoObjetivo
      * es el equipo al cual le dispararon un avion.
      * 
@@ -210,12 +117,10 @@ public class Fachada {
      * índice del arreglo dentro de Aviones.*/
     public void disparo_avion_avion(int equipoObjetivo, String nombreAvionObjetivo){
         if(equipoObjetivo == Equipos.EQUIPO_AZUL){
-//            this.avionesAzules.destruirAvion(nombreAvionObjetivo);
             this.partida.getEquipos().getEquipoAzul().getAviones().destruirAvion(nombreAvionObjetivo);
         }
         else{
             if(equipoObjetivo == Equipos.EQUIPO_ROJO){
-//                this.avionesRojos.destruirAvion(nombreAvionObjetivo);
                 this.partida.getEquipos().getEquipoRojo().getAviones().destruirAvion(nombreAvionObjetivo);
             }
         }
@@ -224,7 +129,6 @@ public class Fachada {
     public void disparo_avion_barco(int equipoObjetivo, String nombreAvion){
         if(equipoObjetivo == Equipos.EQUIPO_AZUL){
             int numeroAvionQueDisparo = Integer.parseInt(nombreAvion);
-//            int tipoMunicion = this.avionesRojos.obtenerAvion(numeroAvionQueDisparo).getArma().getTipoMunicion();
             int tipoMunicion = this.partida.getEquipos().getEquipoRojo().getAviones().obtenerAvion(numeroAvionQueDisparo).getArma().getTipoMunicion();
             
             if(this.partida.getEquipos().getEquipoAzul().getBarco().tieneAviones()){
@@ -264,90 +168,88 @@ public class Fachada {
     }
     
     public boolean[] avionesAzulesVivos(){
-//        return this.avionesAzules.obtenerAvionesVivos();
         return this.partida.getEquipos().getEquipoAzul().getAviones().obtenerAvionesVivos();
     }
     
     public boolean[] avionesRojosVivos(){
-//        return this.avionesRojos.obtenerAvionesVivos();
         return this.partida.getEquipos().getEquipoRojo().getAviones().obtenerAvionesVivos();
     }
     
     public void updateCombustibleAzul(int[] combustibles){
-//        this.avionesAzules.updateCombustible(combustibles);
         this.partida.getEquipos().getEquipoAzul().getAviones().updateCombustible(combustibles);
     }
     
     public void updateCombustibleRojo(int[] combustibles){
-//        this.avionesRojos.updateCombustible(combustibles);
         this.partida.getEquipos().getEquipoAzul().getAviones().updateCombustible(combustibles);
     }
     public void aterrizajeAvionAzul(int posAvion){
-//        Avion aux = this.avionesAzules.obtenerAvion(posAvion);
-//        this.barcoAzul.aterrizajeAvion(aux);
-//        aux = null;
-        
         Avion aux = this.partida.getEquipos().getEquipoAzul().getAviones().obtenerAvion(posAvion);
         this.partida.getEquipos().getEquipoAzul().getBarco().aterrizajeAvion(aux);
         aux = null;
-        
     }
     public void aterrizajeAvionRojo(int posAvion){
-//        Avion aux = this.avionesRojos.obtenerAvion(posAvion);
-//        this.barcoRojo.aterrizajeAvion(aux);
-//        aux = null;
-        
         Avion aux = this.partida.getEquipos().getEquipoRojo().getAviones().obtenerAvion(posAvion);
         this.partida.getEquipos().getEquipoRojo().getBarco().aterrizajeAvion(aux);
         aux = null;
     }
     
     public void despegueAvionAzul(int posAvion){
-//        this.barcoAzul.despegueAvion(posAvion);
         this.partida.getEquipos().getEquipoAzul().getBarco().despegueAvion(posAvion);
     }
     
     public void despegueAvionRojo(int posAvion){
-//        this.barcoRojo.despegueAvion(posAvion);
         this.partida.getEquipos().getEquipoRojo().getBarco().despegueAvion(posAvion);
     }
     
     public void cambioAlturaAvion(int equipo, int indiceAvion, int alturaNueva){
         if(equipo == Equipos.EQUIPO_AZUL){
-//            this.avionesAzules.obtenerAvion(indiceAvion).setAltura(alturaNueva);
             this.partida.getEquipos().getEquipoAzul().getAviones().obtenerAvion(indiceAvion).setAltura(alturaNueva);
         }
         else{
             if(equipo == Equipos.EQUIPO_ROJO){
-//                this.avionesRojos.obtenerAvion(indiceAvion).setAltura(alturaNueva);
                 this.partida.getEquipos().getEquipoRojo().getAviones().obtenerAvion(indiceAvion).setAltura(alturaNueva);
             }
         }
     }
     
     public void disminuirCombustibles(){
-//        this.avionesAzules.disminuirCombustibles();
-//        this.avionesRojos.disminuirCombustibles();
         this.partida.getEquipos().getEquipoAzul().getAviones().disminuirCombustibles();
         this.partida.getEquipos().getEquipoRojo().getAviones().disminuirCombustibles();
     }
     
     public void cambiarTipoMunicionAvion(int equipo,int indice, int armaNueva){
          if(equipo == Equipos.EQUIPO_ROJO){
-//            this.avionesRojos.obtenerAvion(indice).cambiarTipoArma(armaNueva);
             this.partida.getEquipos().getEquipoRojo().getAviones().obtenerAvion(indice).cambiarTipoArma(armaNueva);
         }
         else{
             if(equipo == Equipos.EQUIPO_AZUL){
-//                this.avionesAzules.obtenerAvion(indice).cambiarTipoArma(armaNueva);
                 this.partida.getEquipos().getEquipoAzul().getAviones().obtenerAvion(indice).cambiarTipoArma(armaNueva);
             }
         }
     }
     
-    public void guardarPartida() throws ExcepcionDAOPartida{
-//        this.partidas.insert(partida);
-        System.out.println("llegue");
+    public void guardarPartida() throws ExceptionPersistencia{
+        try {
+            persistenceManager.persistirPartida(partida, conexionBDD);
+            conexionBDD.liberarConexionExitosa();
+        } catch (ExceptionPersistencia ex) {
+            conexionBDD.liberarConexionFallida();
+            throw ex;
+        } 
+    }
+    
+    public void cargarPartida(int idPartida) throws ExceptionPersistencia {
+        try{
+            this.partida = persistenceManager.obtenerPartida(0, conexionBDD);
+            conexionBDD.liberarConexionExitosa();
+        } catch(ExceptionPersistencia ex) {
+            conexionBDD.liberarConexionFallida();
+            throw ex;
+        }
+    }
+    
+    public void nuevaPartida(){
+        this.partida = new Partida();
     }
     
 }

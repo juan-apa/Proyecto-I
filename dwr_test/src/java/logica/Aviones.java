@@ -18,13 +18,7 @@ import javax.persistence.OneToMany;
  *
  * @author Juan Aparicio
  */
-@Entity
 public class Aviones {
-    @Id
-    @GeneratedValue
-    private Long id;
-    
-    @OneToMany(cascade = CascadeType.ALL)
     private List<Avion> aviones;
     private int cantAviones;
     
@@ -305,4 +299,11 @@ public class Aviones {
         }
     }
     
+    public List<Avion> getAviones(){
+        return this.aviones;
+    }
+    
+    public void setAviones(List<Avion> av){
+        this.aviones = av;
+    }
 }

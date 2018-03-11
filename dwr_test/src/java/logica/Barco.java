@@ -14,9 +14,10 @@ import java.io.Serializable;
  */
 public class Barco extends Vehiculo implements Serializable{
     private Aviones aviones;
-    private final int velMaxima = 100;
+    private int velMaxima = 100;
     private int velocidad = 100;
     private boolean vivo = true;
+    private int id;
     
     public Barco() { 
         this.nombre = "-1";
@@ -57,6 +58,9 @@ public class Barco extends Vehiculo implements Serializable{
         return (this.aviones.cantidadAviones() != 0);
     }
     
+    public void setAviones(Aviones av){
+        this.aviones = av;
+    }
     public Aviones getAviones(){
         return this.aviones;
     }
@@ -132,5 +136,23 @@ public class Barco extends Vehiculo implements Serializable{
         Avion aux = this.aviones.sacarAvion(indice);
         aux.setAterrizado(false);
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getVelMaxima() {
+        return velMaxima;
+    }
+
+    public void setVelMaxima(int velMaxima) {
+        this.velMaxima = velMaxima;
+    }
+    
+    
     
 }

@@ -525,6 +525,8 @@ var playState = {
     render: function () {
         game.debug.body(barco_azul.quilla);
         game.debug.body(barco_rojo.quilla);
+        game.debug.body(barco_azul.sprite);
+        game.debug.body(barco_rojo.sprite);
         game.debug.body(aviones_rojos.aviones[0].sprite);
         game.debug.body(aviones_rojos.aviones[1].sprite);
         game.debug.body(aviones_rojos.aviones[2].sprite);

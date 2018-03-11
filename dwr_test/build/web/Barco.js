@@ -18,7 +18,7 @@ function Barco(nombre, equipo){
     }
     
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-    this.sprite.body.setCircle(210, 15.8, -136);
+    this.sprite.body.setCircle(110, 115, -40);
     this.sprite.scale.set(0.65 * factorEscaladoBarco);
     this.sprite.anchor.set(0.5);
 //    sprite.body.setSize(400, 50, -100, 20);
@@ -62,25 +62,18 @@ function Barco(nombre, equipo){
     /*quilla*/
     
     this.quilla = game.add.sprite(this.sprite.x + 300, this.sprite.y, 'quilla');
-    
-    
+    this.quilla.anchor.set(0.5, 0.5);
     game.physics.enable(this.quilla, Phaser.Physics.ARCADE);
-    
-    
     this.quilla.enableBody = true;
     
-    
-    this.quilla.body.setCircle(5, 0, 0);    
-    
-    this.quilla.x = this.sprite.x -30;
-    this.quilla.y = this.sprite.y -30;
     
     this.quilla.scale.set(5.5 * factorEscaladoBarco);
-    this.quilla.anchor.set(0.5, 0.5);
-    this.quilla.enableBody = true;
+    this.quilla.body.setCircle();
+//    this.quilla.body.radius = 40
     this.grupo = game.add.group();
     this.grupo.add(this.sprite);
     this.grupo.add(this.quilla);
+
 //    this.sprite.addChild(this.quilla);
     
     

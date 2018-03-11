@@ -146,24 +146,23 @@
                 submitBtn.input.useHandCursor = true;
                 submitBtn.events.onInputDown.add(function () {					//
                     var usuarioValido = false;
-                    Fachada.verificarUsuario(user.value,password.value,usuarioValido, function () {
-                        console.log("chequeo en bd si usuario valido");
+                    Fachada.verificarUsuario(user.value,password.value, function (respuesta) {
+                        if (respuesta)
+                        {
+                            var imported = document.createElement('script');
+                            imported.src = 'estados/game.js';
+                            document.head.appendChild(imported);
+                            game1.destroy();
+                        }else {
+                            game1.add.text(10, 50, 'USUARIO INVALIDO', {
+                                font: '18px Arial',
+                                fill: '#FF0000',
+                                fontWeight: 'bold',
+                                textAlign: 'center'
+                            });
+                        }
                     });
-                    console.log('usuario es valido o no:' + usuarioValido);
-                    if (!usuarioValido)     //  IMPORTANTEEEEEE CAMBIAR CONDICION DE ENTRADA
-                    {
-                        var imported = document.createElement('script');
-                        imported.src = 'estados/game.js';
-                        document.head.appendChild(imported);
-                        game1.destroy();
-                    }else {
-                        game1.add.text(10, 50, 'USUARIO INVALIDO', {
-                            font: '18px Arial',
-                            fill: '#FF0000',
-                            fontWeight: 'bold',
-                            textAlign: 'center'
-                        });
-                    }
+                    
 
 
                 });

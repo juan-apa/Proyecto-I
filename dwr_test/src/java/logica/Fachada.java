@@ -245,13 +245,15 @@ public class Fachada {
         this.partida = new Partida();
     }
 
-    public void verificarUsuario(String nomUser, String passUser,boolean esValido) throws ExceptionPersistencia {
+    public boolean verificarUsuario(String nomUser, String passUser) throws ExceptionPersistencia {
+        boolean ret;
         try {
-            esValido = persistenceManager.usuarioValido(nomUser, passUser, conexionBDD);
+            ret = persistenceManager.usuarioValido(nomUser, passUser, conexionBDD);
         } catch (ExceptionPersistencia ex) {
             conexionBDD.liberarConexionFallida();
             throw ex;
         }
+        return ret;
     }
 
     public void embisteRojoAzul() {

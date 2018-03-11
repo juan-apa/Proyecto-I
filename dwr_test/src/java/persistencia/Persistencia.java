@@ -447,8 +447,8 @@ public class Persistencia {
         boolean existe = false;
         try {
             p = c.prepareStatement(Consultas.USUARIO_VALIDO);
-            p.setString(1, nom);
-            p.setString(2, pass);
+            p.setString(1, nom.trim().toLowerCase());
+            p.setString(2, pass.trim().toLowerCase());
             rs = p.executeQuery();
             while (rs.next()) {
                 existe = true;

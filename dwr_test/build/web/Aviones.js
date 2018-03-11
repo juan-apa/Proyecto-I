@@ -4,7 +4,7 @@ function Aviones(nombre) {
     /*Permito el click en los hijos*/
     this.grupo.inputEnableChildren = true;
 
-    if (nombre === null) {
+    if (nombre === null || nombre == "undefined") {
         this.grupo.name = nombre;
     }
     

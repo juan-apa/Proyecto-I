@@ -31,7 +31,7 @@ var playState = {
         /*Aviones Rojos*/
         aviones_rojos = new Aviones("Rojos");
         for (let i = 0; i < 4; i++) {
-            aviones_rojos.agregarAvion(new Avion(i.toString(), 2400, 1500, 1000, "rojo"));
+            aviones_rojos.agregarAvion(new Avion(i.toString(), 0, 1000, 1000, "rojo"));
         }
 
         /*Creo los barcos*/
@@ -81,6 +81,9 @@ var playState = {
         var estRojoObtenido = false;
         var estadoAzul;
         var estadoRojo;
+        
+        
+       
         llamar++;
         if (llamar === 0) {
             /*Obtengo los estados de ambos equipos*/
@@ -104,6 +107,7 @@ var playState = {
 //                    if (!estadoAz.barcoVivo) {
 //                        game.state.start("win");
 //                    }
+                    
                 }
 
                 if (azul === true) {
@@ -115,6 +119,8 @@ var playState = {
 //                        game.state.start("loose");
 //                    }
                 }
+//                moverAvionesRojosAterrizados();
+//                moverAvionesAzulesAterrizados();
                 datosAzulesObtenidos = true;
             });
             Fachada.getEstadoEquipoRojo(function (estadoRo) {
@@ -146,6 +152,8 @@ var playState = {
 //                        game.state.start("loose");
 //                    }
                 }
+//                moverAvionesRojosAterrizados();
+//                moverAvionesAzulesAterrizados();
                 datosRojosObtenidos = true;
             });
 
@@ -189,7 +197,7 @@ var playState = {
                 aterrizajeAvionRojo();
 
                 //Cambio de municion 
-                if (cambiarMunicionAvion_1.isDown && cambiarMunicionAvion_1.downDuration(1) && aviones_rojos.obtenerAvion(i).getNombre() === 1) {
+                if (cambiarMunicionAvion_1.isDown && cambiarMunicionAvion_1.downDuration(1) && aviones_rojos.obtenerAvion(i).getNombre() == "1") {
                     if (aviones_rojos.obtenerAvion(i).isAterrizado() === true) {
                         var nuevaArma = aviones_rojos.obtenerAvion(i).cambiarTipoDeArma();
                         Fachada.cambiarTipoMunicionAvion(1, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
@@ -198,7 +206,7 @@ var playState = {
                     }
                 }
                 
-                if (cambiarMunicionAvion_2.isDown && cambiarMunicionAvion_2.downDuration(1) && aviones_rojos.obtenerAvion(i).getNombre() === 2) {
+                if (cambiarMunicionAvion_2.isDown && cambiarMunicionAvion_2.downDuration(1) && aviones_rojos.obtenerAvion(i).getNombre() == "2") {
                     if (aviones_rojos.obtenerAvion(i).isAterrizado() === true) {
                         var nuevaArma = aviones_rojos.obtenerAvion(i).cambiarTipoDeArma();
                         Fachada.cambiarTipoMunicionAvion(1, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
@@ -207,7 +215,7 @@ var playState = {
                     }
                 }
                 
-                if (cambiarMunicionAvion_3.isDown && cambiarMunicionAvion_3.downDuration(1) && aviones_rojos.obtenerAvion(i).getNombre() === 3) {
+                if (cambiarMunicionAvion_3.isDown && cambiarMunicionAvion_3.downDuration(1) && aviones_rojos.obtenerAvion(i).getNombre() == "3") {
                     if (aviones_rojos.obtenerAvion(i).isAterrizado() === true) {
                         var nuevaArma = aviones_rojos.obtenerAvion(i).cambiarTipoDeArma();
                         Fachada.cambiarTipoMunicionAvion(1, i, nuevaArma, function () {     //le paso a la fachada la nueva arma    
@@ -216,7 +224,7 @@ var playState = {
                     }
                 }
                 
-                if (cambiarMunicionAvion_4.isDown && cambiarMunicionAvion_4.downDuration(1) && aviones_rojos.obtenerAvion(i).getNombre() === 0) {
+                if (cambiarMunicionAvion_4.isDown && cambiarMunicionAvion_4.downDuration(1) && aviones_rojos.obtenerAvion(i).getNombre() == "0") {
                     if (aviones_rojos.obtenerAvion(i).isAterrizado() === true) {
                         console.log("entra");
                         var nuevaArma = aviones_rojos.obtenerAvion(i).cambiarTipoDeArma();
@@ -357,7 +365,7 @@ var playState = {
                 aterrizajeAvionAzul();
 
                 //Cambio de municion 
-                if (cambiarMunicionAvion_1.isDown && cambiarMunicionAvion_1.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() === 1) {
+                if (cambiarMunicionAvion_1.isDown && cambiarMunicionAvion_1.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() == "1") {
                     if (aviones_azules.obtenerAvion(i).isAterrizado() === true) {
                         console.log("entra");
                         var nuevaArma = aviones_azules.obtenerAvion(i).cambiarTipoDeArma();
@@ -367,7 +375,7 @@ var playState = {
                     }
                 }
                 
-                if (cambiarMunicionAvion_2.isDown && cambiarMunicionAvion_2.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() === 2) {
+                if (cambiarMunicionAvion_2.isDown && cambiarMunicionAvion_2.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() == "2") {
                     if (aviones_azules.obtenerAvion(i).isAterrizado() === true) {
                         console.log("entra");
                         var nuevaArma = aviones_azules.obtenerAvion(i).cambiarTipoDeArma();
@@ -377,7 +385,7 @@ var playState = {
                     }
                 }
                 
-                if (cambiarMunicionAvion_3.isDown && cambiarMunicionAvion_3.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() === 3) {
+                if (cambiarMunicionAvion_3.isDown && cambiarMunicionAvion_3.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() == "3") {
                     if (aviones_azules.obtenerAvion(i).isAterrizado() === true) {
                         console.log("entra");
                         var nuevaArma = aviones_azules.obtenerAvion(i).cambiarTipoDeArma();
@@ -387,7 +395,7 @@ var playState = {
                     }
                 }
                 
-                if (cambiarMunicionAvion_4.isDown && cambiarMunicionAvion_4.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() === 0) {
+                if (cambiarMunicionAvion_4.isDown && cambiarMunicionAvion_4.downDuration(1) && aviones_azules.obtenerAvion(i).getNombre() == "0") {
                     if (aviones_azules.obtenerAvion(i).isAterrizado() === true) {
                         console.log("entra");
                         var nuevaArma = aviones_azules.obtenerAvion(i).cambiarTipoDeArma();
@@ -808,5 +816,20 @@ function colQuillaQuilla(ba, br) {
 }
 ;
 
-
+function moverAvionesRojosAterrizados(){
+    for(let i = 0; i < 4; i++){
+        if(aviones_rojos.aviones[i].aterrizado || !aviones_rojos.aviones[i].vivo){
+            aviones_rojos.aviones[i].sprite.x = barco_rojo.sprite.x;
+            aviones_rojos.aviones[i].sprite.y = barco_rojo.sprite.y;
+        }
+    }
+}
+function moverAvionesAzulesAterrizados(){
+    for(let i = 0; i < 4; i++){
+        if(aviones_azules.aviones[i].aterrizado || !aviones_azules.aviones[i].vivo){
+            aviones_azules.aviones[i].sprite.x = barco_azul.sprite.x;
+            aviones_azules.aviones[i].sprite.y = barco_azul.sprite.y;
+        }
+    }
+}
 

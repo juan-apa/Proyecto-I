@@ -19,6 +19,7 @@ import logica.Avion;
 import logica.Barco;
 import logica.Equipo;
 import logica.Equipos;
+import logica.Jugador;
 import logica.Partida;
 import persistencia.Conexion;
 import persistencia.Consultas;
@@ -457,6 +458,25 @@ public class Persistencia {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_OBTENER_DATOS);
         }
         return existe;
+    }
+    
+    public Jugador obtenerUsuario(String nom, Conexion con) throws ExceptionPersistencia {
+        Connection c = con.getConexion();
+        PreparedStatement p = null;
+        ResultSet rs = null;
+        Jugador ret = new Jugador();
+        try {
+            p = c.prepareStatement(Consultas.FIND_USUARIO);
+            p.setString(1, nom.trim().toLowerCase());
+            rs = p.executeQuery();
+            while (rs.next()) {
+                ret.setNombre(nom);
+                ret.setContrasenia(rs.getString("password"));
+            }
+        } catch (SQLException e) {
+            throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_OBTENER_DATOS);
+        }
+        return ret;
     }
 
 }

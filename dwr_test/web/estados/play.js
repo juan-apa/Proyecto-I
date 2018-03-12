@@ -305,6 +305,7 @@ var playState = {
                         case BOMBA:
                             colision = game.physics.arcade.collide(aviones_rojos.obtenerAvion(i).getArma(), barco_azul.getSprite(), colisionBombaBarco, null, this);
                             if (colision) {
+                                
                                 imagen_impacto = game.add.sprite(aviones_rojos.obtenerAvion(i).obtenerSpirte().x, aviones_rojos.obtenerAvion(i).obtenerSpirte().y, 'impacto');
                                 imagen_impacto.anchor.setTo(0.2, 0.2);
                                 game.time.events.add(Phaser.Timer.SECOND / 2, borrarImpacto, this);
@@ -475,7 +476,10 @@ var playState = {
                             break;
 
                         case BOMBA:
-                            colision = game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), barco_rojo.getSprite(), colisionBombaBarco, null, this);
+                            colision = game.physics.arcade.overlap(aviones_azules.obtenerAvion(i).getArma(), barco_rojo.getSprite(), colisionBombaBarco, null, this);
+                            console.log(aviones_azules.obtenerAvion(i).getArma());
+                            console.log( barco_rojo.getSprite());
+                            console.log("colision: " + colision);
                             if (colision) {
                                 imagen_impacto = game.add.sprite(aviones_azules.obtenerAvion(i).obtenerSpirte().x, aviones_azules.obtenerAvion(i).obtenerSpirte().y, 'impacto');
                                 imagen_impacto.anchor.setTo(0.2, 0.2);
@@ -487,7 +491,7 @@ var playState = {
                             break;
 
                         case TORPEDO:
-                            colision = game.physics.arcade.collide(aviones_azules.obtenerAvion(i).getArma(), barco_rojo.getSprite(), colisionBombaBarco);
+                            colision = game.physics.arcade.overlap(aviones_azules.obtenerAvion(i).getArma(), barco_rojo.getSprite(), colisionBombaBarco, null, this);
                             if (colision) {
                                 imagen_impacto = game.add.sprite(aviones_azules.obtenerAvion(i).obtenerSpirte().x, aviones_azules.obtenerAvion(i).obtenerSpirte().y, 'impacto');
                                 imagen_impacto.anchor.setTo(0.2, 0.2);

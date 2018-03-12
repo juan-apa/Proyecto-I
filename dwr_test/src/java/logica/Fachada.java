@@ -243,6 +243,8 @@ public class Fachada {
 
     public void nuevaPartida() {
         this.partida = new Partida();
+        this.jAzulListo = false;
+        this.jRojoListo = false;
     }
 
     public boolean verificarUsuario(String nomUser, String passUser) throws ExceptionPersistencia {
@@ -254,6 +256,29 @@ public class Fachada {
             throw ex;
         }
         return ret;
+    }
+    
+    public int loginUsuario(String nomUser) throws ExceptionPersistencia{
+        Jugador aux = null;
+        int colorAsignado = 0;
+        try {
+            aux = persistenceManager.obtenerUsuario(nomUser, conexionBDD);
+            if(this.jAzulListo){
+                this.jRojo = aux;
+                this.jRojoListo = true;
+                colorAsignado = Equipos.EQUIPO_ROJO;
+            }
+            else{
+                this.jAzul = aux;
+                this.jAzulListo = true;
+                colorAsignado = Equipos.EQUIPO_AZUL;
+            }
+            conexionBDD.liberarConexionExitosa();
+        } catch (ExceptionPersistencia ex) {
+            conexionBDD.liberarConexionFallida();
+            throw ex;
+        }      
+        return colorAsignado;
     }
 
     public void embisteRojoAzul() {
@@ -276,5 +301,15 @@ public class Fachada {
     public void jugadorRojoListo() {
         this.jRojoListo = true;
     }
-
+    
+    public boolean estaJugarAzulListo(){
+        return this.jAzulListo;
+    }
+    public boolean estaJugarRojoListo(){
+        return this.jRojoListo;
+    }
+    
+    public boolean jugadoresListos(){
+        return (jAzulListo) && (jRojoListo);
+    }
 }

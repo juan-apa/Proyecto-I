@@ -6,7 +6,7 @@ var game = new Phaser.Game("100",
         Phaser.CANVAS,
         'Juego Midway'
 );
-
+console.log("principio game");
 
 /*Defino las variables globales del juego*/
 var text = '';
@@ -38,8 +38,6 @@ var cambiarMunicionAvion_4;
 var llamar = 0;
 var x = 0;
 var y = 0;
-var azul = false;
-var rojo = false;
 var informacion;
 var wasd;
 var EQUIPO_AZUL = 0;
@@ -62,7 +60,8 @@ game.state.add('play', playState);
 game.state.add('win', winState);
 game.state.add('loose', looseState);
 game.state.add('empate', empateState);
-
+game.state.add('espera', esperaState);
+console.log("fin carga estados game");
 /*Inicio el siguiente estado, que es boot*/
 console.log("pasando a boot");
 game.state.start('boot');

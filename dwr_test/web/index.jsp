@@ -36,6 +36,8 @@
             }
             console.log("TRES " + parametros.MAX_BALAS);
 //            dwr.engine.setActiveReverseAjax(true);
+            var azul = false;
+            var rojo = false;
         </script>
 
         <script src="InfoAvion.js" charset="utf-8"></script>
@@ -47,6 +49,7 @@
         <script src="Avion.js" charset="utf-8"></script>
         <script src="Aviones.js" charset="utf-8"></script>
         <!--<script src="main.js" charset="utf-8"> </script>-->
+        <script src="estados/espera.js" charset="utf-8"> </script>
         <script src="estados/empate.js" charset="utf-8"> </script>
         <script src="estados/win.js" charset="utf-8"> </script>
         <script src="estados/loose.js" charset="utf-8"> </script>
@@ -149,10 +152,20 @@
                     Fachada.verificarUsuario(user.value,password.value, function (respuesta) {
                         if (respuesta)
                         {
-                            var imported = document.createElement('script');
-                            imported.src = 'estados/game.js';
-                            document.head.appendChild(imported);
-                            game1.destroy();
+                            Fachada.loginUsuario(user.value, function(colorAsignado){
+                                console.log(colorAsignado)
+                                if(colorAsignado == 0){
+                                    azul = true;
+                                }
+                                else{
+                                    rojo = true;
+                                }
+                                var imported = document.createElement('script');
+                                imported.src = 'estados/game.js';
+                                document.head.appendChild(imported);
+                                game1.destroy();
+                            });
+                            
                         }else {
                             game1.add.text(10, 50, 'USUARIO INVALIDO', {
                                 font: '18px Arial',

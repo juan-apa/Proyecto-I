@@ -17,9 +17,9 @@ function Arma(tipoArma) {
 
     this.balas = game.add.group();
     this.balas.enableBody = true;
-//    game.physics.enable(balas);
+    game.physics.enable(this.balas);
     this.balas.physicsBodyType = Phaser.Physics.ARCADE;
-    this.balas.createMultiple(50, "balas");
+    this.balas.createMultiple(4, "balas");
     this.balas.setAll('anchor.x', 0.5);
     this.balas.setAll('anchor.y', 0.5);
     this.balas.setAll('checkWorldBounds', true);

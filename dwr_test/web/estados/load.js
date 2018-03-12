@@ -32,6 +32,6 @@ var loadState = {
 
     /*Función create del juego*/
     create: function () {
-        game.state.start('menu');
+        game.state.start('espera');
     }
 };

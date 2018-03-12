@@ -25,7 +25,7 @@ function Barco(nombre, equipo){
     this.sprite.body.collideWorldBounds = true;
     this.sprite.immovable = false;
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-    
+    this.sprite.body.enable = true;
     this.vivo = true;
     this.aviones = new Array(4);
     for(let i = 0; i < 4; i++){

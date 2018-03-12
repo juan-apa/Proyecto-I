@@ -49,18 +49,20 @@
         <script src="Avion.js" charset="utf-8"></script>
         <script src="Aviones.js" charset="utf-8"></script>
         <!--<script src="main.js" charset="utf-8"> </script>-->
-        <script src="estados/espera.js" charset="utf-8"> </script>
-        <script src="estados/empate.js" charset="utf-8"> </script>
-        <script src="estados/win.js" charset="utf-8"> </script>
-        <script src="estados/loose.js" charset="utf-8"> </script>
-        <script src="estados/boot.js" charset="utf-8"> </script>
-        <script src="estados/load.js" charset="utf-8"> </script>
-        <script src="estados/menu.js" charset="utf-8"> </script>
-        <script src="estados/play.js" charset="utf-8"> </script>
+        <script src="estados/espera.js" charset="utf-8"></script>
+        <script src="estados/empate.js" charset="utf-8"></script>
+        <script src="estados/win.js" charset="utf-8"></script>
+        <script src="estados/loose.js" charset="utf-8"></script>
+        <script src="estados/boot.js" charset="utf-8"></script>
+        <script src="estados/credits.js" charset="utf-8"></script>
+        <script src="estados/load.js" charset="utf-8"></script>
+        <script src="estados/menu.js" charset="utf-8"></script>
+        <script src="estados/play.js" charset="utf-8"></script>
+
         <!--<script src="estados/game.js" charset="utf-8"> </script>-->
-        
-        
-        
+
+
+
     </head>
     <body>
         <script type="text/javascript">
@@ -78,7 +80,7 @@
                 game1.load.image('bg', 'assets/img.jpg');
                 game1.load.nineSlice('input', 'assets/button3.png', 15);
                 game1.load.nineSlice('btn', 'assets/button_ingresar3.png', 20, 23, 27, 28);
-                game1.load.nineSlice('btn2', 'assets/button_limpiar2.png', 20, 23, 27, 28);
+                game1.load.nineSlice('btn2', 'assets/boton_creditos.png', 20, 23, 27, 28);
             }
 
             function create() {
@@ -149,15 +151,14 @@
                 submitBtn.input.useHandCursor = true;
                 submitBtn.events.onInputDown.add(function () {					//
                     var usuarioValido = false;
-                    Fachada.verificarUsuario(user.value,password.value, function (respuesta) {
+                    Fachada.verificarUsuario(user.value, password.value, function (respuesta) {
                         if (respuesta)
                         {
-                            Fachada.loginUsuario(user.value, function(colorAsignado){
+                            Fachada.loginUsuario(user.value, function (colorAsignado) {
                                 console.log(colorAsignado)
-                                if(colorAsignado == 0){
+                                if (colorAsignado == 0) {
                                     azul = true;
-                                }
-                                else{
+                                } else {
                                     rojo = true;
                                 }
                                 var imported = document.createElement('script');
@@ -165,8 +166,8 @@
                                 document.head.appendChild(imported);
                                 game1.destroy();
                             });
-                            
-                        }else {
+
+                        } else {
                             game1.add.text(10, 50, 'USUARIO INVALIDO', {
                                 font: '18px Arial',
                                 fill: '#FF0000',
@@ -175,16 +176,26 @@
                             });
                         }
                     });
-                    
+                });
 
+                var botonCreditos = game1.add.nineSlice(game1.width / 2 - 50, 550, 'btn2', null, 106, 37);
+                botonCreditos.inputEnabled = true;
+                botonCreditos.input.useHandCursor = true;
+                botonCreditos.events.onInputDown.add(function () {
+
+                        var win = window.open('http://localhost:8080/dwr-test/estados/creditos.html', '_blank');
+                        win.focus();
 
                 });
+
+
+
 
                 PhaserInput.onKeyboardOpen.add(function () {
-                    console.error("keyboard open", PhaserInput.KeyboardOpen)
+                    console.error("keyboard open", PhaserInput.KeyboardOpen);
                 });
                 PhaserInput.onKeyboardClose.add(function () {
-                    console.error("keyboard close", PhaserInput.KeyboardOpen)
+                    console.error("keyboard close", PhaserInput.KeyboardOpen);
                 });
 
             }

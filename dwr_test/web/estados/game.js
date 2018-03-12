@@ -1,5 +1,5 @@
 /*Inicio el canvas del juego*/
-/* global bootState, loadState, menuState, playState, looseState, winState */
+/* global bootState, loadState, menuState, playState, looseState, winState, Credits, esperaState, empateState */
 
 var game = new Phaser.Game("100",
         "100",
@@ -62,6 +62,7 @@ game.state.add('win', winState);
 game.state.add('loose', looseState);
 game.state.add('empate', empateState);
 game.state.add('espera', esperaState);
+game.state.add('credits', Credits);
 console.log("fin carga estados game");
 /*Inicio el siguiente estado, que es boot*/
 console.log("pasando a boot");

@@ -231,9 +231,9 @@ public class Fachada {
         }
     }
 
-    public void cargarPartida(int idPartida) throws ExceptionPersistencia {
+    public void cargarPartida() throws ExceptionPersistencia {
         try {
-            this.partida = persistenceManager.obtenerPartida(0, conexionBDD);
+            this.partida = persistenceManager.obtenerPartida(conexionBDD);
             conexionBDD.liberarConexionExitosa();
         } catch (ExceptionPersistencia ex) {
             conexionBDD.liberarConexionFallida();

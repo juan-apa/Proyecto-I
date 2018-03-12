@@ -5,15 +5,18 @@
  */
 
 
+/* global rojo, game, azul, Fachada */
+
 var esperaState = {
     create: function(){
         var fondo = game.add.sprite(0, 0, 'imgVictoria');
+        botonCarga = game.input.keyboard.addKey(Phaser.Keyboard.C);
         fondo.scale.setTo(0.75,0.55);
-        if(azul == true){
+        if(azul){
             let nombreJuego = game.add.text(80, 80, 'Color azul asignado.', {font: '50px Arial', fill: '#028c07'});
             
         }
-        if(rojo == true){
+        if(rojo){
             let nombreJuego = game.add.text(80, 80, 'Color rojo asignado.', {font: '50px Arial', fill: '#028c07'});
             
         }
@@ -24,11 +27,17 @@ var esperaState = {
     update: function(){
         if(azul){
             Fachada.jugadorAzulListo(
-                    function(){console.log("respuesta Fachada");}
+                    function(){/*console.log("respuesta Fachada");*/}
             );
+            if (botonCarga.isDown && botonCarga.downDuration(1)){
+                Fachada.cargarPartida(function(){
+                    console.log("partida cargada");
+                    alert("partida cargada");
+                });
+            }
         }
         else{
-            Fachada.jugadorRojoListo(function(){console.log("respuesta Fachada");});
+            Fachada.jugadorRojoListo(/*function(){console.log("respuesta Fachada");}*/);
         }
 //        console.log("update");
         Fachada.jugadoresListos(function(listos){

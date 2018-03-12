@@ -58,6 +58,9 @@ var playState = {
         cambiarMunicionAvion_1 = game.input.keyboard.addKey(Phaser.Keyboard.R);
         cambiarMunicionAvion_2 = game.input.keyboard.addKey(Phaser.Keyboard.T);
         cambiarMunicionAvion_3 = game.input.keyboard.addKey(Phaser.Keyboard.Y);
+        
+        //Boton guardado
+        botonGuardado = game.input.keyboard.addKey(Phaser.KeyCode.G);
 
         /*Inicio el tipo de fisicas del juego*/
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -81,7 +84,8 @@ var playState = {
         var estRojoObtenido = false;
         var estadoAzul;
         var estadoRojo;
-
+        
+        
 
 
         llamar++;
@@ -341,6 +345,12 @@ var playState = {
         }
 
         if (azul === true) {
+            if (botonGuardado.isDown && botonGuardado.downDuration(1)){
+                Fachada.guardarPartida(azul, rojo, function(){
+                    console.log("partida guardada");
+                    alert("partida guardada");
+                });
+            }
             /*Mover barco*/
             barco_azul.moverBarco();
 

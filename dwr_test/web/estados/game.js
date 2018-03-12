@@ -43,6 +43,7 @@ var wasd;
 var EQUIPO_AZUL = 0;
 var EQUIPO_ROJO = 1;
 var HUD;
+var botonGuardado;
 
 //test:
 var huboImpacto = false;

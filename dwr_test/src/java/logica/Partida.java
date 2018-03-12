@@ -18,12 +18,32 @@ public class Partida{
     private Equipos equipos;
     private int dificultad;
     private int tiempo;
+    private String nombreJugador;
+    private int colorJugadorGuardado;
     
     public Partida(){
         this.idPartida = 0;
         this.equipos = new Equipos(this.idPartida);
         this.dificultad = DIFICULTAD_FACIL;
         this.tiempo = 90000;
+        this.nombreJugador = "";
+        this.colorJugadorGuardado = Equipos.EQUIPO_AZUL;
+    }
+
+    public String getNombreJugador() {
+        return nombreJugador;
+    }
+
+    public void setNombreJugador(String nombreJugador) {
+        this.nombreJugador = nombreJugador;
+    }
+
+    public int getColorJugadorGuardado() {
+        return colorJugadorGuardado;
+    }
+
+    public void setColorJugadorGuardado(int colorJugadorGuardado) {
+        this.colorJugadorGuardado = colorJugadorGuardado;
     }
     
     public void disminuirTiempo(){

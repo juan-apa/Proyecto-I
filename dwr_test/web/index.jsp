@@ -14,9 +14,8 @@
         <script type="text/javascript" src="dwr/util.js"></script>
         <script type="text/javascript" src="<%=pageContext.getServletContext().getContextPath()  %>/dwr/interface/Fachada.js"></script>
         <script src="phaser.min.js" charset="utf-8"></script>
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/phaser.min.js"></script>
-        <script type="text/javascript" src="//cnd.fbrq.io/phaser-nineslice/v2.0.0/phaser-nineslice.min.js"></script>
-        <script type="text/javascript" src="//cnd.fbrq.io/phaser-input/phaser-input.min.js"></script>
+        <script type="text/javascript" src="phaser_nineslice.js"></script>
+        <script type="text/javascript" src="phaser_input.js"></script>
 
         <script type="text/javascript">
             var factorEscaladoBarco = 0.8;
@@ -38,6 +37,7 @@
 //            dwr.engine.setActiveReverseAjax(true);
             var azul = false;
             var rojo = false;
+            var botonCarga;
         </script>
 
         <script src="InfoAvion.js" charset="utf-8"></script>

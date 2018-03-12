@@ -11,8 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logica.Arma;
 import logica.Aviones;
 import logica.Avion;
@@ -21,9 +19,6 @@ import logica.Equipo;
 import logica.Equipos;
 import logica.Jugador;
 import logica.Partida;
-import persistencia.Conexion;
-import persistencia.Consultas;
-import persistencia.ExceptionPersistencia;
 
 /**
  *
@@ -202,8 +197,6 @@ public class Persistencia {
     }
 
     private void persistirAviones(Aviones av, int idEquipo, boolean deBarco, Conexion con) throws ExceptionPersistencia {
-//        Connection c = con.getConexion();
-//        PreparedStatement p = null;
         try {
             List<Avion> aux = av.getAviones();
             for (Avion a : aux) {
@@ -212,11 +205,6 @@ public class Persistencia {
         } catch (ExceptionPersistencia ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_INSERT);
         } finally {
-//            try {
-//                p.close();
-//            } catch (SQLException ex) {
-//                throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_CERRAR_CONEXION);
-//            }
         }
     }
 
@@ -266,13 +254,14 @@ public class Persistencia {
 
     }
 
-    public Partida obtenerPartida(int idPartida, Conexion con) throws ExceptionPersistencia {
+    public Partida obtenerPartida(Conexion con) throws ExceptionPersistencia {
         Partida ret = new Partida();
         Connection c = con.getConexion();
         PreparedStatement p = null;
         ResultSet rs = null;
         int idEquipoAzul = 0;
         int idEquipoRojo = 1;
+        int idPartida = this.largoPartidas(con) - 1;
         try {
             p = c.prepareStatement(Consultas.FIND_PARTIDA);
             p.setInt(1, idPartida);

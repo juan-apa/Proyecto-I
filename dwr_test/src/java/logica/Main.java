@@ -21,7 +21,7 @@ public class Main {
             Conexion c = new Conexion();
             Persistencia per = new Persistencia();
 //            per.persistirPartida(p, c);
-            Partida obtenida = per.obtenerPartida(1, c);
+//            Partida obtenida = per.obtenerPartida(1, c);
             c.cerrarConexion();
             
         } catch (ExceptionPersistencia ex) {

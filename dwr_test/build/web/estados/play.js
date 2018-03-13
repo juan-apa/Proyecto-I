@@ -5,6 +5,7 @@ var playState = {
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         game.scale.setMinMax(400, 300, 1920, 1080);
         game.stage.destroy();
+//        Phaser.World.enableBodyDebug();
 
 
 //        game.stage.scale.startFullScreen();
@@ -912,7 +913,7 @@ function moverAvionesConBarco(){
 function acomodarAviones(){
     if(azul){
         for(let i = 0; i < aviones_azules.aviones.length; i++){
-            if(aviones_azules.aviones[i].sprite.x < 5 || aviones_azules.aviones[i].sprite.x > 2395 || aviones_azules.aviones[i].sprite.y < 5 || aviones_azules.aviones[i].sprite.y > 1495){
+            if(aviones_azules.aviones[i].sprite.x < 100 || aviones_azules.aviones[i].sprite.x > 2395 || aviones_azules.aviones[i].sprite.y < 5 || aviones_azules.aviones[i].sprite.y > 1495){
                 aviones_azules.aviones[i].sprite.x = barco_azul.sprite.x;
                 aviones_azules.aviones[i].sprite.y = barco_azul.sprite.y;
             }
@@ -920,7 +921,7 @@ function acomodarAviones(){
     }
     if(rojo){
         for(let i = 0; i < aviones_rojos.aviones.length; i++){
-            if(aviones_rojos.aviones[i].sprite.x < 5 || aviones_rojos.aviones[i].sprite.x > 2395 || aviones_rojos.aviones[i].sprite.y < 5 || aviones_rojos.aviones[i].sprite.y > 1495){
+            if(aviones_rojos.aviones[i].sprite.x < 100 || aviones_rojos.aviones[i].sprite.x > 2395 || aviones_rojos.aviones[i].sprite.y < 5 || aviones_rojos.aviones[i].sprite.y > 1495){
                 aviones_rojos.aviones[i].sprite.x = barco_rojo.sprite.x;
                 aviones_rojos.aviones[i].sprite.y = barco_rojo.sprite.y;
             }

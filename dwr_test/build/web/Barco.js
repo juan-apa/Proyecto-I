@@ -18,7 +18,7 @@ function Barco(nombre, equipo){
     }
     
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-    this.sprite.body.setCircle(110, 115, -40);
+    this.sprite.body.setCircle(210, 15, -136);
     this.sprite.scale.set(0.65 * factorEscaladoBarco);
     this.sprite.anchor.set(0.5);
 //    sprite.body.setSize(400, 50, -100, 20);

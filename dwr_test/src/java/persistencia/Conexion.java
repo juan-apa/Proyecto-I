@@ -29,7 +29,7 @@ public class Conexion {
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            this.conn = (com.mysql.jdbc.Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","root");
+            this.conn = (com.mysql.jdbc.Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/","admin","admin");
             this.conn.setAutoCommit(false);
             /*Creo la base de datos. Si no existe no hace nada*/
             s = this.conn.createStatement();

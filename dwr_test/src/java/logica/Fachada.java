@@ -140,16 +140,16 @@ public class Fachada {
                 int numeroAvionQueDisparo = Integer.parseInt(nombreAvion);
                 int tipoMunicion = this.partida.getEquipos().getEquipoAzul().getAviones().obtenerAvion(numeroAvionQueDisparo).getArma().getTipoMunicion();
 
-                if (this.partida.getEquipos().getEquipoAzul().getBarco().tieneAviones()) {
+                if (this.partida.getEquipos().getEquipoRojo().getBarco().tieneAviones()) {
                     if (tipoMunicion == Arma.MUNICION_BOMBA) {
-                        this.partida.getEquipos().getEquipoAzul().getBarco().recibeDisparoConAvionDeBomba();
+                        this.partida.getEquipos().getEquipoRojo().getBarco().recibeDisparoConAvionDeBomba();
                     } else {
                         if (tipoMunicion == Arma.MUNICION_TORPEDO) {
-                            this.partida.getEquipos().getEquipoAzul().getBarco().recibeDisparoSinAviones();
+                            this.partida.getEquipos().getEquipoRojo().getBarco().recibeDisparoSinAviones();
                         }
                     }
                 } else {
-                    this.partida.getEquipos().getEquipoAzul().getBarco().recibeDisparoSinAviones();
+                    this.partida.getEquipos().getEquipoRojo().getBarco().recibeDisparoSinAviones();
                 }
             }
         }

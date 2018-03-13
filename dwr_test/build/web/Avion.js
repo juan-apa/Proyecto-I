@@ -189,6 +189,7 @@ Avion.prototype.destruir = function(){
     this.sprite.body.enable = false;
     this.sprite.visible = false;
     this.sprite.kill();
+    
 };
 
 Avion.prototype.aterrizar = function(){

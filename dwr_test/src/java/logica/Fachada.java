@@ -28,6 +28,7 @@ public class Fachada {
     private boolean jAzulListo;
     private boolean jRojoListo;
     private Partida partida;
+    private boolean partidaCargada = false;
 
     private Fachada() throws ExceptionPersistencia {
         this.partida = new Partida();
@@ -37,6 +38,7 @@ public class Fachada {
         this.jRojo = new Jugador();
         this.jAzulListo = false;
         this.jRojoListo = false;
+        this.partidaCargada = false;
     }
 
     public static Fachada getInstance() throws ExceptionConfiguracion, Exception {
@@ -185,10 +187,15 @@ public class Fachada {
 
     public void despegueAvionAzul(int posAvion) {
         this.partida.getEquipos().getEquipoAzul().getBarco().despegueAvion(posAvion);
+        this.partida.getEquipos().getEquipoAzul().getAviones().getAviones().get(posAvion).setX(this.partida.getEquipos().getEquipoAzul().getBarco().getX() + 200);
+        this.partida.getEquipos().getEquipoAzul().getAviones().getAviones().get(posAvion).setY(this.partida.getEquipos().getEquipoAzul().getBarco().getY() + 200);
+        
     }
 
     public void despegueAvionRojo(int posAvion) {
         this.partida.getEquipos().getEquipoRojo().getBarco().despegueAvion(posAvion);
+        this.partida.getEquipos().getEquipoRojo().getAviones().getAviones().get(posAvion).setX(this.partida.getEquipos().getEquipoRojo().getBarco().getX() + 200);
+        this.partida.getEquipos().getEquipoRojo().getAviones().getAviones().get(posAvion).setY(this.partida.getEquipos().getEquipoRojo().getBarco().getY() + 200);
     }
 
     public void cambioAlturaAvion(int equipo, int indiceAvion, int alturaNueva) {
@@ -235,6 +242,7 @@ public class Fachada {
         try {
             this.partida = persistenceManager.obtenerPartida(conexionBDD);
             conexionBDD.liberarConexionExitosa();
+            this.partidaCargada = true;
         } catch (ExceptionPersistencia ex) {
             conexionBDD.liberarConexionFallida();
             throw ex;
@@ -242,7 +250,12 @@ public class Fachada {
     }
 
     public void nuevaPartida() {
-        this.partida = new Partida();
+        if(!this.partidaCargada){
+            this.partida = new Partida();
+        } else {
+            this.partidaCargada = false;
+        }
+        
         this.jAzulListo = false;
         this.jRojoListo = false;
     }
@@ -311,5 +324,17 @@ public class Fachada {
     
     public boolean jugadoresListos(){
         return (jAzulListo) && (jRojoListo);
+    }
+    
+    public void jugadorAzulSalio(){
+        this.jAzulListo = false;
+        System.out.println("azul salio");
+        this.partida.getEquipos().getEquipoAzul().getBarco().setVivo(false);
+    }
+    
+    public void jugadorRojolisto(){
+        this.jRojoListo = false;
+        System.out.println("rojo salio");
+        this.partida.getEquipos().getEquipoRojo().getBarco().setVivo(false);
     }
 }

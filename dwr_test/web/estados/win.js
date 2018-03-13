@@ -10,7 +10,7 @@ var winState = {
         if(fireButton.isDown && fireButton.downDuration(1)){
             Fachada.nuevaPartida(function(){
                 game.state.start('espera');
-            })
+            });
         }
     }
 };

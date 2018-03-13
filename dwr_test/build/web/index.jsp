@@ -9,14 +9,23 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Prueba Factibilidad</title>
+        <title>Vulture's Row</title>
         <script type="text/javascript" src="dwr/engine.js"></script>
         <script type="text/javascript" src="dwr/util.js"></script>
         <script type="text/javascript" src="<%=pageContext.getServletContext().getContextPath()  %>/dwr/interface/Fachada.js"></script>
         <script src="phaser.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="phaser_nineslice.js"></script>
         <script type="text/javascript" src="phaser_input.js"></script>
-
+        <style>
+            html{
+                margin: 0;
+                padding: 0;
+            }
+            body{
+                margin: 0;
+                padding: 0;
+            }
+        </style>
         <script type="text/javascript">
             var factorEscaladoBarco = 0.8;
             var factorEscaladoAvion = 1;
@@ -38,6 +47,15 @@
             var azul = false;
             var rojo = false;
             var botonCarga;
+            window.onbeforeunload = function(e){  
+                if(azul){
+                    Fachada.jugadorAzulSalio(function(){});
+                }
+                if(rojo){
+                    Fachada.jugadorRojoSalio(function(){});
+                }
+                return 'salido'; //return not alert
+            }   
         </script>
 
         <script src="InfoAvion.js" charset="utf-8"></script>
@@ -92,7 +110,7 @@
                 game1.add.image(0, 0, 'bg');
 
 
-                var login = game1.add.text(game1.width / 2, 100, 'BATALLA DE MIDWAY', {
+                var login = game1.add.text(game1.width / 2, 100, "Vulture's Row", {
                     font: '30px Arial',
                     fill: '#000000',
                     fontWeight: 'bold',

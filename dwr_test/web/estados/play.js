@@ -73,6 +73,12 @@ var playState = {
 
         game.time.events.loop(200, this.decidirVictoria, this);
         HUD = new Hud();
+        if(azul){
+            game.camera.focusOn(barco_azul.sprite);
+        }
+        if(rojo){
+            game.camera.focusOn(barco_rojo.sprite);
+        }
     },
 
     update: function () {
@@ -170,7 +176,7 @@ var playState = {
 //        mapa.tilePosition.y = -game.camera.y;
 
         moverCamara();
-
+        acomodarAviones();
 
         if (rojo === true) {
             /*Mover barco*/
@@ -901,6 +907,24 @@ function moverAvionesConBarco(){
             aviones_rojos.aviones[i].sprite.y = barco_rojo.sprite.y;
         }
     }
-    
+}
+
+function acomodarAviones(){
+    if(azul){
+        for(let i = 0; i < aviones_azules.aviones.length; i++){
+            if(aviones_azules.aviones[i].sprite.x < 5 || aviones_azules.aviones[i].sprite.x > 2395 || aviones_azules.aviones[i].sprite.y < 5 || aviones_azules.aviones[i].sprite.y > 1495){
+                aviones_azules.aviones[i].sprite.x = barco_azul.sprite.x;
+                aviones_azules.aviones[i].sprite.y = barco_azul.sprite.y;
+            }
+        }
+    }
+    if(rojo){
+        for(let i = 0; i < aviones_rojos.aviones.length; i++){
+            if(aviones_rojos.aviones[i].sprite.x < 5 || aviones_rojos.aviones[i].sprite.x > 2395 || aviones_rojos.aviones[i].sprite.y < 5 || aviones_rojos.aviones[i].sprite.y > 1495){
+                aviones_rojos.aviones[i].sprite.x = barco_rojo.sprite.x;
+                aviones_rojos.aviones[i].sprite.y = barco_rojo.sprite.y;
+            }
+        }
+    }
 }
 

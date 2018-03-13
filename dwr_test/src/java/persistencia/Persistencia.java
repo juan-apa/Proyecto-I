@@ -9,8 +9,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logica.Arma;
 import logica.Aviones;
 import logica.Avion;
@@ -466,6 +469,51 @@ public class Persistencia {
             throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_OBTENER_DATOS);
         }
         return ret;
+    }
+    
+    public void ingresarJugador(String nombre, String pass, Conexion con) throws ExceptionPersistencia {
+        Connection c = con.getConexion();
+        PreparedStatement p = null;
+        try {
+            p = c.prepareStatement(Consultas.INGRESAR_USUARIO);
+            p.setString(1, nombre.trim().toLowerCase());
+            p.setString(2, pass.trim().toLowerCase());
+            p.executeUpdate();
+        } catch (SQLException e) {
+            throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_INSERT);
+        } finally {
+            if(p != null){
+                try {
+                    p.close();
+                } catch (SQLException ex) {
+                    throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_INSERT);
+                }
+            }
+        }
+    }
+    
+    public void crearBDDTablas(Conexion con) throws ExceptionPersistencia{
+        Connection c = con.getConexion();
+        Statement s = null;
+        try{
+            s = c.createStatement();
+            s.executeUpdate(Consultas.CREAR_DB);
+            s.executeUpdate(Consultas.TABLA_JUGADORES);
+            s.executeUpdate(Consultas.TABLA_EQUIPOS);
+            s.executeUpdate(Consultas.TABLA_PARTIDAS);
+            s.executeUpdate(Consultas.TABLA_BARCOS);
+            s.executeUpdate(Consultas.TABLA_AVIONES);
+        } catch(SQLException ex) {
+            throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_CREAR_DB);
+        } finally {
+            if(s != null){
+                try {
+                    s.close();
+                } catch (SQLException ex) {
+                    throw new ExceptionPersistencia(ExceptionPersistencia.ERROR_CREAR_DB);
+                }
+            }
+        }
     }
 
 }

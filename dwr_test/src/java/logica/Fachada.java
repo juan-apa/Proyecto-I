@@ -5,6 +5,7 @@
  */
 package logica;
 
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import persistencia.Conexion;
@@ -336,5 +337,37 @@ public class Fachada {
         this.jRojoListo = false;
         System.out.println("rojo salio");
         this.partida.getEquipos().getEquipoRojo().getBarco().setVivo(false);
+    }
+    
+    public void inicializarBDD() throws ExceptionPersistencia{
+        try{
+            this.persistenceManager.crearBDDTablas(this.conexionBDD);
+            this.conexionBDD.liberarConexionExitosa();
+        } catch(ExceptionPersistencia ex) {
+            this.conexionBDD.liberarConexionFallida();
+        }
+        
+        /*Ingreso usuario uno*/
+        try{
+            this.persistenceManager.ingresarJugador("uno", "uno", this.conexionBDD);
+            this.conexionBDD.liberarConexionExitosa();
+        } catch(ExceptionPersistencia e) {
+            this.conexionBDD.liberarConexionFallida();
+            /*No hago nada, porque la exception se tira cuando ya existe el usuario*/
+        }
+        try{
+            this.persistenceManager.ingresarJugador("dos", "dos", this.conexionBDD);
+            this.conexionBDD.liberarConexionExitosa();
+        } catch(ExceptionPersistencia e) {
+            this.conexionBDD.liberarConexionFallida();
+            /*No hago nada, porque la exception se tira cuando ya existe el usuario*/
+        }
+        try{
+            this.persistenceManager.ingresarJugador("tres", "tres", this.conexionBDD);
+            this.conexionBDD.liberarConexionExitosa();
+        } catch(ExceptionPersistencia e) {
+            this.conexionBDD.liberarConexionFallida();
+            /*No hago nada, porque la exception se tira cuando ya existe el usuario*/
+        }
     }
 }

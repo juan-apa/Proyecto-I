@@ -24,7 +24,7 @@ public class Arma{
         this.municion = BALAS_METRALLETA;
     }
     
-    Arma(int tipoMunicion) {
+    public Arma(int tipoMunicion) {
         this.tipoMunicion = tipoMunicion;
     }
     

@@ -33,6 +33,7 @@ public class Consultas {
     
     public static final String USUARIO_VALIDO = "Select * FROM Proyecto.Jugadores WHERE nombre = ? AND password = ? ORDER BY nombre";
     public static final String FIND_USUARIO = "Select * FROM Proyecto.Jugadores WHERE nombre = ?";
+    public static final String INGRESAR_USUARIO = "INSERT INTO Proyecto.Jugadores (nombre, password) VALUES (?, ?)";
     
     public static final String CREAR_DB = "CREATE DATABASE IF NOT EXISTS Proyecto";
     

@@ -583,28 +583,28 @@ var playState = {
     },
 
     render: function () {
-        game.debug.body(barco_azul.quilla);
-        game.debug.body(barco_rojo.quilla);
-        game.debug.body(barco_azul.sprite);
-        game.debug.body(barco_rojo.sprite);
-        
-        game.debug.body(aviones_rojos.aviones[0].sprite);
-        game.debug.body(aviones_rojos.aviones[1].sprite);
-        game.debug.body(aviones_rojos.aviones[2].sprite);
-        game.debug.body(aviones_rojos.aviones[3].sprite);
-        game.debug.body(aviones_azules.aviones[0].sprite);
-        game.debug.body(aviones_azules.aviones[1].sprite);
-        game.debug.body(aviones_azules.aviones[2].sprite);
-        game.debug.body(aviones_azules.aviones[3].sprite);
-        
-        game.debug.body(aviones_rojos.aviones[0].arma.balas);
-        game.debug.body(aviones_rojos.aviones[1].arma.balas);
-        game.debug.body(aviones_rojos.aviones[2].arma.balas);
-        game.debug.body(aviones_rojos.aviones[3].arma.balas);
-        game.debug.body(aviones_azules.aviones[0].arma.balas);
-        game.debug.body(aviones_azules.aviones[1].arma.balas);
-        game.debug.body(aviones_azules.aviones[2].arma.balas);
-        game.debug.body(aviones_azules.aviones[3].arma.balas);
+//        game.debug.body(barco_azul.quilla);
+//        game.debug.body(barco_rojo.quilla);
+//        game.debug.body(barco_azul.sprite);
+//        game.debug.body(barco_rojo.sprite);
+//        
+//        game.debug.body(aviones_rojos.aviones[0].sprite);
+//        game.debug.body(aviones_rojos.aviones[1].sprite);
+//        game.debug.body(aviones_rojos.aviones[2].sprite);
+//        game.debug.body(aviones_rojos.aviones[3].sprite);
+//        game.debug.body(aviones_azules.aviones[0].sprite);
+//        game.debug.body(aviones_azules.aviones[1].sprite);
+//        game.debug.body(aviones_azules.aviones[2].sprite);
+//        game.debug.body(aviones_azules.aviones[3].sprite);
+//        
+//        game.debug.body(aviones_rojos.aviones[0].arma.balas);
+//        game.debug.body(aviones_rojos.aviones[1].arma.balas);
+//        game.debug.body(aviones_rojos.aviones[2].arma.balas);
+//        game.debug.body(aviones_rojos.aviones[3].arma.balas);
+//        game.debug.body(aviones_azules.aviones[0].arma.balas);
+//        game.debug.body(aviones_azules.aviones[1].arma.balas);
+//        game.debug.body(aviones_azules.aviones[2].arma.balas);
+//        game.debug.body(aviones_azules.aviones[3].arma.balas);
     },
     disminuirCombustible: function () {
 //        console.log(aviones_azules.obtenerCombustibles());

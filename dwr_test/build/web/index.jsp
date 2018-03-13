@@ -35,7 +35,9 @@
                 MAX_BALAS: 300
             };
             console.log("UNO " + parametros.MAX_BALAS);
-//            Fachada.obtenerMAX_BALAS({callback:obtenerMaxBalas});
+            Fachada.inicializarBDD(function(){
+                console.log("bdd inicializada");
+            });
 
             function obtenerMaxBalas(respuesta) {
                 console.log(respuesta);

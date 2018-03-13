@@ -141,7 +141,7 @@ public class Avion extends Vehiculo implements Serializable{
         this.altura = altura;
     }
 
-    void recargarCombustible() {
+    public void recargarCombustible() {
         this.combustible = MAX_COMBUSTIBLE;
     }
 

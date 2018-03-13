@@ -203,7 +203,7 @@
                 botonCreditos.input.useHandCursor = true;
                 botonCreditos.events.onInputDown.add(function () {
 
-                        var win = window.open('/dwr-test/estados/creditos.html', '_blank');
+                        var win = window.open('<%=pageContext.getServletContext().getContextPath()  %>/estados/creditos.html', '_blank');
                         win.focus();
 
                 });

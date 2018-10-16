@@ -8,7 +8,7 @@ pipeline {
     }
     stage('generar war') {
       steps {
-        bat(script: 'jar -cvf ./dwr_test/web/dwr_test.war', encoding: 'utf-8')
+        bat(script: 'jar -cvf .\\dwr_test.war .\\dwr_test\\web\\*', encoding: 'utf-8')
       }
     }
   }

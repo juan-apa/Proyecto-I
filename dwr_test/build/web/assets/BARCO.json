@@ -1,0 +1,52 @@
+{"frames": {
+
+"portaviones_1.png":
+{
+	"frame": {"x":1,"y":1,"w":147,"h":450},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":147,"h":450},
+	"sourceSize": {"w":147,"h":450}
+},
+"portaviones_2.png":
+{
+	"frame": {"x":150,"y":1,"w":147,"h":450},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":147,"h":450},
+	"sourceSize": {"w":147,"h":450}
+},
+"portaviones_3.png":
+{
+	"frame": {"x":299,"y":1,"w":147,"h":450},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":147,"h":450},
+	"sourceSize": {"w":147,"h":450}
+},
+"portaviones_4.png":
+{
+	"frame": {"x":448,"y":1,"w":147,"h":450},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":147,"h":450},
+	"sourceSize": {"w":147,"h":450}
+},
+"portaviones_5.png":
+{
+	"frame": {"x":597,"y":1,"w":147,"h":450},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":147,"h":450},
+	"sourceSize": {"w":147,"h":450}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "BARCO.png",
+	"format": "RGBA8888",
+	"size": {"w":745,"h":452},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:bb308119b913b060e15ccb6a3f5eba11:89dc6a308c39fbf2efb0af29c40cb1e7:74b8dcd96ff405e6cc35aaa3b3b1e77b$"
+}
+}
